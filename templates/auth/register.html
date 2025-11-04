@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Account - Mossé Luxe{% endblock %}
+
+{% block content %}
+<div class="container my-5 py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-8">
+            <div class="text-center mb-5">
+                <a href="/">
+                    <img src="/assets/images/logo.png" alt="Mossé Luxe Logo" style="height: 80px;">
+                </a>
+                <h1 class="h2 mt-4">Create Account</h1>
+            </div>
+            
+            <div class="card-body p-0">
+                {% if registration_error is not empty %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ registration_error }}
+                    </div>
+                {% endif %}
+                
+                <form action="/register" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required value="{{ post.name ?? '' }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email" name="email" required value="{{ post.email ?? '' }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                     <div class="mb-3">
+                        <label for="confirm_password" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                    </div>
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary-dark btn-lg">Register</button>
+                    </div>
+                </form>
+                <div class="text-center mt-4">
+                    <p class="text-muted">Already have an account? <a href="/login" class="text-dark fw-bold text-decoration-none">Log in</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

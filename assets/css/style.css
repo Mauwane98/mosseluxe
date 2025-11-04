@@ -1,0 +1,462 @@
+/*
+==============================================
+   Mossé Luxe - FlyKite Inspired Theme
+==============================================
+*/
+
+/* 1. Core & Typography
+---------------------------------------------- */
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --brand-dark: #000000;
+    --brand-light: #FFFFFF;
+    --brand-border: #E5E5E5;
+    --brand-muted: #888888;
+    --brand-gold: #B8860B; /* Added a gold color for accents */
+}
+
+body {
+    background-color: var(--brand-light);
+    color: var(--brand-dark);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+}
+
+/* Apply default heading styles, but allow them to be overridden inside specific components */
+h1, h2, h3, h4, h5, h6, .gold-text, .navbar-brand {
+    font-family: 'Archivo Black', sans-serif;
+    color: var(--brand-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.05em; /* Slightly increased letter spacing for headings */
+}
+
+h1 { font-size: 2.8rem; }
+h2 { font-size: 2.2rem; }
+h3 { font-size: 1.8rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+
+.lead {
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+/* 2. Navbar
+---------------------------------------------- */
+
+/* --- Base Navbar State --- */
+.navbar {
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid transparent; /* Start with transparent border */
+}
+
+/* --- Transparent State (Top of page) --- */
+.navbar-scroll {
+    background-color: transparent !important;
+    border-bottom: none !important;
+}
+
+.navbar-scroll .nav-link,
+.navbar-scroll .nav-link i {
+    color: var(--brand-light) !important;
+}
+
+.navbar-scroll .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* --- Scrolled State (Solid background) --- */
+.navbar-scroll.scrolled {
+    background-color: var(--brand-light) !important;
+    border-bottom: 1px solid var(--brand-border) !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.navbar-scroll.scrolled .nav-link,
+.navbar-scroll.scrolled .nav-link i {
+    color: var(--brand-dark) !important;
+    text-shadow: none;
+}
+
+.navbar-scroll.scrolled .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* --- General Navbar Components --- */
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.navbar-nav-centered {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+/* --- Links & Icons --- */
+.navbar-nav .nav-link {
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.5rem 1.2rem;
+    position: relative;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--brand-gold) !important; /* Gold color on hover */
+    transform: translateY(-2px);
+}
+
+.navbar-nav .nav-link.active {
+    color: var(--brand-gold) !important; /* Gold color for active link */
+}
+
+.navbar-scroll.scrolled .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 2px;
+    background-color: var(--brand-gold); /* Gold underline for active link when scrolled */
+}
+
+/* Navbar Icons */
+.navbar-nav .nav-link i {
+    font-size: 1.2rem;
+    vertical-align: middle;
+}
+
+/* --- Logo --- */
+.navbar-brand {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.navbar-logo {
+    height: 50px; /* Adjusted logo height for a more modern look */
+    transition: height 0.3s ease;
+}
+
+.navbar-scroll.scrolled .navbar-logo {
+    height: 40px; /* Smaller logo when scrolled */
+}
+
+/* 3. Buttons
+---------------------------------------------- */
+.btn-primary-dark:hover {
+    background-color: var(--brand-light);
+    color: var(--brand-dark);
+    transform: translateY(-3px) scale(1.02); /* Subtle lift and scale on hover */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Add a subtle shadow */
+}
+
+.btn-primary-dark {
+    background-color: var(--brand-dark);
+    color: var(--brand-light);
+    border: 1px solid var(--brand-dark);
+    border-radius: 0;
+    padding: 0.75rem 1.5rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+}
+
+.gold-btn {
+    background-color: var(--brand-gold);
+    border-color: var(--brand-gold);
+    color: var(--brand-light);
+    border-radius: 0;
+    padding: 0.75rem 1.5rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+}
+
+.gold-btn:hover {
+    background-color: #A6780A; /* Darker gold on hover */
+    border-color: #A6780A;
+    color: var(--brand-light);
+}
+
+/* 4. Cards (Product, etc.)
+---------------------------------------------- */
+.product-card {
+    background-color: var(--brand-light);
+    border: 1px solid var(--brand-border);
+    border-radius: 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1); /* Subtle shadow on hover */
+    border-color: var(--brand-gold); /* Subtle gold border on hover */
+}
+
+.product-card .card-img-top {
+    height: 320px;
+    object-fit: cover;
+    border-radius: 0;
+}
+
+.product-card .card-title {
+    min-height: auto;
+    font-size: 1.1rem; /* Slightly larger title */
+    margin-top: 0.75rem;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase; /* Uppercase product titles */
+    font-family: 'Archivo Black', sans-serif; /* Use heading font */
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1.3; /* Improved line height for titles */
+}
+
+.product-card .card-body .card-text {
+    color: var(--brand-dark); /* Ensure price is dark */
+    font-weight: 700; /* Make price bolder */
+    font-size: 1.1rem; /* Slightly larger price */
+}
+
+.product-card .card-body .card-text .text-muted {
+    color: var(--brand-muted) !important; /* Ensure muted color for old price */
+    font-weight: 400; /* Regular weight for old price */
+    font-size: 0.9rem; /* Smaller size for old price */
+}
+
+/* 5. Forms
+---------------------------------------------- */
+.form-control, .form-select {
+    background-color: var(--brand-light);
+    border-color: var(--brand-border);
+    color: var(--brand-dark);
+    border-radius: 0;
+    padding: 0.75rem 1rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--brand-dark);
+    box-shadow: none;
+}
+
+/* 6. Footer
+---------------------------------------------- */
+footer.bg-dark {
+    background-color: var(--brand-light) !important;
+    color: var(--brand-dark) !important;
+    border-top: 1px solid var(--brand-border);
+}
+
+footer a.text-white, footer .text-white {
+    color: var(--brand-dark) !important;
+    text-decoration: none;
+}
+
+footer a.text-white:hover, footer .text-white:hover {
+    text-decoration: underline;
+}
+
+/* 7. Misc */
+.page-wrapper {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* Remove the white background section styling */
+.bg-white-section {
+    background-color: transparent;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* Hero Carousel Slide Styling */
+.carousel-item.hero-slide {
+    height: 100vh;
+    min-height: 500px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    color: var(--brand-light);
+}
+
+.hero-section h1,
+.hero-section p {
+    color: var(--brand-light); /* Override default dark color for headings/paragraphs in hero */
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%);
+    background-size: 200% 200%;
+    animation: gradientAnimation 15s ease infinite;
+    z-index: 0; /* Ensure content is above overlay */
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1; /* Ensure content is above overlay */
+    max-width: 800px; /* Limit width for better readability */
+    padding: 0 15px; /* Add some padding */
+}
+
+/* Utility to center the content when there's only a button */
+.hero-content-centered {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Align to the bottom */
+    height: 100%;
+    padding-bottom: 10vh; /* Lowered again to move the button further down */
+}
+
+
+/* Responsive Typography */
+@media (max-width: 767.98px) {
+    h1, .display-1, .display-2, .display-3 {
+        font-size: 2rem; /* Slightly smaller for mobile */
+    }
+    .display-4 {
+        font-size: 2.25rem; /* Slightly smaller for mobile */
+    }
+    h2, .display-5 {
+        font-size: 1.5rem; /* Slightly smaller for mobile */
+    }
+    .lead {
+        font-size: 1rem; /* Adjust lead paragraph size for mobile */
+    }
+
+    /* Make hero section more compact on mobile */
+    .carousel-item.hero-slide {
+        height: 50vh;
+        min-height: 400px;
+    }
+    .hero-content h1 {
+        font-size: 2rem; /* Adjust heading size for mobile */
+    }
+    .hero-content p {
+        font-size: 1rem; /* Adjust paragraph size for mobile */
+    }
+
+    /* Adjust navbar for a cleaner mobile view */
+    .navbar-collapse {
+        padding: 1rem 0;
+    }
+
+    .navbar-brand {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .navbar-logo {
+        height: 40px; /* Smaller logo on mobile */
+    }
+
+    .navbar-nav .nav-link {
+        padding: 0.75rem 0;
+        font-size: 1rem;
+    }
+}
+
+/* Off-canvas Menu Styling */
+.offcanvas {
+    --bs-offcanvas-bg: var(--brand-light);
+    --bs-offcanvas-color: var(--brand-dark);
+}
+
+.offcanvas-body {
+    padding: 2rem;
+}
+
+.offcanvas-header {
+    background-color: var(--brand-light);
+    color: var(--brand-dark);
+    border-bottom: 1px solid var(--brand-border);
+    padding: 1rem 2rem;
+}
+
+.offcanvas-header .offcanvas-title {
+    font-family: 'Archivo Black', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.offcanvas .btn-close {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+}
+
+/* Style the main navigation links within the offcanvas */
+.offcanvas .navbar-nav .nav-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    padding: 0.75rem 0 !important;
+    color: var(--brand-dark) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.offcanvas .navbar-nav .nav-link.active {
+    color: var(--brand-gold) !important;
+    border-bottom: none;
+}
+
+/* Add padding to the bottom of the body to prevent content from being hidden by the bottom nav */
+body {
+    padding-bottom: 0;
+}
+
+.playfair-display-font {
+    font-family: 'Playfair Display', serif;
+}
+
+/* 8. Animations */
+/* Star Rating Input CSS */
+.star-rating { display: flex; flex-direction: row-reverse; font-size: 2rem; justify-content: flex-start; }
+.star-rating input { display: none; } /* Hide radio buttons */
+.star-rating label {
+    color: #ccc; /* Lighter grey for unselected stars */
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.star-rating label::before { content: '\F586'; font-family: 'bootstrap-icons'; } /* Bootstrap star icon */
+
+/* Gold color for checked star and stars to its right */
+.star-rating input:checked ~ label,
+/* Gold color for hovered star and stars to its right */
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: var(--brand-dark); /* Use dark theme color */
+}
+
+.product-quantity-input { width: 70px; }
+
+/* ---------------------------------------------- */
+.content-fade-in {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.gold-text {
+    color: var(--brand-gold);
+}

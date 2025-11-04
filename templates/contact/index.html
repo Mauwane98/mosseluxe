@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us - Mossé Luxe{% endblock %}
+
+{% block content %}
+<div class="container my-5 py-5">
+    <h1 class="text-center display-4 mb-4">Contact Us</h1>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <p class="lead text-center text-muted mb-5">
+                We'd love to hear from you! Whether you have a question about our products, an inquiry about an order, or just want to say hello, our team is ready to assist.
+            </p>
+            <div class="card p-4 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title gold-text mb-3">Get in Touch</h5>
+                    <ul class="list-unstyled mb-4">
+                        <li><i class="bi bi-envelope me-2"></i> info@mosseluxe.co.za</li>
+                        <li><i class="bi bi-phone me-2"></i> 067 616 0928</li>
+                        <li><i class="bi bi-geo-alt me-2"></i> Pretoria, South Africa</li>
+                    </ul>
+                    <p class="text-muted">Our customer service team is available Monday to Friday, 9 AM - 5 PM (SAST).</p>
+                </div>
+            </div>
+            
+            <h5 class="text-center gold-text mt-5 mb-3">Send Us a Message</h5>
+            <form action="/contact" method="POST" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                    <div class="invalid-feedback">Please enter your name.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                    <div class="invalid-feedback">Please enter a valid email address.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input type="text" class="form-control" id="subject" name="subject" required>
+                    <div class="invalid-feedback">Please enter a subject.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                    <div class="invalid-feedback">Please enter your message.</div>
+                </div>
+                <button type="submit" class="btn btn-primary-dark gold-btn w-100">Send Message</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

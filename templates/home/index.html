@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="container-fluid p-0 page-content">
+    <!-- Hero Carousel Section -->
+    <section id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        </div>
+        <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <!-- TODO: Optimize hero images for web (e.g., WebP, responsive images) -->
+            <div class="carousel-item active hero-slide" style="background-image: url('assets/images/hero1.png');">
+                <div class="hero-overlay"></div>
+                <div class="hero-content hero-content-centered">
+                    <a href="/shop" class="btn btn-primary-dark btn-lg">Shop Now</a>
+                </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="carousel-item hero-slide" style="background-image: url('assets/images/hero2.png');">
+                <div class="hero-overlay"></div>
+                <div class="hero-content hero-content-centered">
+                    <a href="/shop" class="btn btn-primary-dark btn-lg">Shop Now</a>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section id="featured-products" class="container my-5 py-5 border-top">
+        <h2 class="text-center mb-5 display-5">Featured Products</h2>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            {% if featuredProducts is not empty %}
+                {% for product in featuredProducts %}
+                    <div class="col">
+                        <div class="card product-card h-100">
+                            <a href="/product/{{ product.id }}">
+                                <img src="assets/images/{{ product.image }}" class="card-img-top" alt="{{ product.name }}" loading="lazy">
+                            </a>
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <div class="card-text">
+                                    {% if product.sale_price is not empty and product.sale_price > 0 %}
+                                        <span class="text-muted text-decoration-line-through me-2">R {{ "%.2f"|format(product.price) }}</span>
+                                        <span>R {{ "%.2f"|format(product.sale_price) }}</span>
+                                    {% else %}
+                                        <span>R {{ "%.2f"|format(product.price) }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class='col-12 text-center text-white'>No featured products found.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Launching Soon Section -->
+    <section id="launching-soon" class="container-fluid py-5" style="background-color: #FAFAFA;">
+        <div class="container">
+            <h2 class="text-center mb-4 display-5">Launching Soon</h2>
+            <p class="text-center text-muted lead mb-5">The Mossé Luxe apparel line is almost here. Premium fabrics, timeless design.</p>
+            <div class="row justify-content-center g-4">
+                {% if launchingSoonItems is not empty %}
+                    {% for item in launchingSoonItems %}
+                        <div class="col-md-5">
+                            <div class="card product-card h-100">
+                                <img src="assets/images/{{ item.image }}" class="card-img-top" alt="{{ item.name }}" loading="lazy">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">{{ item.name }}</h5>
+                                    <p class="card-text text-white-50">Coming Soon</p>
+                                    <button class="btn btn-outline-secondary disabled">Notify Me</button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class='col-12 text-center text-white'>No items found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section (Hidden for now) -->
+    <!--
+    <section id="testimonials" class="container my-5 py-5 border-top">
+        ...
+    </section>
+    -->
+
+     <!-- Brand Story Section -->
+    <section id="brand-story" class="container text-center my-5 py-5 border-top">
+         <h2 class="display-5 mb-4">The Mossé Luxe Heritage</h2>
+         <p class="text-muted lead mb-4 mx-auto" style="max-width: 800px;">
+             Born from a passion for timeless craftsmanship passed down from our grandfather, Moses, Mossé Luxe is more than a brand; it's a celebration of heritage. Each piece is a statement of quality, designed to bring a touch of luxury to your everyday life.
+         </p>
+         <a href="/about" class="btn btn-primary-dark">Our Story</a>
+    </section>
+
+    <!-- Why Shop With Us Section -->
+    <section id="why-us" class="container my-5 py-5 border-top">
+        <div class="row text-center g-4">
+            <div class="col-md-4">
+                <i class="bi bi-truck display-6 mb-3"></i>
+                <h4>COMPLIMENTARY SHIPPING</h4>
+                <p class="text-muted">Enjoy free shipping on all orders over R500 within South Africa.</p>
+            </div>
+            <div class="col-md-4">
+                <i class="bi bi-patch-check-fill display-6 mb-3"></i>
+                <h4>QUALITY GUARANTEE</h4>
+                <p class="text-muted">All our products are handcrafted from the finest materials, guaranteed to last.</p>
+            </div>
+            <div class="col-md-4">
+                <i class="bi bi-lock-fill display-6 mb-3"></i>
+                <h4>SECURE PAYMENTS</h4>
+                <p class="text-muted">Your payments are processed securely through our trusted payment gateway.</p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<style>
+    .product-card .card-img-top {
+        object-fit: contain; /* Use 'contain' to show the full image */
+    }
+</style>
+{% endblock %}

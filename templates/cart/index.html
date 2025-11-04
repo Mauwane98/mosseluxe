@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5 bg-white-section rounded shadow-sm">
+    <h1 class="mb-4 text-center" style="font-family: 'Playfair Display', serif;">Your Shopping Cart</h1>
+
+    {% if cart_items is empty or cart_products_details is empty %}
+        <div class="text-center py-5">
+            <p class="text-muted">Your shopping cart is empty.</p>
+            <a href="/shop" class="btn btn-lg btn-outline-dark-alt mt-3">Start Shopping</a>
+        </div>
+    {% else %}
+        <!-- Cart Table -->
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 50%;">Product</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product_id, item in cart_items %}
+                        {% if cart_products_details[product_id] is defined %}
+                            {% set product_detail = cart_products_details[product_id] %}
+                            {% set price_to_use = (product_detail.sale_price is not empty and product_detail.sale_price > 0) ? product_detail.sale_price : product_detail.price %}
+                            {% set item_total = price_to_use * item.quantity %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ product_detail.image }}" class="img-fluid rounded me-3" alt="{{ product_detail.name }}" style="width: 80px; height: 80px; object-fit: cover;">
+                                        <div>
+                                            <h5 class="mb-0">{{ product_detail.name }}</h5>
+                                            <!-- <small class="text-muted">Premium Collection</small> -->
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>R {{ "%.2f"|format(price_to_use) }}</td>
+                                <td>
+                                    <!-- Update Quantity Form -->
+                                    <form action="/cart/update" method="POST" class="d-inline-flex align-items-center">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                                        <input type="hidden" name="product_id" value="{{ product_id }}">
+                                        <input type="hidden" name="action" value="update">
+                                        <input type="number" name="quantity" class="form-control me-2" value="{{ item.quantity }}" min="1" style="width: 70px;">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary" title="Update Quantity"><i class="bi bi-arrow-repeat"></i></button>
+                                    </form>
+                                </td>
+                                <td>R {{ "%.2f"|format(item_total) }}</td>
+                                <td>
+                                    <!-- Remove Item Form -->
+                                    <form action="/cart/remove" method="POST" class="d-inline">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                                        <input type="hidden" name="product_id" value="{{ product_id }}">
+                                        <input type="hidden" name="action" value="remove">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="row mt-4 justify-content-end">
+            <div class="col-md-5 col-lg-4">
+                <div class="card border">
+                    <div class="card-body">
+                        <h4 class="card-title mb-3">Cart Summary</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                Subtotal
+                                <span>R {{ "%.2f"|format(total_cart_price) }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                Shipping
+                                <span>R {{ "%.2f"|format(shipping_cost) }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0 fw-bold">
+                                <strong>Total</strong>
+                                <strong>R {{ "%.2f"|format(total_cart_price + shipping_cost) }}</strong>
+                            </li>
+                        </ul>
+                        <a href="/checkout" class="btn btn-lg btn-primary-dark w-100 mt-4">Proceed to Checkout</a>
+                    </div>
+                </div>
+                 <div class="text-center mt-3">
+                    <a href="/shop" class="text-dark">&leftarrow; Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,94 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-scroll">
+    <div class="container-fluid">
+        <!-- Mobile Menu Toggler -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- Main Logo -->
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <img src="/assets/images/logo-dark.png" alt="Mossé Luxe Logo" class="navbar-logo">
+        </a>
+
+        <!-- Desktop Nav Links & Icons (visible on lg and up) -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/shop">Shop</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="bi bi-search"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/wishlist"><i class="bi bi-heart"></i></a>
+                </li>
+                {% if loggedin %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/my-account?view=profile">Profile</a></li>
+                            <li><a class="dropdown-item" href="/my-account">My Orders</a></li>
+                            <li><a class="dropdown-item" href="/wishlist">My Wishlist</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login"><i class="bi bi-person"></i></a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link position-relative" href="/cart">
+                        <i class="bi bi-bag"></i>
+                        <span id="cart-item-count-desktop" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-item-count">{{ cart_item_count }}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Mobile Cart Icon (outside offcanvas for immediate access) -->
+        <a class="nav-link position-relative d-lg-none ms-auto me-3" href="/cart">
+            <i class="bi bi-bag fs-5"></i>
+            <span id="cart-item-count-mobile" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-item-count">{{ cart_item_count }}</span>
+        </a>
+
+
+    </div>
+</nav>
+
+<!-- Search Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-dark text-white border-secondary">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title gold-text" id="searchModalLabel">Search Products</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/search" method="GET">
+          <div class="input-group">
+            <input type="text" name="query" class="form-control form-control-lg" placeholder="e.g., Leather Belt, Gold Bracelet..." required>
+            <button class="btn btn-outline-light gold-btn" type="submit">Search</button>
+          </div>
+        </form>
+        <div class="mt-3 text-muted small">
+            Enter keywords to search for products across our collection.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<footer class="bg-dark text-white pt-5 pb-4">
+    <div class="container text-center text-md-start">
+        <div class="row text-center text-md-start mt-3">
+
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                <h5 class="text-uppercase mb-4 font-weight-bold">Mossé Luxe</h5>
+                <p class="text-muted">Continuing a Legacy of Excellence. Crafted for Today.</p>
+            </div>
+
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                <h5 class="text-uppercase mb-4 font-weight-bold">Shop</h5>
+                <p><a href="/shop?category={{ url_encode('Belts') }}" class="text-white">Belts</a></p>
+                <p><a href="/shop?category={{ url_encode('Bracelets') }}" class="text-white">Bracelets</a></p>
+                <p><a href="/shop?category={{ url_encode('Card Holders') }}" class="text-white">Card Holders</a></p>
+                <p><a href="/shop?category={{ url_encode('T-Shirts') }}" class="text-white">T-Shirts</a></p>
+            </div>
+
+            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                 <h5 class="text-uppercase mb-4 font-weight-bold">Useful Links</h5>
+                 <p><a href="/about" class="text-white">About</a></p>
+                 <p><a href="/contact" class="text-white">Contact Us</a></p> 
+                 <p><a href="/track-order" class="text-white">Track Your Order</a></p>
+                 <p><a href="#" class="text-white">Returns Policy</a></p>
+            </div>
+
+            <div class="col-lg-4 col-xl-4 mx-auto mt-3">
+                <h5 class="text-uppercase mb-4 font-weight-bold">Join Our World</h5>
+                <p class="text-muted">Be the first to know about new collections, exclusive offers, and more.</p>
+                <form action="#" method="post">
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Enter your email" aria-label="Enter your email" aria-describedby="button-addon2">
+                        <button class="btn btn-primary-dark" type="button" id="button-addon2">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <hr class="mb-4">
+
+        <div class="row align-items-center">
+            <div class="col-md-7 col-lg-8">
+                <p>Copyright &copy;{{ "now"|date("Y") }} Mossé Luxe. All Rights Reserved.</p>
+            </div>
+            <div class="col-md-5 col-lg-4">
+                <div class="text-center text-md-end">
+                    <ul class="list-unstyled list-inline">
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-white fs-4"><i class="bi bi-facebook"></i></a>
+                        </li>
+                         <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-white fs-4"><i class="bi bi-twitter-x"></i></a>
+                        </li>
+                         <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-white fs-4"><i class="bi bi-instagram"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Payment Logos -->
+        <div class="row justify-content-center mt-3">
+            <div class="col-auto">
+                <img src="/assets/images/logo.png" alt="Visa" class="mx-2" style="height: 30px;">
+                <img src="/assets/images/logo.png" alt="Mastercard" class="mx-2" style="height: 30px;">
+                <img src="/assets/images/logo.png" alt="PayFast" class="mx-2" style="height: 30px;">
+            </div>
+        </div>
+    </div>
+</footer>

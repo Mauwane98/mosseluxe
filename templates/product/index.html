@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5 bg-white-section rounded shadow-sm">
+    {% if product %}
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-md-6">
+            <div class="position-relative">
+                <img src="{{ product.image }}" class="img-fluid rounded" alt="{{ product.name }}" loading="lazy">
+                {% if product.sale_price is not empty and product.sale_price > 0 %}<span class="badge bg-danger position-absolute top-0 end-0 m-3 fs-6">SALE</span>{% endif %}
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6 text-dark">
+            <h1 class="gold-text">{{ product.name }}</h1>
+            <div class="my-3">
+                {% if product.sale_price is not empty and product.sale_price > 0 %}
+                    <h3 class="d-inline">R {{ "%.2f"|format(product.sale_price) }}</h3>
+                    <h4 class="d-inline text-muted text-decoration-line-through ms-2">R {{ "%.2f"|format(product.price) }}</h4>
+                {% else %}
+                    <h3 class="d-inline">R {{ "%.2f"|format(product.price) }}</h3>
+                {% endif %}
+            </div>
+            
+            <!-- Star Rating Display -->
+            <div class="d-flex align-items-center mb-3">
+                {% for i in 1..5 %}
+                    <i class="bi {% if i <= product.rating_summary.avg_rating|round %}bi-star-fill text-dark{% else %}bi-star{% endif %} me-1"></i>
+                {% endfor %}
+                <span class="text-muted ms-2">
+                    {{ "%.1f"|format(product.rating_summary.avg_rating) }} 
+                    ({{ product.rating_summary.review_count }} reviews)
+                </span>
+            </div>
+
+            <p class="lead">{{ product.description }}</p>
+            
+            <hr class="my-4">
+
+            {% if product.stock > 0 %}
+                <!-- Add to Cart Form -->
+                <form action="/cart/add" method="POST" id="add-to-cart-form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <input type="hidden" name="action" value="add">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <label for="quantity" class="form-label text-dark">Quantity</label>
+                            <input type="number" id="quantity" name="quantity" class="form-control product-quantity-input" value="1" min="1" max="{{ product.stock }}" required>
+                        </div>
+                        <div class="align-self-end d-flex gap-2">
+                            <button type="submit" class="btn btn-lg btn-primary-dark">
+                                <i class="bi bi-bag-plus me-2"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!-- Wishlist button (outside the cart form) -->
+                {% if loggedin %}
+                    <form action="/wishlist/toggle" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <input type="hidden" name="action" value="{% if is_in_wishlist %}remove{% else %}add{% endif %}">
+                        <button type="submit" class="btn btn-lg {% if is_in_wishlist %}btn-dark{% else %}btn-outline-dark{% endif %} mt-2" title="{% if is_in_wishlist %}Remove from Wishlist{% else %}Add to Wishlist{% endif %}">
+                            <i class="bi {% if is_in_wishlist %}bi-heart-fill{% else %}bi-heart{% endif %}"></i> {% if is_in_wishlist %}In Wishlist{% else %}Add to Wishlist{% endif %}">
+                        </button>
+                    </form>
+                {% endif %}
+            {% else %}
+                <!-- Out of Stock / Notify Me Form -->
+                <div class="card border p-3">
+                    <h5>Out of Stock</h5>
+                    <p class="text-muted small">Enter your email to be notified when this product is available again.</p>
+                    {% if notify_error %}<div class="alert alert-danger py-2 small">{{ notify_error }}</div>{% endif %}
+                    {% if notify_success %}<div class="alert alert-success py-2 small">{{ notify_success }}</div>{% endif %}
+                    <form action="/product/{{ product.id }}" method="POST">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <input type="email" name="email" class="form-control mb-2" placeholder="your@email.com" required>
+                        <button type="submit" name="notify_me" class="btn btn-outline-dark w-100">Notify Me</button>
+                    </form>
+                </div>
+            {% endif %}
+
+             <div class="mt-5">
+                <h5>More Information</h5>
+                <p>Please contact us for more information about this product.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reviews Section -->
+    <div class="row mt-5 pt-5">
+        <div class="col-12">
+            <h2 class="mb-4 playfair-display-font">Customer Reviews</h2>
+            
+            <!-- Review Submission Form -->
+            {% if user_can_review %}
+                <div class="card border p-4 mb-5">
+                    <h4 class="mb-3">Write a Review</h4>
+                    {% if review_error %}<div class="alert alert-danger">{{ review_error }}</div>{% endif %}
+                    <form action="/product/{{ product.id }}" method="POST" id="review-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <div class="mb-3">
+                            <label class="form-label">Your Rating</label>
+                            <div class="star-rating">
+                                {% for i in 5..1 %}
+                                <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" required/><label for="star{{ i }}"></label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="review_text" class="form-label">Your Review</label>
+                            <textarea class="form-control" name="review_text" id="review_text" rows="4"></textarea>
+                        </div>
+                        <button type="submit" name="submit_review" class="btn btn-outline-dark">Submit Review</button>
+                    </form>
+                </div>
+            {% elseif loggedin and reviewed_count > 0 %}
+                <p class="text-muted mb-5">You have already submitted a review for this product.</p>
+            {% elseif loggedin %}
+                <p class="text-muted mb-5">You must purchase this product before you can write a review.</p>
+            {% endif %}
+            
+            {% if review_success %}<div class="alert alert-success">{{ review_success }}</div>{% endif %}
+
+            <!-- Existing Reviews List -->
+            {% if reviews is not empty %}
+                {% for review in reviews %}
+                    <div class="card p-3 mb-3">
+                        <div class="d-flex justify-content-between text-dark">
+                            <h5 class="mb-1">{{ review.user_name }}</h5>
+                            <small class="text-muted">{{ review.created_at|date('d M Y') }}</small>
+                        </div>
+                        <div class="d-flex align-items-center mb-2 text-dark">
+                            {% for i in 1..5 %}
+                                <i class="bi {% if i <= review.rating %}bi-star-fill text-dark{% else %}bi-star{% endif %} me-1"></i>
+                            {% endfor %}
+                        </div>
+                        <p class="mb-0">{{ review.review_text|nl2br }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-muted">This product has no reviews yet. Be the first to write one!</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    {% if related_products is not empty %}
+    <div class="row mt-5 pt-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4 playfair-display-font">You Might Also Like</h2>
+        </div>
+        {% for related_product in related_products %}
+        <div class="col-md-4 col-lg-3">
+            <div class="card h-100 product-card">
+                <img src="{{ related_product.image }}" class="card-img-top" alt="{{ related_product.name }}" loading="lazy">
+                <div class="card-body text-center">
+                    <h5 class="card-title" style="min-height: 48px;">{{ related_product.name }}</h5>
+                    <div class="card-text mb-3">
+                        {% if related_product.sale_price is not empty and related_product.sale_price > 0 %}
+                            <span class="text-muted text-decoration-line-through me-2">R {{ "%.2f"|format(related_product.price) }}</span>
+                            <span>R {{ "%.2f"|format(related_product.sale_price) }}</span>
+                        {% else %}
+                            <span>R {{ "%.2f"|format(related_product.price) }}</span>
+                        {% endif %}
+                    </div>
+                    <a href="/product/{{ related_product.id }}" class="btn btn-sm btn-primary-dark">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

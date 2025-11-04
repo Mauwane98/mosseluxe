@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5 bg-white-section rounded shadow-sm">
+    <header class="d-flex justify-content-between align-items-center mb-4">
+        <h1>My Wishlist</h1>
+        <a href="/my-account?view=wishlist" class="btn btn-outline-dark-alt">&leftarrow; Back to My Account</a>
+    </header>
+    
+    {% if get.action is defined and get.action == 'removed' %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Item removed from your wishlist.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+
+    {% if wishlist_items is empty %}
+        <div class="text-center py-5">
+            <p class="text-muted">Your wishlist is empty.</p>
+            <a href="/shop" class="btn btn-lg btn-outline-dark-alt mt-3">Discover Products</a>
+        </div>
+    {% else %}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            {% for product in wishlist_items %}
+                <div class="col">
+                    <div class="card h-100 product-card">
+                        <a href="/product/{{ product.id }}">
+                            <img src="{{ product.image }}" class="card-img-top" alt="{{ product.name }}">
+                        </a>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <div class="card-text gold-text mb-3">
+                                {% if product.sale_price is not empty and product.sale_price > 0 %}
+                                    <span class="text-muted text-decoration-line-through me-2">R {{ "%.2f"|format(product.price) }}</span>
+                                    <span>R {{ "%.2f"|format(product.sale_price) }}</span>
+                                {% else %}
+                                    <span>R {{ "%.2f"|format(product.price) }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="d-flex justify-content-center gap-2">
+                                <a href="/product/{{ product.id }}" class="btn btn-sm btn-primary-dark">View Details</a>
+                                <form action="/wishlist/toggle" method="POST" class="d-inline">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                                    <input type="hidden" name="action" value="remove">
+                                    <input type="hidden" name="redirect_to" value="wishlist">
+                                    <button type="submit" class="btn btn-sm btn-outline-dark" title="Remove from Wishlist"><i class="bi bi-heartbreak-fill"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

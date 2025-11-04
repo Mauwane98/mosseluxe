@@ -1,0 +1,134 @@
+/*
+==============================================
+   Mossé Luxe - Admin Panel Styles
+==============================================
+*/
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa; /* Light grey background */
+    color: #212529; /* Dark text */
+}
+
+.gold-text {
+    color: #000000; /* Change gold text to black for consistency */
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+    padding: 20px;
+    background-color: #ffffff; /* White sidebar */
+    border-right: 1px solid #dee2e6; /* Light border */
+    transition: transform 0.3s ease-in-out;
+    z-index: 1030;
+}
+
+.sidebar-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar-header h2 {
+    font-family: 'Playfair Display', serif;
+}
+
+.nav-link {
+    color: #495057; /* Darker grey for links */
+    font-size: 1.05rem;
+    padding: 10px 15px;
+    margin: 5px 0;
+    border-radius: 0.25rem;
+}
+
+.nav-link:hover, .nav-link.active {
+    background-color: #e9ecef; /* Light grey for active/hover */
+    color: #000;
+}
+
+.nav-link i {
+    margin-right: 10px;
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 40px;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.sidebar-toggler {
+    display: none; /* Hidden by default */
+    font-size: 1.5rem;
+    color: #212529;
+    background: none;
+    border: none;
+}
+
+/* Responsive Styles for Admin */
+@media (max-width: 991.98px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .sidebar-toggler {
+        display: block; /* Show toggler on smaller screens */
+    }
+}
+
+/* General Admin Component Styles */
+.card { background-color: #ffffff; border: 1px solid #dee2e6; }
+.form-control, .form-select { background-color: #ffffff; border-color: #ced4da; color: #212529; }
+.form-control:focus, .form-select:focus { background-color: #ffffff; border-color: #86b7fe; color: #212529; box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25); }
+.btn-gold { background-color: #000; color: #fff; border: 1px solid #000; }
+.btn-gold:hover { background-color: #333; border-color: #333; }
+.table { --bs-table-bg: #ffffff; --bs-table-color: #212529; --bs-table-border-color: #dee2e6; --bs-table-hover-bg: #f8f9fa; }
+.modal-content { background-color: #ffffff; border-color: #dee2e6; }
+.btn-close-white { filter: none; }
+
+.stat-card {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    padding: 20px;
+    border-radius: 0.25rem;
+}
+
+.widget-card {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+}
+
+.login-card {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+}
+
+.btn-outline-gold {
+    color: #000;
+    border-color: #000;
+}
+
+.btn-outline-gold:hover {
+    background-color: #000;
+    color: #fff;
+}

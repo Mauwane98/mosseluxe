@@ -1,0 +1,36 @@
+[31-Oct-2025 22:20:28 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:20:28 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
+[31-Oct-2025 22:21:32 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:21:32 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
+[31-Oct-2025 22:21:33 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:21:33 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
+[31-Oct-2025 22:22:30 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:22:30 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
+[31-Oct-2025 22:22:31 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:22:31 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
+[31-Oct-2025 22:24:22 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:24:22 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
+[31-Oct-2025 22:24:23 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:24:23 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
+[31-Oct-2025 22:24:24 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:24:24 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
+[31-Oct-2025 22:24:24 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:24:24 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
+[31-Oct-2025 22:24:25 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:24:25 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
+[31-Oct-2025 22:24:25 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:24:25 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
+[31-Oct-2025 22:24:25 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:24:25 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
+[31-Oct-2025 22:25:07 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:25:07 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
+[31-Oct-2025 22:26:11 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:26:11 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
+[31-Oct-2025 22:28:08 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:28:08 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: YES)
+[31-Oct-2025 22:28:09 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:28:09 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: YES)
+[31-Oct-2025 22:28:10 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:28:10 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: YES)
+[31-Oct-2025 22:29:12 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[31-Oct-2025 22:29:12 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: YES)

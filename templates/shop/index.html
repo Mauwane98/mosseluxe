@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5 py-5">
+    <div class="row">
+        <!-- Sidebar for Filters -->
+        <div class="col-lg-3">
+            <h4 class="mb-4">CATEGORIES</h4>
+            <div class="list-group list-group-flush">
+                <a href="/shop?sort={{ sort_by }}" class="list-group-item list-group-item-action bg-transparent ps-0 {% if category_filter is empty %}fw-bold{% endif %}">All Products</a>
+                {% for category in categories %}
+                    <a href="/shop?category={{ url_encode(category.name) }}" class="list-group-item list-group-item-action bg-transparent ps-0 {% if category_filter == category.name %}fw-bold{% endif %}">
+                        {{ category.name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1>SHOP</h1>
+                <form action="/shop" method="GET" id="sort-form">
+                    <div class="d-flex align-items-center">
+                        <label for="sort" class="form-label me-2 mb-0 text-muted">Sort by:</label>
+                        <input type="hidden" name="category" value="{{ category_filter }}">
+                        <select name="sort" id="sort" class="form-select form-select-sm" onchange="this.form.submit()">
+                            <option value="default" {% if sort_by == 'default' %}selected{% endif %}>Default</option>
+                            <option value="price_asc" {% if sort_by == 'price_asc' %}selected{% endif %}>Price: Low to High</option>
+                            <option value="price_desc" {% if sort_by == 'price_desc' %}selected{% endif %}>Price: High to Low</option>
+                            <option value="name_asc" {% if sort_by == 'name_asc' %}selected{% endif %}>Name: A-Z</option>
+                            <option value="name_desc" {% if sort_by == 'name_desc' %}selected{% endif %}>Name: Z-A</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                
+                {% if products is not empty %}
+                    {% for product in products %}
+                        <div class="col">
+                            <div class="card h-100 product-card">
+                                <!-- Use product image from database -->
+                                {% if product.sale_price is not empty and product.sale_price > 0 %}
+                                    <span class="badge bg-danger position-absolute top-0 end-0 m-2">SALE</span>
+                                {% endif %}
+                                <img src="{{ product.image }}" class="card-img-top" alt="{{ product.name }}" loading="lazy">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">{{ product.name }}</h5>
+                                    <div class="card-text mb-3">
+                                        {% if product.sale_price is not empty and product.sale_price > 0 %}
+                                            <span class="text-muted text-decoration-line-through me-2">R {{ "%.2f"|format(product.price) }}</span>
+                                            <span>R {{ "%.2f"|format(product.sale_price) }}</span>
+                                        {% else %}
+                                            <span>R {{ "%.2f"|format(product.price) }}</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="d-flex justify-content-center align-items-center gap-2">
+                                        <a href="/product/{{ product.id }}" class="btn btn-sm btn-primary-dark">View Details</a>
+                                        <form action="/cart/add" method="POST" class="d-inline quick-add-form">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                                            <input type="hidden" name="quantity" value="1">
+                                            <input type="hidden" name="action" value="add">
+                                            <button type="submit" class="btn btn-sm btn-outline-dark" title="Add to Cart"><i class="bi bi-bag-plus"></i></button>
+                                            <button type="button" class="btn btn-sm btn-outline-dark quick-view-btn" data-product-id="{{ product.id }}" title="Quick View"><i class="bi bi-eye"></i></button>
+                                        </form>
+                                    {% if loggedin %}
+                                        <form action="/wishlist/toggle" method="POST" class="d-inline ms-2">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                                            <input type="hidden" name="action" value="toggle">
+                                            <button type="submit" class="btn btn-sm btn-outline-dark" title="Add to Wishlist"><i class="bi bi-heart"></i></button>
+                                        </form>
+                                    {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12 text-center">
+                        <p class="text-muted">No products found in this category.</p>
+                    </div>
+                {% endif %}
+                
+            </div>
+        </div>
+
+        <!-- Pagination Controls -->
+        {% if total_pages > 1 %}
+        <nav aria-label="Page navigation" class="mt-5">
+            <ul class="pagination justify-content-center">
+                <li class="page-item {% if current_page <= 1 %}disabled{% endif %}">
+                    <a class="page-link" href="/shop?page={{ current_page - 1 }}&category={{ url_encode(category_filter) }}&sort={{ url_encode(sort_by) }}">&laquo;</a>
+                </li>
+                {% for i in 1..total_pages %}
+                    <li class="page-item {% if current_page == i %}active{% endif %}">
+                        <a class="page-link" href="/shop?page={{ i }}&category={{ url_encode(category_filter) }}&sort={{ url_encode(sort_by) }}">{{ i }}</a>
+                    </li>
+                {% endfor %}
+                <li class="page-item {% if current_page >= total_pages %}disabled{% endif %}">
+                    <a class="page-link" href="/shop?page={{ current_page + 1 }}&category={{ url_encode(category_filter) }}&sort={{ url_encode(sort_by) }}">&raquo;</a>
+                </li>
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Quick View Modal -->
+<div class="modal fade" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content bg-dark text-white border-secondary">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title gold-text" id="quickViewModalLabel"></h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <img src="" id="quickViewImage" class="img-fluid rounded" alt="Product Image" loading="lazy">
+          </div>
+          <div class="col-md-6 d-flex flex-column">
+            <div id="quickViewPrice" class="my-3"></div>
+            <p id="quickViewDescription" class="lead"></p>
+            <div class="mt-auto">
+                <form action="/cart/add" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <input type="hidden" name="product_id" id="quickViewProductId">
+                    <input type="hidden" name="action" value="add">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <label for="quickViewQuantity" class="form-label">Quantity</label>
+                            <input type="number" id="quickViewQuantity" name="quantity" class="form-control" value="1" min="1" style="width: 70px;" required>
+                        </div>
+                        <div class="align-self-end">
+                            <button type="submit" class="btn btn-lg btn-primary-dark">
+                                <i class="bi bi-bag-plus"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
