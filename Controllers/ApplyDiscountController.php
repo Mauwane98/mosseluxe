@@ -15,19 +15,15 @@ class ApplyDiscountController
 
     public function apply()
     {
-        header('Content-Type: application/json');
-
         // Validate CSRF token
         if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            echo json_encode(['success' => false, 'message' => 'Invalid CSRF token!']);
-            return;
+            return json_encode(['success' => false, 'message' => 'Invalid CSRF token!']);
         }
 
         $discount_code = trim($_POST['discount_code']);
 
         if (empty($discount_code)) {
-            echo json_encode(['success' => false, 'message' => 'Please enter a discount code.']);
-            return;
+            return json_encode(['success' => false, 'message' => 'Please enter a discount code.']);
         }
 
         // Check discount code in database
@@ -41,8 +37,7 @@ class ApplyDiscountController
 
             if ($discount) {
                 if ($discount['usage_limit'] > 0 && $discount['usage_count'] >= $discount['usage_limit']) {
-                    echo json_encode(['success' => false, 'message' => 'Discount code has reached its usage limit.']);
-                    return;
+                    return json_encode(['success' => false, 'message' => 'Discount code has reached its usage limit.']);
                 }
 
                 // Calculate subtotal from cart
@@ -70,9 +65,17 @@ class ApplyDiscountController
                     'value' => $discount['value']
                 ];
 
+                // Increment usage count
+                $update_sql = "UPDATE discount_codes SET usage_count = usage_count + 1 WHERE code = ?";
+                if ($update_stmt = $this->conn->prepare($update_sql)) {
+                    $update_stmt->bind_param("s", $discount_code);
+                    $update_stmt->execute();
+                    $update_stmt->close();
+                }
+
                 $new_total = $subtotal - $discount_amount + SHIPPING_COST;
 
-                echo json_encode([
+                return json_encode([
                     'success' => true,
                     'message' => 'Discount applied successfully!',
                     'discount_amount' => $discount_amount,
@@ -82,11 +85,11 @@ class ApplyDiscountController
                 ]);
 
             } else {
-                echo json_encode(['success' => false, 'message' => 'Invalid or expired discount code.']);
+                return json_encode(['success' => false, 'message' => 'Invalid or expired discount code.']);
             }
         } else {
             error_log("Error preparing discount code query: " . $this->conn->error);
-            echo json_encode(['success' => false, 'message' => 'An error occurred.']);
+            return json_encode(['success' => false, 'message' => 'An error occurred.']);
         }
     }
 }
