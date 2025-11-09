@@ -1,0 +1,144 @@
+<?php
+// Include the admin bootstrap for automatic setup
+require_once 'bootstrap.php';
+
+// --- Data Fetching ---
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+$role_filter = isset($_GET['role']) ? trim($_GET['role']) : '';
+$limit = 10;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+$sql = "SELECT id, name, email, role, created_at FROM users";
+$count_sql = "SELECT COUNT(id) as total FROM users";
+
+$where_clauses = [];
+$params = [];
+$types = '';
+
+if (!empty($search)) {
+    $where_clauses[] = "(name LIKE ? OR email LIKE ?)";
+    $search_param = "%" . $search . "%";
+    $params = array_merge($params, [$search_param, $search_param]);
+    $types .= 'ss';
+}
+if (!empty($role_filter)) {
+    $where_clauses[] = "role = ?";
+    $params[] = $role_filter;
+    $types .= 's';
+}
+
+if (!empty($where_clauses)) {
+    $sql .= " WHERE " . implode(" AND ", $where_clauses);
+    $count_sql .= " WHERE " . implode(" AND ", $where_clauses);
+}
+
+// Get total user count for pagination
+$total_users = 0;
+if ($stmt_count = $conn->prepare($count_sql)) {
+    if (!empty($params)) {
+        $stmt_count->bind_param($types, ...$params);
+    }
+    $stmt_count->execute();
+    $total_users = $stmt_count->get_result()->fetch_assoc()['total'];
+    $stmt_count->close();
+}
+$total_pages = ceil($total_users / $limit);
+
+// Fetch users for the current page
+$sql .= " ORDER BY created_at DESC LIMIT ? OFFSET ?";
+$types .= 'ii';
+$params[] = $limit;
+$params[] = $offset;
+
+$users = [];
+if ($stmt = $conn->prepare($sql)) {
+    if (!empty($params)) {
+        $stmt->bind_param($types, ...$params);
+    }
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $users[] = $row;
+    }
+    $stmt->close();
+}
+$conn->close();
+
+$pageTitle = "Manage Users";
+include 'header.php';
+?>
+
+<div class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">All Users</h2>
+
+    <!-- Filters -->
+    <form action="users.php" method="get" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="md:col-span-1">
+            <input type="text" name="search" placeholder="Search by name or email..." value="<?php echo htmlspecialchars($search); ?>" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+        </div>
+        <div class="md:col-span-1">
+            <select name="role" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                <option value="">All Roles</option>
+                <option value="admin" <?php echo ($role_filter == 'admin') ? 'selected' : ''; ?>>Admin</option>
+                <option value="user" <?php echo ($role_filter == 'user') ? 'selected' : ''; ?>>User</option>
+            </select>
+        </div>
+        <div>
+            <button type="submit" class="w-full bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">Filter</button>
+        </div>
+    </form>
+
+    <!-- Users Table -->
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Registered</th>
+                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <?php if (!empty($users)): ?>
+                    <?php foreach ($users as $user): ?>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">#<?php echo htmlspecialchars($user['id']); ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><?php echo htmlspecialchars($user['name']); ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><?php echo htmlspecialchars($user['email']); ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><?php echo htmlspecialchars(ucfirst($user['role'])); ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><?php echo date('d M Y', strtotime($user['created_at'])); ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <a href="edit_user.php?id=<?php echo $user['id']; ?>" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
+                                <a href="delete_user.php?id=<?php echo $user['id']; ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="6" class="text-center text-gray-500 py-6">No users found.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <?php if ($total_pages > 1): ?>
+        <div class="mt-6 flex justify-center">
+            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                    <a href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search); ?>&role=<?php echo urlencode($role_filter); ?>"
+                       class="<?php echo $page == $i ? 'z-10 bg-black text-white' : 'bg-white text-gray-500 hover:bg-gray-50'; ?> relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium">
+                        <?php echo $i; ?>
+                    </a>
+                <?php endfor; ?>
+            </nav>
+        </div>
+    <?php endif; ?>
+</div>
+
+<?php include 'footer.php'; ?>

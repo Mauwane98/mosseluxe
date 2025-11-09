@@ -1,0 +1,68 @@
+# Mossé Luxe E-commerce Website
+
+This project is a rebuilt e-commerce website for the Mossé Luxe brand, designed with a modern luxury streetwear aesthetic.
+
+## Setup Instructions
+
+1.  **Database Setup:**
+    *   Ensure you have a MySQL database server running.
+    *   Create a new database named `mosse_luxe_db`.
+    *   Import the `database.sql` file into your `mosse_luxe_db` database. This file contains the necessary table structures and sample product data.
+
+2.  **Database Configuration:**
+    *   Open the `config.php` file in the project root.
+    *   Update the `DB_HOST`, `DB_NAME`, `DB_USER`, and `DB_PASS` constants with your database credentials.
+
+3.  **Web Server Configuration (Apache/Nginx):**
+    *   Configure your web server (e.g., Apache or Nginx) to point its document root to the `public` directory of this project.
+    *   **For Apache (httpd.conf or a virtual host file):**
+        ```apache
+        <VirtualHost *:80>
+            DocumentRoot "/path/to/your/mosse-luxe/public"
+            <Directory "/path/to/your/mosse-luxe/public">
+                AllowOverride All
+                Require all granted
+            </Directory>
+        </VirtualHost>
+        ```
+        (Replace `/path/to/your/mosse-luxe` with the actual path to your project.)
+
+    *   **For Nginx (nginx.conf or a server block file):**
+        ```nginx
+        server {
+            listen 80;
+            server_name your_domain.com;
+            root /path/to/your/mosse-luxe/public;
+
+            index index.php index.html index.htm;
+
+            location / {
+                try_files $uri $uri/ /index.php?$query_string;
+            }
+
+            location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass unix:/var/run/php/php7.4-fpm.sock; # Adjust PHP version as needed
+            }
+        }
+        ```
+        (Replace `/path/to/your/mosse-luxe` with the actual path to your project and `your_domain.com` with your domain or IP address.)
+
+4.  **Accessing the Application:**
+    *   After configuring your web server, open your web browser and navigate to the URL configured for your project (e.g., `http://localhost/` or `http://your_domain.com/`).
+
+## Implemented Features:
+
+*   Product Listing Page
+*   Single Product Details Page
+*   User Registration
+*   User Login
+*   Shopping Cart (Add, Update, Remove items)
+*   Checkout Process
+
+## Next Steps:
+
+*   Implement payment gateway integration.
+*   Add user profile management.
+*   Implement order history for users.
+*   Develop an admin panel for product, order, and user management.

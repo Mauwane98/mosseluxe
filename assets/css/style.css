@@ -1,0 +1,487 @@
+/*
+==============================================
+   Mossé Luxe - FlyKite Inspired Theme
+==============================================
+*/
+
+/* 1. Core & Typography
+---------------------------------------------- */
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --brand-dark: #000000;
+    --brand-light: #FFFFFF;
+    --brand-border: #E5E5E5;
+    --brand-muted: #888888;
+    --brand-gold: #B8860B; /* Added a gold color for accents */
+}
+
+body {
+    background-color: var(--brand-light);
+    color: var(--brand-dark);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    padding-top: 178px; /* Adjusted for announcement bar (30px) + larger navbar */
+}
+
+/* ... */
+
+.announcement-bar {
+    z-index: 1050; /* Higher z-index */
+}
+
+.navbar {
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid transparent; /* Start with transparent border */
+    top: 30px; /* Position below the announcement bar */
+    z-index: 1040; /* Higher z-index, below announcement bar */
+    background-color: var(--brand-light); /* Explicitly set background color */
+}
+
+/* ... */
+
+.navbar-logo {
+    height: 100px; /* Increased logo height */
+    transition: height 0.3s ease;
+}
+
+.navbar-scroll.scrolled .navbar-logo {
+    height: 90px; /* Smaller logo when scrolled */
+}
+
+/* 3. Buttons
+---------------------------------------------- */
+.btn-primary-dark:hover {
+    background-color: var(--brand-light);
+    color: var(--brand-dark);
+    transform: translateY(-3px) scale(1.02); /* Subtle lift and scale on hover */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Add a subtle shadow */
+}
+
+.btn-primary-dark {
+    background-color: var(--brand-dark);
+    color: var(--brand-light);
+    border: 1px solid var(--brand-dark);
+    border-radius: 0;
+    padding: 0.75rem 1.5rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+}
+
+.gold-btn {
+    background-color: var(--brand-gold);
+    border-color: var(--brand-gold);
+    color: var(--brand-light);
+    border-radius: 0;
+    padding: 0.75rem 1.5rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+}
+
+.gold-btn:hover {
+    background-color: #A6780A; /* Darker gold on hover */
+    border-color: #A6780A;
+    color: var(--brand-light);
+}
+
+/* 4. Cards (Product, etc.)
+---------------------------------------------- */
+.product-card {
+    background-color: var(--brand-light);
+    border: 1px solid var(--brand-border);
+    border-radius: 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1); /* Subtle shadow on hover */
+    border-color: var(--brand-gold); /* Subtle gold border on hover */
+}
+
+.product-card .card-img-top {
+    height: 320px;
+    object-fit: cover;
+    border-radius: 0;
+}
+
+.product-card .card-title {
+    min-height: auto;
+    font-size: 1.1rem; /* Slightly larger title */
+    margin-top: 0.75rem;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase; /* Uppercase product titles */
+    font-family: 'Archivo Black', sans-serif; /* Use heading font */
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1.3; /* Improved line height for titles */
+}
+
+.product-card .card-body .card-text {
+    color: var(--brand-dark); /* Ensure price is dark */
+    font-weight: 700; /* Make price bolder */
+    font-size: 1.1rem; /* Slightly larger price */
+}
+
+.product-card .card-body .card-text .text-muted {
+    color: var(--brand-muted) !important; /* Ensure muted color for old price */
+    font-weight: 400; /* Regular weight for old price */
+    font-size: 0.9rem; /* Smaller size for old price */
+}
+
+/* 5. Forms
+---------------------------------------------- */
+.form-control, .form-select {
+    background-color: var(--brand-light);
+    border-color: var(--brand-border);
+    color: var(--brand-dark);
+    border-radius: 0;
+    padding: 0.75rem 1rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--brand-dark);
+    box-shadow: none;
+}
+
+/* 6. Footer
+---------------------------------------------- */
+footer.bg-dark {
+    background-color: var(--brand-light) !important;
+    color: var(--brand-dark) !important;
+    border-top: 1px solid var(--brand-border);
+}
+
+footer a.text-white, footer .text-white {
+    color: var(--brand-dark) !important;
+    text-decoration: none;
+}
+
+footer a.text-white:hover, footer .text-white:hover {
+    text-decoration: underline;
+}
+
+/* 7. Misc */
+.page-wrapper {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* Remove the white background section styling */
+.bg-white-section {
+    background-color: transparent;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* Hero Carousel Slide Styling */
+.carousel-slide {
+    height: 100vh;
+    min-height: 500px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    color: var(--brand-light);
+}
+
+.hero-section h1,
+.hero-section p {
+    color: var(--brand-light); /* Override default dark color for headings/paragraphs in hero */
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%);
+    background-size: 200% 200%;
+    animation: gradientAnimation 15s ease infinite;
+    z-index: 0; /* Ensure content is above overlay */
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1; /* Ensure content is above overlay */
+    max-width: 800px; /* Limit width for better readability */
+    padding: 0 15px; /* Add some padding */
+}
+
+/* Utility to center the content when there's only a button */
+.hero-content-centered {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Align to the bottom */
+    height: 100%;
+    padding-bottom: 10vh; /* Lowered again to move the button further down */
+}
+
+
+
+/* Responsive Typography */
+@media (max-width: 767.98px) {
+    h1, .display-1, .display-2, .display-3 {
+        font-size: 2rem; /* Slightly smaller for mobile */
+    }
+    .display-4 {
+        font-size: 2.25rem; /* Slightly smaller for mobile */
+    }
+    h2, .display-5 {
+        font-size: 1.5rem; /* Slightly smaller for mobile */
+    }
+    .lead {
+        font-size: 1rem; /* Adjust lead paragraph size for mobile */
+    }
+
+    /* Make hero section more compact on mobile */
+    .carousel-item.hero-slide {
+        height: 50vh;
+        min-height: 400px;
+    }
+    .hero-content h1 {
+        font-size: 2rem; /* Adjust heading size for mobile */
+    }
+    .hero-content p {
+        font-size: 1rem; /* Adjust paragraph size for mobile */
+    }
+
+    /* Adjust navbar for a cleaner mobile view */
+    .navbar-collapse {
+        padding: 1rem 0;
+    }
+
+    .navbar-brand {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .navbar-logo {
+        height: 40px; /* Smaller logo on mobile */
+    }
+
+    .navbar-nav .nav-link {
+        padding: 0.75rem 0;
+        font-size: 1rem;
+    }
+}
+
+/* Off-canvas Menu Styling */
+.offcanvas {
+    --bs-offcanvas-bg: var(--brand-light);
+    --bs-offcanvas-color: var(--brand-dark);
+}
+
+.offcanvas-body {
+    padding: 2rem;
+}
+
+.offcanvas-header {
+    background-color: var(--brand-light);
+    color: var(--brand-dark);
+    border-bottom: 1px solid var(--brand-border);
+    padding: 1rem 2rem;
+}
+
+.offcanvas-header .offcanvas-title {
+    font-family: 'Archivo Black', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.offcanvas .btn-close {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+}
+
+/* Style the main navigation links within the offcanvas */
+.offcanvas .navbar-nav .nav-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    padding: 0.75rem 0 !important;
+    color: var(--brand-dark) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.offcanvas .navbar-nav .nav-link.active {
+    color: var(--brand-gold) !important;
+    border-bottom: none;
+}
+
+/* Add padding to the bottom of the body to prevent content from being hidden by the bottom nav */
+body {
+    padding-bottom: 0;
+}
+
+.playfair-display-font {
+    font-family: 'Playfair Display', serif;
+}
+
+/* 8. Animations */
+/* Star Rating Input CSS */
+.star-rating { display: flex; flex-direction: row-reverse; font-size: 2rem; justify-content: flex-start; }
+.star-rating input { display: none; } /* Hide radio buttons */
+.star-rating label {
+    color: #ccc; /* Lighter grey for unselected stars */
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.star-rating label::before { content: '\F586'; font-family: 'bootstrap-icons'; } /* Bootstrap star icon */
+
+/* Gold color for checked star and stars to its right */
+.star-rating input:checked ~ label,
+/* Gold color for hovered star and stars to its right */
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: var(--brand-dark); /* Use dark theme color */
+}
+
+.product-quantity-input { width: 70px; }
+
+/* ---------------------------------------------- */
+.content-fade-in {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.gold-text {
+    color: var(--brand-gold);
+}
+
+/* Loading States & Micro-interactions */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #000;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.btn-loading {
+    position: relative;
+    color: transparent !important;
+}
+
+.btn-loading::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+/* Skeleton Loading */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 200%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.skeleton-image {
+    height: 200px;
+    background: #f0f0f0;
+    border-radius: 8px;
+}
+
+.skeleton-title {
+    height: 20px;
+    background: #f0f0f0;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.skeleton-price {
+    height: 16px;
+    background: #f0f0f0;
+    width: 60px;
+    border-radius: 4px;
+}
+
+/* Enhanced Button Interactions */
+.btn-enhanced {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn-enhanced::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-enhanced:hover::before {
+    left: 100%;
+}
+
+/* Success/Error Toast Notifications */
+.toast-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    padding: 16px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateX(400px);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.toast-notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.toast-notification.success {
+    background: #10b981;
+}
+
+.toast-notification.error {
+    background: #ef4444;
+}
+
+.toast-notification.info {
+    background: #3b82f6;
+}
