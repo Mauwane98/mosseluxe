@@ -3,7 +3,6 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 require_once '../includes/db_connect.php';
-require_once '../includes/notification_service.php';
 
 // Ensure admin is logged in
 if (!isset($_SESSION["admin_loggedin"]) || $_SESSION["admin_loggedin"] !== true) {
@@ -13,7 +12,6 @@ if (!isset($_SESSION["admin_loggedin"]) || $_SESSION["admin_loggedin"] !== true)
 
 // Check if user ID is provided
 if (!isset($_GET['id']) || empty(trim($_GET['id']))) {
-    set_notification("error", "Invalid request. User ID not provided.");
     header("location: users.php");
     exit;
 }
@@ -23,7 +21,6 @@ $current_admin_id = $_SESSION['admin_id']; // Assuming admin_id is stored in ses
 
 // Prevent admin from deleting themselves
 if ($user_id_to_delete == $current_admin_id) {
-    set_notification("error", "You cannot delete your own account.");
     header("location: users.php");
     exit;
 }
@@ -38,13 +35,13 @@ if ($stmt = $conn->prepare($sql)) {
     $param_id = $user_id_to_delete;
 
     if ($stmt->execute()) {
-        set_notification("success", "User has been deleted successfully.");
+        // User deleted successfully
     } else {
-        set_notification("error", "Oops! Something went wrong. Please try again later.");
+        // Error occurred
     }
     $stmt->close();
 } else {
-    set_notification("error", "Error preparing the delete statement.");
+    // Error preparing statement
 }
 
 $conn->close();

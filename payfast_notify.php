@@ -5,13 +5,6 @@ if (session_status() == PHP_SESSION_NONE) {
 
 require_once 'includes/db_connect.php';
 require_once 'includes/config.php';
-require_once 'phpmailer/PHPMailer.php';
-require_once 'phpmailer/SMTP.php';
-require_once 'phpmailer/Exception.php';
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
 
 // Custom logging function
 function log_itn_message($message) {
@@ -148,38 +141,7 @@ if ($order['status'] !== $new_order_status) {
         $stmt_items->close();
         log_itn_message("Stock reduced for Order ID " . $order_id);
 
-        // Send confirmation email
-        $mail = new PHPMailer(true);
-        try {
-            //Server settings
-            $mail->isSMTP();
-            $mail->Host       = SMTP_HOST;
-            $mail->SMTPAuth   = true;
-            $mail->Username   = SMTP_USERNAME;
-            $mail->Password   = SMTP_PASSWORD;
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-            $mail->Port       = SMTP_PORT;
 
-            //Recipients
-            $mail->setFrom(SMTP_FROM_EMAIL, SMTP_FROM_NAME);
-            $mail->addAddress($_POST['email_address'], $_POST['name_first'] . ' ' . $_POST['name_last']); // Buyer's email from ITN
-
-            // Content
-            $mail->isHTML(true);
-            $mail->Subject = 'Mossé Luxe Order Confirmation #' . $order_id;
-            $mail->Body    = 'Dear ' . $_POST['name_first'] . ',<br><br>'
-                           . 'Thank you for your order from Mossé Luxe! Your order #' . $order_id . ' has been confirmed and is being processed.<br><br>'
-                           . 'You can track your order status by logging into your account or visiting <a href="' . SITE_URL . 'track_order.php?order_id=' . $order_id . '">this link</a>.<br><br>'
-                           . 'Order Total: R ' . number_format($amount_paid, 2) . '<br><br>'
-                           . 'If you have any questions, please contact us.<br><br>'
-                           . 'Sincerely,<br>The Mossé Luxe Team';
-            $mail->AltBody = 'Thank you for your order from Mossé Luxe! Your order #' . $order_id . ' has been confirmed and is being processed. Order Total: R ' . number_format($amount_paid, 2);
-
-            $mail->send();
-            log_itn_message("Order confirmation email sent for Order ID " . $order_id);
-        } catch (Exception $e) {
-            log_itn_message("Message could not be sent for Order ID " . $order_id . ". Mailer Error: {$mail->ErrorInfo}");
-        }
     }
 }
 

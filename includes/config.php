@@ -32,16 +32,6 @@ define('PRODUCT_IMAGE_WIDTH', 800);
 define('PRODUCT_IMAGE_HEIGHT', 800);
 define('PRODUCT_IMAGE_DIR', 'assets/images/');
 
-// --- PHPMailer SMTP Configuration ---
-// These details are used for sending emails from the website (e.g., password resets).
-define('SMTP_HOST', getenv('SMTP_HOST') ?: 'mail.mosseluxe.co.za');
-define('SMTP_USERNAME', getenv('SMTP_USERNAME') ?: 'info@mosseluxe.co.za');
-define('SMTP_PASSWORD', getenv('SMTP_PASSWORD') ?: '');
-define('SMTP_PORT', getenv('SMTP_PORT') ?: 465);
-define('SMTP_ENCRYPTION', getenv('SMTP_ENCRYPTION') ?: 'ssl');
-define('SMTP_FROM_EMAIL', getenv('SMTP_FROM_EMAIL') ?: 'info@mosseluxe.co.za');
-define('SMTP_FROM_NAME', getenv('SMTP_FROM_NAME') ?: 'Mossé Luxe');
-
 // --- Contact & Business Information ---
 define('CONTACT_PHONE', '067 616 0928');
 define('CONTACT_ADDRESS', 'Pretoria, South Africa');

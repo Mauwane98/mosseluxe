@@ -30,10 +30,3 @@ define('PAYFAST_URL', 'https://sandbox.payfast.co.za/eng/process');
 // Contact information
 define('CONTACT_ADDRESS', '123 Fashion Street, Cape Town, South Africa');
 define('CONTACT_PHONE', '+27 12 345 6789');
-
-// Email configuration (PHPMailer)
-define('SMTP_HOST', 'smtp.gmail.com');
-define('SMTP_PORT', 587);
-define('SMTP_USERNAME', 'your_email@gmail.com');
-define('SMTP_PASSWORD', 'your_app_password');
-define('SMTP_ENCRYPTION', 'tls');

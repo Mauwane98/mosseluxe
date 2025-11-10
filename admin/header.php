@@ -428,13 +428,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <!-- Main content -->
         <div class="flex-1 flex flex-col overflow-y-auto">
             <!-- Top bar -->
-            <header class="bg-white shadow-sm p-4 flex justify-between items-center">
+            <header class="bg-white shadow-sm p-4 flex justify-between items-center flex-shrink-0">
                 <h1 class="text-xl font-bold"><?php echo isset($pageTitle) ? $pageTitle : 'Dashboard'; ?></h1>
                 <div>
                     <span class="text-sm">Welcome, <?php echo htmlspecialchars($_SESSION['admin_name']); ?>!</span>
                 </div>
             </header>
-            <main class="flex-1 p-6 md:p-8">
+            <main class="flex-1 p-6 md:p-8 overflow-y-auto">
 
     <script>
         // Enhanced Admin Panel JavaScript
