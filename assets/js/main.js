@@ -1,35 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const navbar = document.querySelector('.navbar-scroll');
-    const announcementBar = document.querySelector('.announcement-bar');
-    const body = document.body;
-
-    let announcementBarHeight = 0; // Declare outside to make it accessible
-    let navbarHeight = 0; // Declare outside to make it accessible
-
-    const setBodyPadding = () => {
-        announcementBarHeight = announcementBar ? announcementBar.offsetHeight : 0;
-        navbarHeight = navbar ? navbar.offsetHeight : 0;
-        console.log('Announcement Bar Height:', announcementBarHeight);
-        console.log('Navbar Height:', navbarHeight);
-        body.style.paddingTop = `${announcementBarHeight + navbarHeight}px`;
-    };
-
-    // Set padding on load
-    setBodyPadding();
-
-    // Recalculate padding on resize
-    window.addEventListener('resize', setBodyPadding);
-
-    // Navbar Scroll Effect
-    if (navbar) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > announcementBarHeight) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
+    // Function to update cart count display
+    function updateCartCountDisplay() {
+        fetch('ajax_cart_handler.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'action=get_count'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const cartCountElement = document.getElementById('cart-count');
+                if (cartCountElement) {
+                    cartCountElement.textContent = data.cart_count;
+                }
             }
+        })
+        .catch(error => {
+            console.error('Error fetching cart count:', error);
         });
     }
+
+    // Call on page load
+    updateCartCountDisplay();
 
     // Hero Carousel Functionality
     const slidesContainer = document.getElementById('slides-container');
@@ -43,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Create dots
         slides.forEach((_, index) => {
             const dot = document.createElement('div');
-            dot.classList.add('carousel-dot', 'w-3', 'h-3', 'bg-white', 'rounded-full', 'cursor-pointer');
+            dot.classList.add('carousel-dot'); // Use existing CSS for styling
             if (index === 0) dot.classList.add('active');
             dot.addEventListener('click', () => goToSlide(index));
             carouselDots.appendChild(dot);
@@ -56,12 +50,8 @@ document.addEventListener('DOMContentLoaded', function() {
             allDots.forEach((dot, index) => {
                 if (index === currentIndex) {
                     dot.classList.add('active');
-                    dot.classList.remove('bg-white');
-                    dot.classList.add('bg-gray-800'); // Active dot color
                 } else {
                     dot.classList.remove('active');
-                    dot.classList.remove('bg-gray-800');
-                    dot.classList.add('bg-white'); // Inactive dot color
                 }
             });
         };
@@ -90,27 +80,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCarousel(); // Initial update
     }
 
-    /**
-     * Page content fade-in animation
-     * Applies a fade-in effect to the main content area on page load.
-     */
-    const pageContent = document.querySelector('.page-content');
-    if (pageContent) {
-        pageContent.classList.add('content-fade-in');
-        setTimeout(() => { pageContent.style.opacity = 1; pageContent.style.transform = 'translateY(0)'; }, 50); // Small delay
-    }
-
-    /**
-     * Sidebar Toggler for Admin pages
-     * Toggles the 'active' class on the sidebar for mobile view.
-     */
-    const sidebar = document.querySelector('.sidebar');
-    const toggler = document.getElementById('sidebar-toggler');
-    if (toggler) {
-        toggler.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-        });
-    }
 
     /**
      * AJAX "Add to Cart" functionality
@@ -126,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const button = form.querySelector('button[type="submit"]');
                 const originalButtonText = button.innerHTML;
-                button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Adding...';
+                button.innerHTML = 'Adding...';
                 button.disabled = true;
 
                 const formData = new FormData(form);
@@ -140,13 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (data.success) {
                         alert(data.message);
                         
-                        // Update cart counts on all relevant elements without reloading
-                        const cartCountElements = document.querySelectorAll('#cart-item-count-desktop, #cart-item-count-mobile, .bottom-nav .badge');
-                        cartCountElements.forEach(el => {
-                            if(el) {
-                                el.textContent = data.cart_item_count;
-                            }
-                        });
+                        updateCartCountDisplay(); // Use the function from header.php
                     } else {
                         alert(data.message || 'An error occurred.');
                     }
@@ -199,4 +162,64 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
+            const pageWrapper = document.getElementById('page-wrapper');
+            
+            // Mobile Menu
+            const openMenuBtn = document.getElementById('open-menu-btn');
+            const closeMenuBtn = document.getElementById('close-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            openMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('-translate-x-full');
+            });
+
+            closeMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.add('-translate-x-full');
+            });
+
+            // Cart Sidebar
+            const openCartBtn = document.getElementById('open-cart-btn');
+            const closeCartBtn = document.getElementById('close-cart-btn');
+            const cartSidebar = document.getElementById('cart-sidebar');
+
+            openCartBtn.addEventListener('click', () => {
+                cartSidebar.classList.remove('translate-x-full');
+            });
+
+            closeCartBtn.addEventListener('click', () => {
+                cartSidebar.classList.add('translate-x-full');
+            });
+
+            // Search Overlay
+            const openSearchBtn = document.getElementById('open-search-btn');
+            const closeSearchBtn = document.getElementById('close-search-btn');
+            const searchOverlay = document.getElementById('search-overlay');
+
+            openSearchBtn.addEventListener('click', () => {
+                searchOverlay.classList.remove('hidden');
+                searchOverlay.classList.add('flex');
+            });
+
+            closeSearchBtn.addEventListener('click', () => {
+                searchOverlay.classList.add('hidden');
+                searchOverlay.classList.remove('flex');
+            });
+
+            // Sticky Header on Scroll
+            const announcementBar = document.getElementById('announcement-bar');
+            const mainHeader = document.getElementById('main-header');
+
+            const handleScroll = () => {
+                const announcementHeight = announcementBar ? announcementBar.offsetHeight : 0;
+                if (window.scrollY > announcementHeight) {
+                    mainHeader.classList.add('scrolled');
+                } else {
+                    mainHeader.classList.remove('scrolled');
+                }
+            };
+
+            // Call on load
+            handleScroll(); // Call once on load to set initial state
+            window.addEventListener('scroll', handleScroll);
 });

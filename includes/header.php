@@ -15,158 +15,9 @@
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <style>
-        /* Applying Inter as the default font */
-        /* Custom scrollbar for a more modern feel */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #555;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #888;
-        }
-
-        /* Helper class for aspect ratio (Tailwind aspect-ratio plugin isn't default) */
-        @media (min-width: 768px) {
-            .aspect-md-h-1 {
-                position: relative;
-                padding-bottom: 100%; /* 1:1 Aspect Ratio */
-            }
-            .aspect-md-h-1 > * {
-                position: absolute;
-                height: 100%;
-                width: 100%;
-                top: 0;
-                left: 0;
-            }
-        }
-
-        /* Carousel Specific Styles */
-        .carousel-slide {
-            flex-shrink: 0;
-            width: 100%;
-            height: 100%; /* Ensure slide takes full height of parent */
-            position: relative;
-            text-align: center;
-            color: white;
-        }
-        .carousel-slide img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .carousel-slide-content {
-            position: absolute; /* Use absolute positioning */
-            bottom: 0; /* Position at the bottom */
-            left: 50%;
-            transform: translateX(-50%); /* Center horizontally */
-            z-index: 20;
-            padding: 1.5rem;
-            bottom: 1.5rem; /* Position at the bottom with padding */
-            animation: fadeIn 1s ease-out;
-        }
-        
-        /* Fade-in animation for slide content */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .carousel-slide-content.animate-in {
-            animation: fadeIn 1s ease-out;
-        }
-
-        /* Custom carousel controls */
-        .carousel-control {
-            position: absolute;
-            z-index: 30;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.8);
-            color: black;
-            border-radius: 9999px;
-            width: 2.5rem; /* 40px */
-            height: 2.5rem; /* 40px */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(4px);
-        }
-        .carousel-control:hover {
-            background: rgba(255, 255, 255, 1);
-            transform: translateY(-50%) scale(1.1);
-        }
-        .carousel-control.prev {
-            left: 1.5rem; /* p-6 */
-        }
-        .carousel-control.next {
-            right: 1.5rem; /* p-6 */
-        }
-
-        /* Custom carousel dots */
-        .carousel-dots {
-            position: absolute;
-            z-index: 30;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 0.75rem; /* space-x-3 */
-        }
-        .carousel-dot {
-            width: 0.75rem; /* 12px */
-            height: 0.75rem; /* 12px */
-            border-radius: 9999px;
-            background: rgba(255, 255, 255, 0.5);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .carousel-dot.active {
-            background: rgba(255, 255, 255, 1);
-            width: 2rem; /* 32px */
-        }
-
-    </style>
     <script>
         // Function to update cart count display
-        function updateCartCountDisplay() {
-            fetch('ajax_cart_handler.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'action=get_count'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const cartCountElement = document.getElementById('cart-count');
-                    if (cartCountElement) {
-                        cartCountElement.textContent = data.cart_count;
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching cart count:', error);
-            });
-        }
-
-        // Call on page load
-        document.addEventListener('DOMContentLoaded', updateCartCountDisplay);
+        // This function will be moved to main.js
     </script>
 </head>
 <body class="bg-white text-black antialiased">
@@ -234,17 +85,16 @@
         </div>
     </div>
     
-    <!-- Announcement Bar -->
-    <a href="index.php#newsletter-signup" id="announcement-bar" class="fixed top-0 left-0 w-full bg-black text-white text-center p-2.5 text-sm font-semibold tracking-wider uppercase z-[60] block hover:bg-black/80 transition-colors">
-        Join The List & Receive 10% Off Your First Order.
-    </a>
+    <!-- Fixed Header Container -->
+    <div id="fixed-header-container" class="fixed top-0 left-0 w-full z-[60]">
+        <!-- Announcement Bar -->
+        <a href="index.php#newsletter-signup" id="announcement-bar" class="w-full bg-black text-white text-center p-2.5 text-sm font-semibold tracking-wider uppercase block hover:bg-black/80 transition-colors">
+            Join The List & Receive 10% Off Your First Order.
+        </a>
 
-    <!-- Page Wrapper -->
-    <div id="page-wrapper" class="transition-transform duration-300">
-
-                <!-- Header -->
-                <header id="main-header" class="navbar-scroll fixed top-[var(--header-top-offset)] left-0 w-full z-[50] transition-all duration-300 ease-in-out bg-white text-black border-b border-black/10">
-                    <nav class="container mx-auto px-4 md:px-6 py-10 flex justify-between items-center">
+        <!-- Header -->
+        <header id="main-header" class="left-0 w-full transition-all duration-300 ease-in-out bg-white text-black border-b border-black/10">
+            <nav class="navbar-scroll container mx-auto px-4 md:px-6 py-10 flex justify-between items-center">
                         <!-- Mobile Menu Butt<section id="newsletter-signup" class="py-16 md:py-24 bg-neutral-100">
                             ...
                         </section>
@@ -290,3 +140,7 @@
                         </div>
                     </nav>
                 </header>
+    </div> <!-- Close fixed-header-container -->
+
+    <!-- Page Wrapper -->
+    <div id="page-wrapper" class="transition-transform duration-300">

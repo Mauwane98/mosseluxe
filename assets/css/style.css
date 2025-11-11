@@ -16,6 +16,9 @@ html {
     --brand-border: #E5E5E5;
     --brand-muted: #888888;
     --brand-gold: #B8860B; /* Added a gold color for accents */
+    --announcement-bar-height: 40px; /* Estimated height of the announcement bar */
+    --navbar-height: 160px; /* Estimated height of the main navigation bar */
+    --fixed-header-height: calc(var(--announcement-bar-height) + var(--navbar-height));
 }
 
 body {
@@ -23,35 +26,8 @@ body {
     color: var(--brand-dark);
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
-    padding-top: 178px; /* Adjusted for announcement bar (30px) + larger navbar */
 }
 
-/* ... */
-
-.announcement-bar {
-    z-index: 1050; /* Higher z-index */
-}
-
-.navbar {
-    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid transparent; /* Start with transparent border */
-    top: 30px; /* Position below the announcement bar */
-    z-index: 1040; /* Higher z-index, below announcement bar */
-    background-color: var(--brand-light); /* Explicitly set background color */
-}
-
-/* ... */
-
-.navbar-logo {
-    height: 100px; /* Increased logo height */
-    transition: height 0.3s ease;
-}
-
-.navbar-scroll.scrolled .navbar-logo {
-    height: 90px; /* Smaller logo when scrolled */
-}
 
 /* 3. Buttons
 ---------------------------------------------- */
@@ -92,99 +68,18 @@ body {
     color: var(--brand-light);
 }
 
-/* 4. Cards (Product, etc.)
----------------------------------------------- */
-.product-card {
-    background-color: var(--brand-light);
-    border: 1px solid var(--brand-border);
-    border-radius: 0;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
 
-.product-card:hover {
-    transform: translateY(-5px); /* Lift effect on hover */
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1); /* Subtle shadow on hover */
-    border-color: var(--brand-gold); /* Subtle gold border on hover */
-}
 
-.product-card .card-img-top {
-    height: 320px;
-    object-fit: cover;
-    border-radius: 0;
-}
-
-.product-card .card-title {
-    min-height: auto;
-    font-size: 1.1rem; /* Slightly larger title */
-    margin-top: 0.75rem;
-    margin-bottom: 0.25rem;
-    text-transform: uppercase; /* Uppercase product titles */
-    font-family: 'Archivo Black', sans-serif; /* Use heading font */
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    line-height: 1.3; /* Improved line height for titles */
-}
-
-.product-card .card-body .card-text {
-    color: var(--brand-dark); /* Ensure price is dark */
-    font-weight: 700; /* Make price bolder */
-    font-size: 1.1rem; /* Slightly larger price */
-}
-
-.product-card .card-body .card-text .text-muted {
-    color: var(--brand-muted) !important; /* Ensure muted color for old price */
-    font-weight: 400; /* Regular weight for old price */
-    font-size: 0.9rem; /* Smaller size for old price */
-}
-
-/* 5. Forms
----------------------------------------------- */
-.form-control, .form-select {
-    background-color: var(--brand-light);
-    border-color: var(--brand-border);
-    color: var(--brand-dark);
-    border-radius: 0;
-    padding: 0.75rem 1rem;
-}
-
-.form-control:focus, .form-select:focus {
-    border-color: var(--brand-dark);
-    box-shadow: none;
-}
-
-/* 6. Footer
----------------------------------------------- */
-footer.bg-dark {
-    background-color: var(--brand-light) !important;
-    color: var(--brand-dark) !important;
-    border-top: 1px solid var(--brand-border);
-}
-
-footer a.text-white, footer .text-white {
-    color: var(--brand-dark) !important;
-    text-decoration: none;
-}
-
-footer a.text-white:hover, footer .text-white:hover {
-    text-decoration: underline;
-}
 
 /* 7. Misc */
 .page-wrapper {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: var(--fixed-header-height);
 }
 
-/* Remove the white background section styling */
-.bg-white-section {
-    background-color: transparent;
-    padding-top: 0;
-    padding-bottom: 0;
-}
 
 /* Hero Carousel Slide Styling */
 .carousel-slide {
-    height: 100vh;
+    height: calc(100vh - var(--fixed-header-height)); /* Adjust height to fill remaining space */
     min-height: 500px;
     background-size: cover;
     background-position: center;
@@ -248,83 +143,31 @@ footer a.text-white:hover, footer .text-white:hover {
         font-size: 1rem; /* Adjust lead paragraph size for mobile */
     }
 
-    /* Make hero section more compact on mobile */
-    .carousel-item.hero-slide {
-        height: 50vh;
-        min-height: 400px;
-    }
-    .hero-content h1 {
-        font-size: 2rem; /* Adjust heading size for mobile */
-    }
-    .hero-content p {
-        font-size: 1rem; /* Adjust paragraph size for mobile */
     }
 
-    /* Adjust navbar for a cleaner mobile view */
-    .navbar-collapse {
-        padding: 1rem 0;
-    }
 
-    .navbar-brand {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
 
-    .navbar-logo {
-        height: 40px; /* Smaller logo on mobile */
-    }
-
-    .navbar-nav .nav-link {
-        padding: 0.75rem 0;
-        font-size: 1rem;
-    }
+/* Custom carousel dots */
+.carousel-dots {
+    position: absolute;
+    z-index: 30;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.75rem; /* space-x-3 */
 }
-
-/* Off-canvas Menu Styling */
-.offcanvas {
-    --bs-offcanvas-bg: var(--brand-light);
-    --bs-offcanvas-color: var(--brand-dark);
+.carousel-dot {
+    width: 0.75rem; /* 12px */
+    height: 0.75rem; /* 12px */
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
-
-.offcanvas-body {
-    padding: 2rem;
-}
-
-.offcanvas-header {
-    background-color: var(--brand-light);
-    color: var(--brand-dark);
-    border-bottom: 1px solid var(--brand-border);
-    padding: 1rem 2rem;
-}
-
-.offcanvas-header .offcanvas-title {
-    font-family: 'Archivo Black', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.offcanvas .btn-close {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
-}
-
-/* Style the main navigation links within the offcanvas */
-.offcanvas .navbar-nav .nav-link {
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    padding: 0.75rem 0 !important;
-    color: var(--brand-dark) !important;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.offcanvas .navbar-nav .nav-link.active {
-    color: var(--brand-gold) !important;
-    border-bottom: none;
-}
-
-/* Add padding to the bottom of the body to prevent content from being hidden by the bottom nav */
-body {
-    padding-bottom: 0;
+.carousel-dot.active {
+    background: rgba(255, 255, 255, 1);
+    width: 2rem; /* 32px */
 }
 
 .playfair-display-font {
@@ -484,4 +327,141 @@ body {
 
 .toast-notification.info {
     background: #3b82f6;
+}
+
+#main-header {
+    top: var(--announcement-bar-height); /* Position below the announcement bar */
+}
+
+/* Hero Carousel Slide Styling */
+.carousel-slide {
+    height: calc(100vh - var(--fixed-header-height)); /* Adjust height to fill remaining space */
+    min-height: 500px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    color: var(--brand-light);
+}
+
+/* Applying Inter as the default font */
+/* Custom scrollbar for a more modern feel */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
+/* Helper class for aspect ratio (Tailwind aspect-ratio plugin isn't default) */
+@media (min-width: 768px) {
+    .aspect-md-h-1 {
+        position: relative;
+        padding-bottom: 100%; /* 1:1 Aspect Ratio */
+    }
+    .aspect-md-h-1 > * {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+}
+
+/* Carousel Specific Styles */
+.carousel-slide {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%; /* Ensure slide takes full height of parent */
+    position: relative;
+    text-align: center;
+    color: white;
+}
+.carousel-slide img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.carousel-slide-content {
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center both horizontally and vertically */
+    z-index: 20;
+    padding: 1.5rem;
+    animation: fadeIn 1s ease-out;
+}
+
+/* Fade-in animation for slide content */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.carousel-slide-content.animate-in {
+    animation: fadeIn 1s ease-out;
+}
+
+/* Custom carousel controls */
+.carousel-control {
+    position: absolute;
+    z-index: 30;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    color: black;
+    border-radius: 9999px;
+    width: 2.5rem; /* 40px */
+    height: 2.5rem; /* 40px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+}
+.carousel-control:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-50%) scale(1.1);
+}
+.carousel-control.prev {
+    left: 1.5rem; /* p-6 */
+}
+.carousel-control.next {
+    right: 1.5rem; /* p-6 */
+}
+
+/* Custom carousel dots */
+.carousel-dots {
+    position: absolute;
+    z-index: 30;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.75rem; /* space-x-3 */
+}
+.carousel-dot {
+    width: 0.75rem; /* 12px */
+    height: 0.75rem; /* 12px */
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.carousel-dot.active {
+    background: rgba(255, 255, 255, 1);
+    width: 2rem; /* 32px */
 }
