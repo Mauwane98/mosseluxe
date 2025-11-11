@@ -143,4 +143,4 @@
     </div> <!-- Close fixed-header-container -->
 
     <!-- Page Wrapper -->
-    <div id="page-wrapper" class="transition-transform duration-300">
+    <div id="page-wrapper" class="transition-transform duration-300 pt-[100px] md:pt-[140px]">
