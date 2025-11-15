@@ -1,27 +1,16 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once '../includes/db_connect.php';
-
-// Ensure admin is logged in
-if (!isset($_SESSION["admin_loggedin"]) || $_SESSION["admin_loggedin"] !== true) {
-    header("location: login.php");
-    exit;
-}
-
-require_once '../includes/csrf.php';
-
+require_once 'bootstrap.php';
 $conn = get_db_connection();
 
 $csrf_token = generate_csrf_token();
-$message = '';
-$error = '';
+
 
 // Handle review actions (approve, unapprove, delete)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        $error = 'Invalid CSRF token.';
+        $_SESSION['error_message'] = 'Invalid CSRF token.';
+        header("Location: manage_reviews.php");
+        exit();
     } else {
         $review_id = filter_var($_POST['review_id'], FILTER_SANITIZE_NUMBER_INT);
         $action = $_POST['action'] ?? '';
@@ -38,10 +27,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (isset($sql) && ($stmt = $conn->prepare($sql))) {
                 $stmt->bind_param("i", $review_id);
                 if ($stmt->execute()) {
-                    header("Location: manage_reviews.php?success=true");
+                    $_SESSION['success_message'] = "Review status updated successfully.";
+                    header("Location: manage_reviews.php");
                     exit();
                 } else {
-                    $error = "Action failed. Please try again.";
+                    $_SESSION['error_message'] = "Action failed. Please try again.";
+                    header("Location: manage_reviews.php");
+                    exit();
                 }
                 $stmt->close();
             }
@@ -56,15 +48,16 @@ $sql_reviews = "SELECT r.id, r.rating, r.review_text, r.is_approved, r.created_a
                 JOIN products p ON r.product_id = p.id
                 JOIN users u ON r.user_id = u.id
                 ORDER BY r.created_at DESC";
-if ($result = $conn->query($sql_reviews)) {
+if ($stmt_reviews = $conn->prepare($sql_reviews)) {
+    $stmt_reviews->execute();
+    $result = $stmt_reviews->get_result();
     while ($row = $result->fetch_assoc()) {
         $reviews[] = $row;
     }
+    $stmt_reviews->close();
 }
 
-if (isset($_GET['success']) && $_GET['success'] == 'true') {
-    $message = "Review status updated successfully.";
-}
+
 
 $pageTitle = 'Manage Product Reviews';
 include 'header.php';
@@ -73,17 +66,7 @@ include 'header.php';
 <div class="bg-white p-6 rounded-lg shadow-md">
     <h2 class="text-2xl font-bold text-gray-800 mb-6">All Product Reviews</h2>
 
-    <?php if(!empty($message)): ?>
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-            <?php echo $message; ?>
-        </div>
-    <?php endif; ?>
 
-    <?php if(!empty($error)): ?>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            <?php echo $error; ?>
-        </div>
-    <?php endif; ?>
 
     <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">

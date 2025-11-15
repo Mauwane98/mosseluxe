@@ -1,0 +1,18 @@
+{
+  "name": "mosse-luxe",
+  "version": "1.0.0",
+  "description": "This project is a rebuilt e-commerce website for the Mossé Luxe brand, designed with a modern luxury streetwear aesthetic.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "npx tailwindcss -i ./assets/css/tailwind.css -o ./assets/css/tailwind_output.css --minify"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.22",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.0.0"
+  }
+}

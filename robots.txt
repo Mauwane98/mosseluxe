@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Block access to admin areas
+Disallow: /admin/
+Disallow: /_private_scripts/
+Disallow: /includes/
+Disallow: /assets/images/hero/
+Disallow: /cache/
+
+# Sitemap location
+Sitemap: https://yourdomain.com/mosse-luxe/sitemap.xml

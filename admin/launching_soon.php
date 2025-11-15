@@ -1,29 +1,18 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once '../includes/db_connect.php';
-
-// Ensure admin is logged in
-if (!isset($_SESSION["admin_loggedin"]) || $_SESSION["admin_loggedin"] !== true) {
-    header("location: login.php");
-    exit;
-}
-
-require_once '../includes/csrf.php';
-require_once '../includes/config.php';
-require_once '../includes/image_service.php';
-
+require_once 'bootstrap.php';
 $conn = get_db_connection();
 
+require_once '../includes/image_service.php';
+
 $csrf_token = generate_csrf_token();
-$message = '';
-$error = '';
+
 
 // Handle form submission for adding a new item
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_item'])) {
-    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        $error = 'Invalid CSRF token.';
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+        $_SESSION['toast_message'] = ['message' => 'Invalid CSRF token.', 'type' => 'error'];
+        header("Location: launching_soon.php");
+        exit();
     } else {
         $name = trim($_POST['name']);
 
@@ -32,26 +21,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_item'])) {
         if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
             $image_path = ImageService::processUpload($_FILES['image'], '../assets/images/', PRODUCT_IMAGE_WIDTH, PRODUCT_IMAGE_HEIGHT, $error);
         } elseif (isset($_FILES['image']) && $_FILES['image']['error'] != UPLOAD_ERR_NO_FILE) {
-            $error = 'There was an error with the image upload.';
+            $_SESSION['toast_message'] = ['message' => 'There was an error with the image upload.', 'type' => 'error'];
+            header("Location: launching_soon.php");
+            exit();
         } else {
-            $error = 'Please select an image to upload.';
+            $_SESSION['toast_message'] = ['message' => 'Please select an image to upload.', 'type' => 'error'];
+            header("Location: launching_soon.php");
+            exit();
         }
 
-        if (empty($name) || empty($image_path)) {
-            if(empty($image_path)) {
-                // Do nothing, error is already set
-            } else {
-                $error = 'Please fill out all required fields.';
+        if (empty($name)) {
+            $_SESSION['toast_message'] = ['message' => 'Please fill out all required fields.', 'type' => 'error'];
+            header("Location: launching_soon.php");
+            exit();
+        } elseif (empty($image_path)) {
+            // Error message for image upload should already be set by ImageService::processUpload
+            // or the check above. If not, set a generic one.
+            if (empty($error)) {
+                $error = 'Please select an image to upload.';
             }
+            $_SESSION['toast_message'] = ['message' => $error, 'type' => 'error'];
+            header("Location: launching_soon.php");
+            exit();
         } else {
             $sql = "INSERT INTO launching_soon (name, image) VALUES (?, ?)";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ss", $name, $image_path);
             if ($stmt->execute()) {
-                header("Location: launching_soon.php?success=added");
+                $_SESSION['toast_message'] = ['message' => 'New item added successfully!', 'type' => 'success'];
+                regenerate_csrf_token();
+                header("Location: launching_soon.php");
                 exit();
             } else {
-                $error = "Error: " . $stmt->error;
+                $_SESSION['toast_message'] = ['message' => 'Error: ' . $stmt->error, 'type' => 'error'];
+                header("Location: launching_soon.php");
+                exit();
             }
             $stmt->close();
         }
@@ -60,18 +64,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_item'])) {
 
 // Handle POST request for deleting an item (after confirmation modal)
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_item'])) {
-    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        $error = 'Invalid CSRF token.';
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+        $_SESSION['toast_message'] = ['message' => 'Invalid CSRF token.', 'type' => 'error'];
+        header("Location: launching_soon.php");
+        exit();
     } else {
         $id_to_delete = filter_var(trim($_POST['item_id']), FILTER_SANITIZE_NUMBER_INT);
+
+        // Get image path before deleting item
+        $sql_get_image = "SELECT image FROM launching_soon WHERE id = ?";
+        $stmt_get_image = $conn->prepare($sql_get_image);
+        $stmt_get_image->bind_param("i", $id_to_delete);
+        $stmt_get_image->execute();
+        $image_path_row = $stmt_get_image->get_result()->fetch_assoc();
+        $stmt_get_image->close();
+
+        $image_to_delete = $image_path_row['image'] ?? null;
+
         $sql = "DELETE FROM launching_soon WHERE id = ?";
         if ($stmt = $conn->prepare($sql)) {
             $stmt->bind_param("i", $id_to_delete);
             if ($stmt->execute()) {
-                header("Location: launching_soon.php?success=deleted");
+                // Delete image file
+                if ($image_to_delete) {
+                    $full_image_path = ABSPATH . '/' . $image_to_delete;
+                    if (file_exists($full_image_path)) {
+                        unlink($full_image_path);
+                    }
+                }
+                $_SESSION['toast_message'] = ['message' => 'Item deleted successfully!', 'type' => 'success'];
+                regenerate_csrf_token();
+                header("Location: launching_soon.php");
                 exit();
             } else {
-                header("Location: launching_soon.php?error=deletion_failed");
+                $_SESSION['toast_message'] = ['message' => 'Error deleting item. Please try again.', 'type' => 'error'];
+                header("Location: launching_soon.php");
                 exit();
             }
         }
@@ -87,20 +114,7 @@ if ($result = $conn->query($sql_items)) {
     }
 }
 
-// Check for success/error messages from redirects
-if (isset($_GET['success'])) {
-    if ($_GET['success'] == 'added') {
-        $message = "New item added successfully!";
-    } elseif ($_GET['success'] == 'deleted') {
-        $message = "Item deleted successfully!";
-    } elseif ($_GET['success'] == 'updated') {
-        $message = "Item updated successfully!";
-    }
-} elseif (isset($_GET['error'])) {
-    if ($_GET['error'] == 'deletion_failed') {
-        $error = "Error deleting item. Please try again.";
-    }
-}
+
 
 $pageTitle = 'Manage "Launching Soon"';
 include 'header.php';
@@ -111,17 +125,7 @@ include 'header.php';
     <div class="bg-white p-6 rounded-lg shadow-md">
         <h3 class="text-lg font-bold text-gray-800 mb-4">Add New Item</h3>
 
-        <?php if(!empty($error)): ?>
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                <?php echo $error; ?>
-            </div>
-        <?php endif; ?>
 
-        <?php if(!empty($message)): ?>
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                <?php echo $message; ?>
-            </div>
-        <?php endif; ?>
 
         <form action="launching_soon.php" method="post" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
@@ -202,23 +206,6 @@ include 'header.php';
     </div>
 </div>
 
-<script>
-function confirmDelete(itemId, itemName) {
-    document.getElementById('deleteMessage').textContent = `Are you sure you want to delete "${itemName}"?`;
-    document.getElementById('deleteItemId').value = itemId;
-    document.getElementById('deleteModal').classList.remove('hidden');
-}
 
-function closeDeleteModal() {
-    document.getElementById('deleteModal').classList.add('hidden');
-}
-
-// Close modal when clicking outside
-document.getElementById('deleteModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeDeleteModal();
-    }
-});
-</script>
 
 <?php include 'footer.php'; ?>

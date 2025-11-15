@@ -1,8 +1,6 @@
 <?php
-// Start session and check if user is logged in
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+$pageTitle = "My Account - Mossé Luxe";
+require_once __DIR__ . '/includes/bootstrap.php';
 
 // If user is not logged in, redirect to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
@@ -10,13 +8,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit;
 }
 
-require_once 'includes/db_connect.php';
-require_once 'includes/csrf.php';
 $conn = get_db_connection();
 require_once 'includes/header.php'; // Now include header after all PHP logic
 
 $user_id = $_SESSION['user_id'];
-$csrf_token = generate_csrf_token();
 $profile_error = '';
 $profile_success = '';
 $success_messages = [];
@@ -28,7 +23,7 @@ $view = isset($_GET['view']) ? $_GET['view'] : 'orders';
 
 // Handle profile update form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_profile'])) {
-    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
         $error_messages[] = 'Invalid CSRF token. Please try again.';
     } else {
         // Update Name
@@ -50,11 +45,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_profile'])) {
         $new_password = $_POST['new_password'];
         $confirm_new_password = $_POST['confirm_new_password'];
 
-        if (!empty($current_password) && !empty($new_password)) { // Only start password update if current and new password are provided
+        // If any password field is filled, validate all of them
+        if (!empty($current_password) || !empty($new_password) || !empty($confirm_new_password)) {
+            if (empty($current_password) || empty($new_password) || empty($confirm_new_password)) {
+                $error_messages[] = 'To change your password, please fill in the current, new, and confirm password fields.';
+            }
             if ($new_password !== $confirm_new_password) {
                 $error_messages[] = 'New passwords do not match.';
-            } elseif (strlen($new_password) < 6) {
-                $error_messages[] = 'New password must be at least 6 characters long.';
+            } elseif (strlen($new_password) < 8) {
+                $error_messages[] = 'New password must be at least 8 characters long.';
             } else {
                 // Fetch current password to verify
                 $sql_user = "SELECT password FROM users WHERE id = ?";
@@ -196,7 +195,7 @@ if ($stmt = $conn->prepare($sql_orders)) {
                                     <?php if (!empty($orders)): ?>
                                         <?php foreach ($orders as $order): ?>
                                             <tr class="border-b border-black/5">
-                                                <td class="px-6 py-4 font-medium">#ML-<?php echo htmlspecialchars($order['id']); ?></td>
+                                                <td class="px-6 py-4 font-medium"><?php echo htmlspecialchars(get_order_id_from_numeric_id($order['id'])); ?></td>
                                                 <td class="px-6 py-4"><?php echo date('d M Y, H:i', strtotime($order['created_at'])); ?></td>
                                                 <td class="px-6 py-4">R <?php echo number_format($order['total_price'], 2); ?></td>
                                                 <td class="px-6 py-4">
@@ -240,7 +239,7 @@ if ($stmt = $conn->prepare($sql_orders)) {
 
                     <div class="bg-neutral-50 p-8 rounded-lg">
                         <form action="my_account.php?view=profile" method="POST" class="space-y-8">
-                            <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
+                            <input type="hidden" name="csrf_token" value="<?php echo generate_csrf_token(); ?>">
                             
                             <div>
                                 <h3 class="text-lg font-bold uppercase tracking-wider mb-4">Personal Information</h3>
@@ -270,11 +269,11 @@ if ($stmt = $conn->prepare($sql_orders)) {
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
                                             <label for="new_password" class="block text-sm font-medium text-black/80 mb-1">New Password</label>
-                                            <input type="password" id="new_password" name="new_password" class="w-full p-3 bg-white border border-black/20 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                                            <input type="password" id="new_password" name="new_password" minlength="8" class="w-full p-3 bg-white border border-black/20 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
                                         </div>
                                         <div>
                                             <label for="confirm_new_password" class="block text-sm font-medium text-black/80 mb-1">Confirm New Password</label>
-                                            <input type="password" id="confirm_new_password" name="confirm_new_password" class="w-full p-3 bg-white border border-black/20 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                                            <input type="password" id="confirm_new_password" minlength="8" name="confirm_new_password" class="w-full p-3 bg-white border border-black/20 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
                                         </div>
                                     </div>
                                 </div>

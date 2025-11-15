@@ -1,14 +1,9 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once '../includes/admin_auth.php';
-require_once '../includes/db_connect.php';
-require_once '../includes/csrf.php';
+require_once 'bootstrap.php';
 $conn = get_db_connection();
 
 $csrf_token = generate_csrf_token();
-$error = '';
+
 $admin_id = isset($_GET['id']) ? filter_var($_GET['id'], FILTER_VALIDATE_INT, array('options' => array('min_range' => 1))) : 0;
 
 if (!$admin_id) {
@@ -17,7 +12,7 @@ if (!$admin_id) {
 }
 
 // Fetch admin details
-$stmt = $conn->prepare("SELECT id, name, email FROM users WHERE id = ? AND role = 'admin'");
+$stmt = $conn->prepare("SELECT id, name, email, role FROM users WHERE id = ? AND role IN ('admin', 'super_admin')");
 $stmt->bind_param("i", $admin_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -25,24 +20,36 @@ $admin = $result->fetch_assoc();
 $stmt->close();
 
 if (!$admin) {
-    header("Location: manage_admins.php?error=not_found");
+    $_SESSION['error_message'] = "Admin not found.";
+    header("Location: manage_admins.php");
     exit();
 }
 
+$edit_admin_error = ''; // Initialize error variable
+
 // Handle form submission for updating the admin
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_admin'])) {
-    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        $error = 'Invalid CSRF token.';
+    // Repopulate $admin with POST data to retain values on error
+    $admin['name'] = trim($_POST['name']);
+    $admin['email'] = trim($_POST['email']);
+
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+        $edit_admin_error = 'Invalid CSRF token.';
     } else {
         $name = trim($_POST['name']);
         $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+        $role = trim($_POST['role']);
         $password = trim($_POST['password']);
+        $confirm_password = trim($_POST['confirm_password']); // Get confirm password here
+
+        $valid_roles = ['admin', 'super_admin'];
+        if (!in_array($role, $valid_roles)) {
+            $edit_admin_error = "Invalid role selected.";
+        }
 
         // Validate inputs
         if (empty($name) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $error = "Name and a valid email are required.";
-        } elseif (!preg_match("/^[a-zA-Z\s]+$/", $name)) {
-            $error = "Name can only contain alphabetic characters and spaces.";
+            $edit_admin_error = "Name and a valid email are required.";
         } else {
             // Check if email is being changed and if the new one is already taken
             if ($email !== $admin['email']) {
@@ -52,35 +59,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_admin'])) {
                 $stmt_check->execute();
                 $stmt_check->store_result();
                 if ($stmt_check->num_rows > 0) {
-                    $error = "This email address is already in use by another account.";
+                    $edit_admin_error = "This email address is already in use by another account.";
                 }
                 $stmt_check->close();
             }
 
-            if (empty($error)) {
+            if (empty($edit_admin_error)) { // Only proceed if no prior error
                 if (!empty($password)) {
-                    // Update with new password
-                    if (strlen($password) < 8) {
-                        $error = "New password must be at least 8 characters long.";
+                    if ($password !== $confirm_password) {
+                        $edit_admin_error = "New password and confirm password do not match.";
+                    } elseif (strlen($password) < 8) {
+                        $edit_admin_error = "New password must be at least 8 characters long.";
                     } else {
                         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                        $sql_update = "UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?";
+                        $sql_update = "UPDATE users SET name = ?, email = ?, role = ?, password = ? WHERE id = ?";
                         $stmt_update = $conn->prepare($sql_update);
-                        $stmt_update->bind_param("sssi", $name, $email, $hashed_password, $admin_id);
+                        $stmt_update->bind_param("ssssi", $name, $email, $role, $hashed_password, $admin_id);
                     }
                 } else {
                     // Update without changing password
-                    $sql_update = "UPDATE users SET name = ?, email = ? WHERE id = ?";
+                    $sql_update = "UPDATE users SET name = ?, email = ?, role = ? WHERE id = ?";
                     $stmt_update = $conn->prepare($sql_update);
-                    $stmt_update->bind_param("ssi", $name, $email, $admin_id);
+                    $stmt_update->bind_param("sssi", $name, $email, $role, $admin_id);
                 }
 
-                if (empty($error)) {
+                if (empty($edit_admin_error)) { // Only proceed if no prior error
                     if (isset($stmt_update) && $stmt_update->execute()) {
-                        header("Location: manage_admins.php?success=updated");
+                        $_SESSION['success_message'] = "Admin updated successfully!";
+                        regenerate_csrf_token();
+                        header("Location: manage_admins.php");
                         exit();
                     } else {
-                        $error = "Failed to update admin user.";
+                        error_log("Error executing admin update query: " . $stmt_update->error);
+                        $edit_admin_error = "Failed to update admin user.";
                     }
                 }
                 if (isset($stmt_update)) $stmt_update->close();
@@ -99,9 +110,9 @@ include 'header.php';
         <a href="manage_admins.php" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">Back to Admins</a>
     </div>
 
-    <?php if(!empty($error)): ?>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            <?php echo $error; ?>
+    <?php if(!empty($edit_admin_error)): ?>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+            <?php echo $edit_admin_error; ?>
         </div>
     <?php endif; ?>
 
@@ -133,12 +144,14 @@ include 'header.php';
                        class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-600">
             </div>
 
-            <!-- Role (Read-only) -->
+            <!-- Role -->
             <div>
                 <label for="role" class="block text-sm font-medium text-gray-700 mb-2">Role</label>
-                <input type="text" id="role" readonly
-                       value="Administrator"
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-600">
+                <select id="role" name="role" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                    <option value="admin" <?php echo $admin['role'] === 'admin' ? 'selected' : ''; ?>>Administrator</option>
+                    <option value="super_admin" <?php echo $admin['role'] === 'super_admin' ? 'selected' : ''; ?>>Super Administrator</option>
+                </select>
             </div>
         </div>
 
@@ -157,7 +170,7 @@ include 'header.php';
 
                 <div>
                     <label for="confirm_password" class="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
-                    <input type="password" id="confirm_password"
+                    <input type="password" id="confirm_password" name="confirm_password"
                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
                 </div>
             </div>
@@ -170,25 +183,5 @@ include 'header.php';
         </div>
     </form>
 </div>
-
-<script>
-// Password confirmation validation
-document.querySelector('form').addEventListener('submit', function(e) {
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirm_password').value;
-
-    if (password !== confirmPassword) {
-        e.preventDefault();
-        alert('Passwords do not match. Please try again.');
-        return false;
-    }
-
-    if (password && password.length < 8) {
-        e.preventDefault();
-        alert('Password must be at least 8 characters long.');
-        return false;
-    }
-});
-</script>
 
 <?php include 'footer.php'; ?>

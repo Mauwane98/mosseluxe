@@ -1,19 +1,19 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once '../includes/admin_auth.php';
-require_once '../includes/db_connect.php';
+require_once __DIR__ . '/../includes/bootstrap.php'; // Includes db_connect.php, config.php, csrf.php, and starts session (if not already started)
+require_once __DIR__ . '/../includes/auth_service.php'; // Auth class
+
+// Ensure admin is logged in
+Auth::checkAdmin(); // Redirects to login if not authenticated
 
 header('Content-Type: application/json');
 
-if (!isset($_SESSION["admin_loggedin"]) || $_SESSION["admin_loggedin"] !== true) {
-    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['success' => false, 'message' => 'Invalid request method']);
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['success' => false, 'message' => 'Invalid request method']);
+if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) { // Validate CSRF token
+    echo json_encode(['success' => false, 'message' => 'Invalid security token.']);
     exit;
 }
 

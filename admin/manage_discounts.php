@@ -1,17 +1,5 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once '../includes/db_connect.php';
-
-// Ensure admin is logged in
-if (!isset($_SESSION["admin_loggedin"]) || $_SESSION["admin_loggedin"] !== true) {
-    header("location: login.php");
-    exit;
-}
-
-require_once '../includes/csrf.php';
-
+require_once 'bootstrap.php';
 $conn = get_db_connection();
 
 $csrf_token = generate_csrf_token();
@@ -20,7 +8,7 @@ $error = '';
 
 // Handle form submission for adding a new discount
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_discount'])) {
-    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
         $error = 'Invalid CSRF token.';
     } else {
         $code = strtoupper(trim($_POST['code']));
@@ -30,25 +18,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_discount'])) {
         $expires_at = !empty($_POST['expires_at']) ? $_POST['expires_at'] : null;
 
         if (empty($code) || empty($type) || $value === false || $usage_limit === false) {
-            $error = "Please fill all fields with valid data.";
+            $_SESSION['toast_message'] = ['message' => 'Please fill all fields with valid data.', 'type' => 'error'];
+            header("Location: manage_discounts.php");
+            exit();
         } elseif (!preg_match('/^[A-Z0-9]{4,}$/', $code)) { // Example: minimum 4 alphanumeric characters
-            $error = "Discount code must be at least 4 alphanumeric characters.";
+            $_SESSION['toast_message'] = ['message' => 'Discount code must be at least 4 alphanumeric characters.', 'type' => 'error'];
+            header("Location: manage_discounts.php");
+            exit();
         } elseif (!in_array($type, ['percentage', 'fixed'])) {
-            $error = "Invalid discount type selected.";
+            $_SESSION['toast_message'] = ['message' => 'Invalid discount type selected.', 'type' => 'error'];
+            header("Location: manage_discounts.php");
+            exit();
         } elseif ($value <= 0) {
-            $error = "Discount value must be a positive number.";
+            $_SESSION['toast_message'] = ['message' => 'Discount value must be a positive number.', 'type' => 'error'];
+            header("Location: manage_discounts.php");
+            exit();
         } elseif ($type === 'percentage' && ($value > 100 || $value < 0)) {
-            $error = "Percentage discount must be between 0 and 100.";
+            $_SESSION['toast_message'] = ['message' => 'Percentage discount must be between 0 and 100.', 'type' => 'error'];
+            header("Location: manage_discounts.php");
+            exit();
         } elseif ($expires_at && !strtotime($expires_at)) {
-            $error = "Invalid expiry date provided.";
+            $_SESSION['toast_message'] = ['message' => 'Invalid expiry date provided.', 'type' => 'error'];
+            header("Location: manage_discounts.php");
+            exit();
         } else {
             $sql = "INSERT INTO discount_codes (code, type, value, usage_limit, expires_at) VALUES (?, ?, ?, ?, ?)";
             if ($stmt = $conn->prepare($sql)) {
                 $stmt->bind_param("ssdis", $code, $type, $value, $usage_limit, $expires_at);
                 if ($stmt->execute()) {
-                    $message = "Discount code created successfully!";
+                    $_SESSION['toast_message'] = ['message' => 'Discount code created successfully!', 'type' => 'success'];
+                    regenerate_csrf_token();
+                    header("Location: manage_discounts.php");
+                    exit();
                 } else {
-                    $error = "Failed to create discount code. It might already exist.";
+                    $_SESSION['toast_message'] = ['message' => 'Failed to create discount code. It might already exist.', 'type' => 'error'];
+                    header("Location: manage_discounts.php");
+                    exit();
                 }
                 $stmt->close();
             }
@@ -58,8 +63,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_discount'])) {
 
 // Handle toggling active status
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['toggle_status'])) {
-    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        $error = 'Invalid CSRF token.';
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+        $_SESSION['toast_message'] = ['message' => 'Invalid CSRF token.', 'type' => 'error'];
+        header("Location: manage_discounts.php");
+        exit();
     } else {
         $discount_id = filter_var($_POST['discount_id'], FILTER_SANITIZE_NUMBER_INT);
         $current_status = filter_var($_POST['current_status'], FILTER_SANITIZE_NUMBER_INT);
@@ -69,11 +76,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['toggle_status'])) {
         if ($stmt_toggle = $conn->prepare($sql_toggle)) {
             $stmt_toggle->bind_param("ii", $new_status, $discount_id);
             if ($stmt_toggle->execute()) {
-                header("Location: manage_discounts.php?success=status_updated");
+                $_SESSION['toast_message'] = ['message' => 'Discount status updated successfully!', 'type' => 'success'];
+                regenerate_csrf_token();
+                header("Location: manage_discounts.php");
                 exit();
             }
         }
-        $error = "Failed to update status.";
+        $_SESSION['toast_message'] = ['message' => 'Failed to update status.', 'type' => 'error'];
+        header("Location: manage_discounts.php");
+        exit();
     }
 }
 
@@ -86,13 +97,7 @@ if ($result = $conn->query($sql_discounts)) {
     }
 }
 
-// Check for success/error messages from redirects
-if (isset($_GET['success'])) {
-    if ($_GET['success'] == 'updated') $message = "Discount code updated successfully!";
-    if ($_GET['success'] == 'status_updated') $message = "Discount status updated successfully!";
-} elseif (isset($_GET['error'])) {
-    if ($_GET['error'] == 'not_found') $error = "Discount code not found.";
-}
+
 
 $pageTitle = 'Manage Discount Codes';
 include 'header.php';
@@ -103,17 +108,7 @@ include 'header.php';
     <div class="bg-white p-6 rounded-lg shadow-md">
         <h3 class="text-lg font-bold text-gray-800 mb-4">Create New Discount</h3>
 
-        <?php if(!empty($error)): ?>
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                <?php echo $error; ?>
-            </div>
-        <?php endif; ?>
 
-        <?php if(!empty($message)): ?>
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                <?php echo $message; ?>
-            </div>
-        <?php endif; ?>
 
         <form action="manage_discounts.php" method="post">
             <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">

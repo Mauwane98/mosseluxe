@@ -13,11 +13,24 @@ class ImageService {
      * @param string &$error Reference to a variable to store error messages.
      * @return string|false The relative path to the saved image on success, or false on failure.
      */
-    public static function processUpload($file, $target_width, $target_height, &$error) {
-        // Ensure target_dir is consistent with PRODUCT_IMAGE_DIR
-        $target_dir = '../' . PRODUCT_IMAGE_DIR;
+    public static function processUpload($file, $target_dir_relative, $target_width, $target_height, &$error) {
+        if (!extension_loaded('gd')) {
+            $error = 'GD library is not enabled. Image processing is not available.';
+            return false;
+        }
+
+        // Check file size (e.g., 20MB limit)
+        if ($file['size'] > 20 * 1024 * 1024) {
+            $error = 'File is too large. Please upload an image smaller than 20MB.';
+            return false;
+        }
+
+        if (!defined('ABSPATH')) {
+            define('ABSPATH', dirname(__DIR__));
+        }
+        $target_dir = ABSPATH . DIRECTORY_SEPARATOR . rtrim($target_dir_relative, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         if (!is_dir($target_dir)) {
-            mkdir($target_dir, 0777, true);
+            mkdir($target_dir, 0755, true);
         }
         if ($file['error'] !== UPLOAD_ERR_OK) {
             $error = 'An error occurred during file upload.';
@@ -57,14 +70,16 @@ class ImageService {
         $original_width = imagesx($source_image);
         $original_height = imagesy($source_image);
 
-        // Calculate new dimensions to fit within the target box while maintaining aspect ratio
+        // Calculate new dimensions to cover the target box while maintaining aspect ratio
         $ratio = $original_width / $original_height;
-        if ($target_width / $target_height > $ratio) {
-            $new_width = $target_height * $ratio;
+        if ($ratio > $target_width / $target_height) {
+            // Original is wider relative to target, fit by height and crop width
             $new_height = $target_height;
+            $new_width = $original_width * ($target_height / $original_height);
         } else {
-            $new_height = $target_width / $ratio;
+            // Original is taller relative to target, fit by width and crop height
             $new_width = $target_width;
+            $new_height = $original_height * ($target_width / $original_width);
         }
 
         // Create a new true color image (the canvas)
@@ -88,9 +103,8 @@ class ImageService {
         // Generate a unique filename with .webp extension
         $unique_filename = uniqid() . '-' . pathinfo($file["name"], PATHINFO_FILENAME) . '.webp';
         $target_file_path = $target_dir . $unique_filename;
-        $relative_path = PRODUCT_IMAGE_DIR . $unique_filename;
+        $relative_path = rtrim($target_dir_relative, '/') . '/' . $unique_filename;
 
-        // Save the final image as WEBP
         imagewebp($final_image, $target_file_path, 80); // 80 is the quality
 
         // Free up memory

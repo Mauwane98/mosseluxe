@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../config.php';
+
 
 /**
  * Establishes and returns a database connection.
@@ -19,7 +19,11 @@ function get_db_connection() {
         if ($conn->connect_error) {
             // In a production environment, you would log this error instead of dying.
             error_log("Database Connection Failed: " . $conn->connect_error);
-            die("A database connection error occurred. Please try again later.");
+            if (APP_ENV === 'development') {
+                throw new Exception("Database Connection Failed: " . $conn->connect_error);
+            } else {
+                throw new Exception("A database connection error occurred. Please try again later.");
+            }
         }
         
         $conn->set_charset("utf8mb4");

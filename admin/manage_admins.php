@@ -1,38 +1,33 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once '../includes/db_connect.php';
-
-// Ensure admin is logged in
-if (!isset($_SESSION["admin_loggedin"]) || $_SESSION["admin_loggedin"] !== true) {
-    header("location: login.php");
-    exit;
-}
-
-require_once '../includes/csrf.php';
-
+require_once 'bootstrap.php';
 $conn = get_db_connection();
 
 $csrf_token = generate_csrf_token();
-$message = '';
-$error = '';
+
+
+$add_admin_error = '';
+$delete_admin_error = '';
+$new_admin_name = '';
+$new_admin_email = '';
 
 // Handle form submission for adding a new admin
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_admin'])) {
-    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        $error = 'Invalid CSRF token.';
-    } else {
-        $name = trim($_POST['name']);
-        $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
-        $password = trim($_POST['password']);
+    $new_admin_name = trim($_POST['name']);
+    $new_admin_email = trim($_POST['email']);
 
-        if (empty($name) || !filter_var($email, FILTER_VALIDATE_EMAIL) || empty($password)) {
-            $error = "Please fill all fields with valid data.";
-        } elseif (!preg_match("/^[a-zA-Z\s]+$/", $name)) {
-            $error = "Name can only contain alphabetic characters and spaces.";
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+        $add_admin_error = 'Invalid CSRF token.';
+    } else {
+        $name = $new_admin_name;
+        $email = filter_var($new_admin_email, FILTER_SANITIZE_EMAIL);
+        $password = trim($_POST['password']);
+        $role = trim($_POST['role']);
+
+        $valid_roles = ['admin', 'super_admin'];
+        if (empty($name) || !filter_var($email, FILTER_VALIDATE_EMAIL) || empty($password) || !in_array($role, $valid_roles)) {
+            $add_admin_error = "Please fill all fields with valid data.";
         } elseif (strlen($password) < 8) {
-            $error = "Password must be at least 8 characters long.";
+            $add_admin_error = "Password must be at least 8 characters long.";
         } else {
             // Check if email already exists
             $sql_check = "SELECT id FROM users WHERE email = ?";
@@ -41,18 +36,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_admin'])) {
             $stmt_check->execute();
             $stmt_check->store_result();
             if ($stmt_check->num_rows > 0) {
-                $error = "An account with this email already exists.";
+                $add_admin_error = "An account with this email already exists.";
             } else {
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                $role = 'admin';
                 $sql_insert = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
                 $stmt_insert = $conn->prepare($sql_insert);
                 $stmt_insert->bind_param("ssss", $name, $email, $hashed_password, $role);
                 if ($stmt_insert->execute()) {
-                    header("Location: manage_admins.php?success=added");
+                    $_SESSION['success_message'] = "Admin user added successfully!";
+                    regenerate_csrf_token();
+                    header("Location: manage_admins.php");
                     exit();
                 } else {
-                    $error = "Failed to create admin account.";
+                    error_log("Error executing add admin query: " . $stmt_insert->error);
+                    $add_admin_error = "Failed to create admin account.";
                 }
                 $stmt_insert->close();
             }
@@ -63,57 +60,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_admin'])) {
 
 // Handle POST request for deleting an admin
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_admin'])) {
-    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        $error = 'Invalid CSRF token.';
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+        $delete_admin_error = 'Invalid CSRF token.';
     } else {
-        $id_to_delete = filter_var(trim($_POST['admin_id']), FILTER_VALIDATE_INT, array('options' => array('min_range' => 1)));
+        $id_to_delete = filter_var(trim($_POST['id']), FILTER_VALIDATE_INT, array('options' => array('min_range' => 1))); // Changed from admin_id to id
         if ($id_to_delete == $_SESSION['admin_id']) {
-            header("Location: manage_admins.php?error=self_delete");
-            exit();
+            $delete_admin_error = "You cannot delete your own account.";
         }
 
-        // Check if this is the last admin
-        $sql_count = "SELECT COUNT(*) as admin_count FROM users WHERE role = 'admin'";
-        $result_count = $conn->query($sql_count);
-        $admin_count = $result_count->fetch_assoc()['admin_count'];
+        if (empty($delete_admin_error)) {
+            // Check if this is the last admin
+            $sql_count = "SELECT COUNT(*) as admin_count FROM users WHERE role = 'admin'";
+            $result_count = $conn->query($sql_count);
+            $admin_count = $result_count->fetch_assoc()['admin_count'];
 
-        if ($admin_count <= 1) {
-            header("Location: manage_admins.php?error=last_admin");
-            exit();
+            if ($admin_count <= 1) {
+                $delete_admin_error = "Cannot delete the last remaining admin account.";
+            }
         }
 
-        $sql_delete = "DELETE FROM users WHERE id = ? AND role = 'admin'";
-        $stmt_delete = $conn->prepare($sql_delete);
-        $stmt_delete->bind_param("i", $id_to_delete);
-        if ($stmt_delete->execute()) {
-            header("Location: manage_admins.php?success=deleted");
-            exit();
-        } else {
-            header("Location: manage_admins.php?error=delete_failed");
-            exit();
+        if (empty($delete_admin_error)) {
+            $sql_delete = "DELETE FROM users WHERE id = ? AND role = 'admin'";
+            $stmt_delete = $conn->prepare($sql_delete);
+            $stmt_delete->bind_param("i", $id_to_delete);
+            if ($stmt_delete->execute()) {
+                $_SESSION['success_message'] = "Admin user deleted successfully!";
+                regenerate_csrf_token();
+                header("Location: manage_admins.php");
+                exit();
+            } else {
+                error_log("Error executing delete admin query: " . $stmt_delete->error);
+                $delete_admin_error = "Failed to delete admin user.";
+            }
+            $stmt_delete->close();
         }
     }
 }
 
 // Fetch all admin users
 $admins = [];
-$sql_admins = "SELECT id, name, email FROM users WHERE role = 'admin' ORDER BY name ASC";
+$sql_admins = "SELECT id, name, email, role FROM users WHERE role IN ('admin', 'super_admin') ORDER BY name ASC";
 if ($result = $conn->query($sql_admins)) {
     while ($row = $result->fetch_assoc()) {
         $admins[] = $row;
     }
 }
 
-// Check for success/error messages from redirects
-if (isset($_GET['success'])) {
-    if ($_GET['success'] == 'added') $message = "Admin user added successfully!";
-    if ($_GET['success'] == 'deleted') $message = "Admin user deleted successfully!";
-    if ($_GET['success'] == 'updated') $message = "Admin user updated successfully!";
-} elseif (isset($_GET['error'])) {
-    if ($_GET['error'] == 'self_delete') $error = "You cannot delete your own account.";
-    if ($_GET['error'] == 'last_admin') $error = "Cannot delete the last remaining admin account.";
-    if ($_GET['error'] == 'delete_failed') $error = "Failed to delete admin user.";
-}
+
 
 $pageTitle = 'Manage Administrators';
 include 'header.php';
@@ -124,15 +117,9 @@ include 'header.php';
     <div class="bg-white p-6 rounded-lg shadow-md">
         <h3 class="text-lg font-bold text-gray-800 mb-4">Add New Admin</h3>
 
-        <?php if(!empty($error)): ?>
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                <?php echo $error; ?>
-            </div>
-        <?php endif; ?>
-
-        <?php if(!empty($message)): ?>
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                <?php echo $message; ?>
+        <?php if(!empty($add_admin_error)): ?>
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+                <?php echo $add_admin_error; ?>
             </div>
         <?php endif; ?>
 
@@ -140,13 +127,21 @@ include 'header.php';
             <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
             <div class="mb-4">
                 <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                <input type="text" id="name" name="name" required
+                <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($new_admin_name); ?>" required
                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
             </div>
             <div class="mb-4">
                 <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                <input type="email" id="email" name="email" required
+                <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($new_admin_email); ?>" required
                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+            </div>
+            <div class="mb-4">
+                <label for="role" class="block text-sm font-medium text-gray-700 mb-2">Role</label>
+                <select id="role" name="role" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                    <option value="admin">Administrator</option>
+                    <option value="super_admin">Super Administrator</option>
+                </select>
             </div>
             <div class="mb-4">
                 <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
@@ -161,6 +156,12 @@ include 'header.php';
     <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
         <h3 class="text-lg font-bold text-gray-800 mb-4">All Administrators</h3>
 
+        <?php if(!empty($delete_admin_error)): ?>
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+                <?php echo $delete_admin_error; ?>
+            </div>
+        <?php endif; ?>
+
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
@@ -168,6 +169,7 @@ include 'header.php';
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
                         <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
                     </tr>
                 </thead>
@@ -178,17 +180,18 @@ include 'header.php';
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#<?php echo $admin['id']; ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><?php echo htmlspecialchars($admin['name']); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><?php echo htmlspecialchars($admin['email']); ?></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><?php echo htmlspecialchars(ucfirst(str_replace('_', ' ', $admin['role']))); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <a href="edit_admin.php?id=<?php echo $admin['id']; ?>" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
                                     <?php if ($admin['id'] != $_SESSION['admin_id']): ?>
-                                        <button onclick="confirmDelete(<?php echo $admin['id']; ?>, '<?php echo htmlspecialchars($admin['name']); ?>')" class="text-red-600 hover:text-red-900">Delete</button>
+                                        <button onclick="confirmDelete(<?php echo $admin['id']; ?>, '<?php echo htmlspecialchars($admin['name']); ?>', 'admin')" class="text-red-600 hover:text-red-900">Delete</button>
                                     <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="4" class="text-center text-gray-500 py-6">No admin users found.</td>
+                            <td colspan="5" class="text-center text-gray-500 py-6">No admin users found.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
@@ -207,7 +210,7 @@ include 'header.php';
                 <button onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-colors">Cancel</button>
                 <form id="deleteForm" action="manage_admins.php" method="POST" class="inline">
                     <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
-                    <input type="hidden" name="admin_id" id="deleteAdminId">
+                    <input type="hidden" name="id" id="deleteId">
                     <button type="submit" name="delete_admin" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors">Delete</button>
                 </form>
             </div>
@@ -215,23 +218,6 @@ include 'header.php';
     </div>
 </div>
 
-<script>
-function confirmDelete(adminId, adminName) {
-    document.getElementById('deleteMessage').textContent = `Are you sure you want to delete the admin "${adminName}"? This action cannot be undone.`;
-    document.getElementById('deleteAdminId').value = adminId;
-    document.getElementById('deleteModal').classList.remove('hidden');
-}
 
-function closeDeleteModal() {
-    document.getElementById('deleteModal').classList.add('hidden');
-}
-
-// Close modal when clicking outside
-document.getElementById('deleteModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeDeleteModal();
-    }
-});
-</script>
 
 <?php include 'footer.php'; ?>

@@ -1,8 +1,6 @@
 <?php
-// Start session
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/../includes/bootstrap.php';
+$conn = get_db_connection();
 
 // If an admin is already logged in, redirect them to the dashboard
 if (isset($_SESSION["admin_loggedin"]) && $_SESSION["admin_loggedin"] === true) {
@@ -10,26 +8,22 @@ if (isset($_SESSION["admin_loggedin"]) && $_SESSION["admin_loggedin"] === true) 
     exit;
 }
 
-// Include necessary files
-require_once '../includes/db_connect.php';
-require_once '../includes/csrf.php';
-$conn = get_db_connection();
-
 $pageTitle = "Admin Login - Mossé Luxe";
 $error = '';
 $csrf_token = generate_csrf_token();
 
 // Process login form when submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Temporarily disable CSRF validation for testing
-    // if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-    //     $error = 'Invalid security token. Please try again.';
-    // } else {
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+        $error = 'Invalid security token. Please try again.';
+    } else {
         $email = trim($_POST['email']);
         $password = trim($_POST['password']);
 
         if (empty($email) || empty($password)) {
             $error = 'Please enter both email and password.';
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $error = 'Please enter a valid email address.';
         } else {
             // Prepare a select statement
             $sql = "SELECT id, name, email, password, role FROM users WHERE email = ? AND role = 'admin'";
@@ -59,11 +53,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 header("location: dashboard.php");
                                 exit;
                             } else {
-                                $error = 'The password you entered was not valid.';
+                                $error = 'Invalid email or password.';
                             }
                         }
                     } else {
-                        $error = 'No admin account found with that email address.';
+                        $error = 'Invalid email or password.';
                     }
                 } else {
                     $error = 'Oops! Something went wrong. Please try again later.';
@@ -72,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     }
-    $conn->close();
+
 }
 ?>
 <!DOCTYPE html>

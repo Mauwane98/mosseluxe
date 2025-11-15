@@ -1,68 +1,114 @@
-# Mossé Luxe E-commerce Website
+# Mossé Luxe - E-commerce Website
 
-This project is a rebuilt e-commerce website for the Mossé Luxe brand, designed with a modern luxury streetwear aesthetic.
+## Overview
+Mossé Luxe is a premium e-commerce platform specializing in luxury streetwear and fashion accessories, crafted with precision and heritage. The platform features a modern, mobile-first design with comprehensive admin functionality.
 
-## Setup Instructions
+## Features
 
-1.  **Database Setup:**
-    *   Ensure you have a MySQL database server running.
-    *   Create a new database named `mosse_luxe_db`.
-    *   Import the `database.sql` file into your `mosse_luxe_db` database. This file contains the necessary table structures and sample product data.
+### Frontend
+- **Product Management**: Dynamic product catalog with categories, filters, and search
+- **Shopping Cart**: Persistent cart functionality with session merging for users
+- **Checkout Process**: Secure payment integration with Yoco and PayFast gateways
+- **User Accounts**: Registration, login, account management, and order history
+- **WhatsApp Integration**: Customer support chat functionality
+- **Responsive Design**: Mobile-first approach with dark/light theme support
+- **SEO Optimized**: Dynamic meta tags, sitemap, and structured data
 
-2.  **Database Configuration:**
-    *   Open the `config.php` file in the project root.
-    *   Update the `DB_HOST`, `DB_NAME`, `DB_USER`, and `DB_PASS` constants with your database credentials.
+### Admin Panel
+- **Dashboard**: Sales analytics, low stock alerts, and recent activity overview
+- **Product Management**: CRUD operations with image upload and variants
+- **Order Management**: Order processing, status updates, and customer communication
+- **User Management**: Customer account management and admin role handling
+- **Content Management**: Dynamic hero slides, homepage sections, and announcements
+- **Export Functionality**: Sales reports and customer/order data export
+- **Settings Management**: Store configuration and WhatsApp integration settings
 
-3.  **Web Server Configuration (Apache/Nginx):**
-    *   Configure your web server (e.g., Apache or Nginx) to point its document root to the `public` directory of this project.
-    *   **For Apache (httpd.conf or a virtual host file):**
-        ```apache
-        <VirtualHost *:80>
-            DocumentRoot "/path/to/your/mosse-luxe/public"
-            <Directory "/path/to/your/mosse-luxe/public">
-                AllowOverride All
-                Require all granted
-            </Directory>
-        </VirtualHost>
-        ```
-        (Replace `/path/to/your/mosse-luxe` with the actual path to your project.)
+## Technical Stack
+- **Backend**: PHP 8.1+, MySQL 8.0+
+- **Frontend**: TailwindCSS, JavaScript (ES6+)
+- **Security**: CSRF protection, input sanitization, SQL injection prevention
+- **Payment**: Yoco payment gateway integration
+- **Caching**: Static asset caching with .htaccess optimization
+- **Session Management**: Secure session handling with database persistence
 
-    *   **For Nginx (nginx.conf or a server block file):**
-        ```nginx
-        server {
-            listen 80;
-            server_name your_domain.com;
-            root /path/to/your/mosse-luxe/public;
+## Installation
 
-            index index.php index.html index.htm;
+1. **Prerequisites**
+   - PHP 8.1 or higher
+   - MySQL 8.0 or higher
+   - Apache/Nginx web server
+   - SSL certificate (recommended for production)
 
-            location / {
-                try_files $uri $uri/ /index.php?$query_string;
-            }
+2. **Setup Steps**
+   ```bash
+   # Clone the repository
+   git clone https://github.com/yourusername/mosse-luxe.git
+   cd mosse-luxe
 
-            location ~ \.php$ {
-                include snippets/fastcgi-php.conf;
-                fastcgi_pass unix:/var/run/php/php7.4-fpm.sock; # Adjust PHP version as needed
-            }
-        }
-        ```
-        (Replace `/path/to/your/mosse-luxe` with the actual path to your project and `your_domain.com` with your domain or IP address.)
+   # Install dependencies
+   composer install
+   npm install
 
-4.  **Accessing the Application:**
-    *   After configuring your web server, open your web browser and navigate to the URL configured for your project (e.g., `http://localhost/` or `http://your_domain.com/`).
+   # Set up environment variables
+   cp .env.example .env
+   # Configure database credentials, SMTP settings, and payment gateway keys
 
-## Implemented Features:
+   # Create database
+   php _private_scripts/db_setup.php
 
-*   Product Listing Page
-*   Single Product Details Page
-*   User Registration
-*   User Login
-*   Shopping Cart (Add, Update, Remove items)
-*   Checkout Process
+   # Seed initial data
+   php _private_scripts/seed_database.php
+   ```
 
-## Next Steps:
+3. **Production Deployment**
+   ```bash
+   # Install production dependencies
+   composer install --no-dev --optimize-autoloader
+   npm run build
 
-*   Implement payment gateway integration.
-*   Add user profile management.
-*   Implement order history for users.
-*   Develop an admin panel for product, order, and user management.
+   # Run database migrations and index optimization
+   php add_db_indexes.php
+
+   # Set proper file permissions
+   chmod 755 logs/
+   chmod 644 logs/*.log
+   ```
+
+## Security Features
+- CSRF token validation on all forms
+- Prepared statements for all database queries
+- Input sanitization and validation
+- Session security with secure cookies
+- Rate limiting for sensitive operations
+- Error logging with sanitized data
+
+## Performance Optimizations
+- Static asset caching (1 year for images/CSS/JS)
+- Database query optimization with proper indexing
+- Lazy loading for images
+- Minified CSS and JavaScript
+- Gzip compression enabled
+
+## Production Checklist
+- [ ] Environment variables configured (.env file)
+- [ ] SSL certificate installed and configured
+- [ ] Database connection tested and secured
+- [ ] SMTP settings configured for email notifications
+- [ ] Payment gateway credentials set up
+- [ ] File permissions properly configured
+- [ ] Error logging directory created and secured
+- [ ] Database indexes optimized (run `add_db_indexes.php`)
+- [ ] Production error pages configured (404.php, 500.php)
+
+## Maintenance
+- Regular database backups (recommended daily)
+- Monitor error logs in `/logs/` directory
+- Update dependencies regularly via Composer/NPM
+- Review and update SSL certificates annually
+- Monitor payment gateway integration health
+
+## License
+Copyright Mossé Luxe - All Rights Reserved
+
+## Support
+For technical support or questions, please contact the development team.

@@ -1,27 +1,16 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once '../includes/db_connect.php';
-
-// Ensure admin is logged in
-if (!isset($_SESSION["admin_loggedin"]) || $_SESSION["admin_loggedin"] !== true) {
-    header("location: login.php");
-    exit;
-}
-
-require_once '../includes/csrf.php';
-
+require_once 'bootstrap.php';
 $conn = get_db_connection();
 
 $csrf_token = generate_csrf_token();
-$message = '';
-$error = '';
+
 
 // Handle subscription deletion
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_subscription'])) {
     if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        $error = 'Invalid CSRF token.';
+        $_SESSION['error_message'] = 'Invalid CSRF token.';
+        header("Location: manage_subscriptions.php");
+        exit();
     } else {
         $subscription_id = filter_var($_POST['subscription_id'], FILTER_SANITIZE_NUMBER_INT);
         if ($subscription_id) {
@@ -29,10 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_subscription'])
             if ($stmt = $conn->prepare($sql)) {
                 $stmt->bind_param("i", $subscription_id);
                 if ($stmt->execute()) {
-                    header("Location: manage_subscriptions.php?success=deleted");
+                    $_SESSION['success_message'] = "Subscription removed successfully.";
+                    header("Location: manage_subscriptions.php");
                     exit();
                 } else {
-                    $error = "Failed to delete subscription.";
+                    $_SESSION['error_message'] = "Failed to delete subscription.";
+                    header("Location: manage_subscriptions.php");
+                    exit();
                 }
                 $stmt->close();
             }
@@ -47,15 +39,16 @@ $sql_subscriptions = "SELECT sn.id, sn.email, sn.created_at, p.name as product_n
                       JOIN products p ON sn.product_id = p.id
                       WHERE sn.notified_at IS NULL
                       ORDER BY sn.created_at DESC";
-if ($result = $conn->query($sql_subscriptions)) {
+if ($stmt_subscriptions = $conn->prepare($sql_subscriptions)) {
+    $stmt_subscriptions->execute();
+    $result = $stmt_subscriptions->get_result();
     while ($row = $result->fetch_assoc()) {
         $subscriptions[] = $row;
     }
+    $stmt_subscriptions->close();
 }
 
-if (isset($_GET['success']) && $_GET['success'] == 'deleted') {
-    $message = "Subscription removed successfully.";
-}
+
 
 $pageTitle = 'Stock Notification Subscriptions';
 include 'header.php';
@@ -64,17 +57,7 @@ include 'header.php';
 <div class="bg-white p-6 rounded-lg shadow-md">
     <h2 class="text-2xl font-bold text-gray-800 mb-6">Pending Stock Notification Subscriptions</h2>
 
-    <?php if(!empty($message)): ?>
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-            <?php echo $message; ?>
-        </div>
-    <?php endif; ?>
 
-    <?php if(!empty($error)): ?>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            <?php echo $error; ?>
-        </div>
-    <?php endif; ?>
 
     <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">

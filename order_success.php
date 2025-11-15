@@ -1,9 +1,6 @@
 <?php
 $pageTitle = "Order Success - Mossé Luxe";
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once 'includes/db_connect.php';
+require_once __DIR__ . '/includes/bootstrap.php';
 require_once 'includes/header.php';
 
 $order_id = filter_var($_GET['order_id'] ?? null, FILTER_SANITIZE_NUMBER_INT);
@@ -42,7 +39,7 @@ if ($order_id) {
         <?php if ($order_details): ?>
             <svg class="mx-auto h-16 w-16 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             <h1 class="mt-4 text-4xl md:text-6xl font-black uppercase tracking-tighter text-green-600">Order Successful!</h1>
-            <p class="mt-4 text-lg text-black/70">Thank you for your purchase. Your order #<?php echo htmlspecialchars($order_details['id']); ?> has been placed successfully.</p>
+            <p class="mt-4 text-lg text-black/70">Thank you for your purchase. Your order <?php echo htmlspecialchars(get_order_id_from_numeric_id($order_details['id'])); ?> has been placed successfully.</p>
             <p class="text-lg text-black/70">A confirmation email has been sent to your inbox.</p>
 
             <div class="mt-12 bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">

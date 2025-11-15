@@ -1,105 +1,162 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once '../includes/db_connect.php';
-
-// Ensure admin is logged in
-if (!isset($_SESSION["admin_loggedin"]) || $_SESSION["admin_loggedin"] !== true) {
-    header("location: login.php");
-    exit;
-}
-
-require_once '../includes/csrf.php';
-
+require_once 'bootstrap.php';
 $conn = get_db_connection();
 
-$error = '';
-$csrf_token = generate_csrf_token();
+$page_id = isset($_GET['id']) ? filter_var($_GET['id'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) : 0;
+$is_editing = $page_id > 0;
 
-$page_id = isset($_GET['id']) ? filter_var($_GET['id'], FILTER_VALIDATE_INT, array('options' => array('min_range' => 1))) : 0;
-
-$page = null;
-if ($page_id > 0) {
-    $sql = "SELECT id, title, slug, content FROM pages WHERE id = ?";
-    if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param('i', $page_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $page = $result->fetch_assoc();
-        $stmt->close();
+// --- Slug Generation Helper ---
+function generate_slug($title, $conn, $ignore_id = 0) {
+    // If title is empty, generate a timestamp-based slug
+    if (empty(trim($title))) {
+        $title = 'page-' . time();
     }
+
+    $slug = strtolower($title);
+    $slug = preg_replace('/[^a-z0-9\s-]/', '', $slug);
+    $slug = preg_replace('/[\s-]+/', '-', $slug);
+    $slug = trim($slug, '-');
+
+    // Check for uniqueness
+    $original_slug = $slug;
+    $counter = 1;
+    while (true) {
+        $sql = "SELECT id FROM pages WHERE slug = ? AND id != ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('si', $slug, $ignore_id);
+        $stmt->execute();
+        if ($stmt->get_result()->num_rows == 0) {
+            $stmt->close();
+            break;
+        }
+        $stmt->close();
+        $slug = $original_slug . '-' . $counter++;
+    }
+    return $slug;
 }
 
-if (!$page) {
-    header("Location: pages.php?error=not_found");
+// --- POST Handling ---
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+        $_SESSION['toast_message'] = ['message' => 'Invalid CSRF token.', 'type' => 'error'];
+        header("Location: pages.php");
+        exit();
+    }
+
+    $title = trim($_POST['title']);
+    $subtitle = trim($_POST['subtitle']);
+    $content = trim($_POST['content']);
+
+    // Only content is required, title and subtitle are optional
+    if (empty($content)) {
+        $_SESSION['toast_message'] = ['message' => 'Content cannot be empty.', 'type' => 'error'];
+        header("Location: " . $_SERVER['REQUEST_URI']); // Redirect back to the same page
+        exit();
+    }
+
+    if ($is_editing) {
+        // Update existing page
+        $sql = "UPDATE pages SET title = ?, subtitle = ?, content = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('sssi', $title, $subtitle, $content, $page_id);
+        $success_message = 'Page updated successfully!';
+    } else {
+        // Create new page
+        $slug = generate_slug($title, $conn);
+        $sql = "INSERT INTO pages (title, slug, subtitle, content) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ssss', $title, $slug, $subtitle, $content);
+        $success_message = 'Page created successfully!';
+    }
+
+    if ($stmt->execute()) {
+        $_SESSION['toast_message'] = ['message' => $success_message, 'type' => 'success'];
+        regenerate_csrf_token();
+        header("Location: pages.php");
+    } else {
+        $_SESSION['toast_message'] = ['message' => 'An error occurred while saving the page.', 'type' => 'error'];
+        header("Location: " . $_SERVER['REQUEST_URI']);
+    }
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!verify_csrf_token()) {
-        $error = 'Invalid CSRF token.';
-    } else {
-        $title = trim($_POST['title']);
-        $content = trim($_POST['content']);
+// --- Data Fetching for Edit Mode ---
+$page = [
+    'id' => 0,
+    'title' => '',
+    'slug' => '',
+    'content' => ''
+];
 
-        if (empty($title) || empty($content)) {
-            $error = 'Title and content cannot be empty.';
-        } else {
-            if ($page_id > 0) {
-                $sql = "UPDATE pages SET title = ?, content = ? WHERE id = ?";
-                if ($stmt = $conn->prepare($sql)) {
-                    $stmt->bind_param('ssi', $title, $content, $page_id);
-                    if ($stmt->execute()) {
-                        header('Location: pages.php?success=updated');
-                        exit;
-                    } else {
-                        $error = 'Failed to update page.';
-                    }
-                    $stmt->close();
-                }
-            }
-        }
+if ($is_editing) {
+    $stmt = $conn->prepare("SELECT id, title, subtitle, slug, content FROM pages WHERE id = ?");
+    $stmt->bind_param('i', $page_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $page = $result->fetch_assoc();
+    $stmt->close();
+
+    if (!$page) {
+        $_SESSION['toast_message'] = ['message' => 'Page not found.', 'type' => 'error'];
+        header("Location: pages.php");
+        exit();
     }
 }
 
-$pageTitle = 'Edit Page: ' . htmlspecialchars($page['title']);
+$pageTitle = $is_editing ? 'Edit Page' : 'Create New Page';
+
+// Fetch all pages for internal link dropdown
+$all_pages = [];
+$sql_pages = "SELECT id, title, slug FROM pages WHERE status = 1 ORDER BY title ASC";
+if ($result_pages = $conn->query($sql_pages)) {
+    while ($row_page = $result_pages->fetch_assoc()) {
+        $all_pages[] = $row_page;
+    }
+    $result_pages->free();
+} else {
+    error_log("Error fetching pages for internal links: " . $conn->error);
+}
+
 include 'header.php';
 ?>
 
 <div class="bg-white p-6 rounded-lg shadow-md">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">Edit Page</h2>
+        <h2 class="text-2xl font-bold text-gray-800"><?php echo $pageTitle; ?></h2>
         <a href="pages.php" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">Back to Pages</a>
     </div>
 
-    <?php if(!empty($error)): ?>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            <?php echo $error; ?>
-        </div>
-    <?php endif; ?>
-
-    <form action="edit_page.php?id=<?php echo $page_id; ?>" method="post" class="space-y-6">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
+    <form action="edit_page.php<?php echo $is_editing ? '?id=' . $page_id : ''; ?>" method="post" class="space-y-6">
+        <?php echo generate_csrf_token_input(); ?>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Title -->
             <div class="md:col-span-2">
-                <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Page Title</label>
-                <input type="text" id="title" name="title" required
+                <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Page Title <span class="text-gray-500 text-xs">(optional)</span></label>
+                <input type="text" id="title" name="title"
                        value="<?php echo htmlspecialchars($page['title']); ?>"
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                       placeholder="Optional page title">
             </div>
 
-            <!-- Slug (Read-only) -->
+            <!-- Subtitle -->
+            <div class="md:col-span-2">
+                <label for="subtitle" class="block text-sm font-medium text-gray-700 mb-2">Page Subtitle</label>
+                <input type="text" id="subtitle" name="subtitle"
+                       value="<?php echo htmlspecialchars($page['subtitle'] ?? ''); ?>"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                       placeholder="Optional subtitle that appears under the title">
+            </div>
+
+            <?php if ($is_editing): ?>
+            <!-- Slug (Read-only for existing pages) -->
             <div>
                 <label for="slug" class="block text-sm font-medium text-gray-700 mb-2">Page Slug</label>
                 <input type="text" id="slug" name="slug" readonly
-                       value="<?php echo htmlspecialchars($page['slug']); ?>"
+                       value="/<?php echo htmlspecialchars($page['slug']); ?>"
                        class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-600">
-                <p class="text-xs text-gray-500 mt-1">Slug cannot be changed</p>
+                <p class="text-xs text-gray-500 mt-1">Slug is auto-generated and cannot be changed.</p>
             </div>
-
             <!-- Preview Link -->
             <div class="flex items-end">
                 <a href="../page.php?slug=<?php echo urlencode($page['slug']); ?>" target="_blank"
@@ -107,45 +164,224 @@ include 'header.php';
                     Preview Page
                 </a>
             </div>
+            <?php endif; ?>
         </div>
 
         <!-- Content -->
         <div>
             <label for="content" class="block text-sm font-medium text-gray-700 mb-2">Page Content</label>
-            <textarea id="content" name="content" rows="15" required
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black font-mono text-sm"><?php echo htmlspecialchars($page['content']); ?></textarea>
-            <p class="text-xs text-gray-500 mt-1">You can use HTML tags for formatting</p>
+            <div id="editor-toolbar" class="mb-2 border border-gray-300 rounded-t-md bg-gray-50 p-2">
+                <button type="button" class="toolbar-btn px-2 py-1 text-xs border border-gray-300 rounded hover:bg-gray-200" onclick="formatText('bold')" title="Bold">
+                    <strong>B</strong>
+                </button>
+                <button type="button" class="toolbar-btn px-2 py-1 text-xs border border-gray-300 rounded hover:bg-gray-200" onclick="formatText('italic')" title="Italic">
+                    <em>I</em>
+                </button>
+                <button type="button" class="toolbar-btn px-2 py-1 text-xs border border-gray-300 rounded hover:bg-gray-200" onclick="formatText('underline')" title="Underline">
+                    <u>U</u>
+                </button>
+                <span class="mx-2 border-l border-gray-300 h-4 inline-block"></span>
+                <button type="button" class="toolbar-btn px-2 py-1 text-xs border border-gray-300 rounded hover:bg-gray-200" onclick="formatBlock('h1')" title="Heading 1">H1</button>
+                <button type="button" class="toolbar-btn px-2 py-1 text-xs border border-gray-300 rounded hover:bg-gray-200" onclick="formatBlock('h2')" title="Heading 2">H2</button>
+                <button type="button" class="toolbar-btn px-2 py-1 text-xs border border-gray-300 rounded hover:bg-gray-200" onclick="formatBlock('h3')" title="Heading 3">H3</button>
+                <span class="mx-2 border-l border-gray-300 h-4 inline-block"></span>
+                <button type="button" class="toolbar-btn px-2 py-1 text-xs border border-gray-300 rounded hover:bg-gray-200" onclick="formatBlock('p')" title="Paragraph">P</button>
+                <button type="button" class="toolbar-btn px-2 py-1 text-xs border border-gray-300 rounded hover:bg-gray-200" onclick="insertList('ul')" title="Bullet List">•</button>
+                <button type="button" class="toolbar-btn px-2 py-1 text-xs border border-gray-300 rounded hover:bg-gray-200" onclick="insertList('ol')" title="Numbered List">1.</button>
+                <span class="mx-2 border-l border-gray-300 h-4 inline-block"></span>
+                <button type="button" class="toolbar-btn px-2 py-1 text-xs border border-gray-300 rounded hover:bg-gray-200" onclick="insertLink()" title="Insert Link">🔗</button>
+                <button type="button" class="toolbar-btn px-2 py-1 text-xs border border-gray-300 rounded hover:bg-gray-200" onclick="insertInternalLink()" title="Insert Internal Page Link">🏠</button>
+                <button type="button" class="toolbar-btn px-2 py-1 text-xs border border-gray-300 rounded hover:bg-gray-200" onclick="toggleCode()" title="Show/Hide HTML">HTML</button>
+            </div>
+            <div id="editor-container" class="border-x border-b border-gray-300 rounded-b-md">
+                <div id="wysiwyg-editor"
+                     contenteditable="true"
+                     class="min-h-[400px] p-4 focus:outline-none prose prose-lg max-w-none"
+                     oninput="updateTextarea()"><?php echo $page['content']; ?></div>
+            </div>
+            <textarea id="content" name="content" class="hidden"><?php echo htmlspecialchars($page['content']); ?></textarea>
+            <p class="text-xs text-gray-500 mt-1 p-3 pb-2 border-x border-b border-gray-300 rounded-b-md bg-gray-50">Use the toolbar above to format your content. The content will appear exactly as it looks here.</p>
         </div>
 
         <!-- Submit Buttons -->
-        <div class="flex justify-end space-x-4">
-            <a href="pages.php" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">Cancel</a>
-            <button type="submit" class="px-6 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition-colors">Save Changes</button>
+        <div class="flex justify-between items-center border-t pt-6">
+            <button type="button" onclick="previewContent()" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">
+                Preview Content
+            </button>
+            <div class="flex space-x-4">
+                <a href="pages.php" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">Cancel</a>
+                <button type="submit" class="px-6 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition-colors">
+                    <?php echo $is_editing ? 'Save Changes' : 'Create Page'; ?>
+                </button>
+            </div>
         </div>
     </form>
 </div>
 
 <!-- Content Preview Modal -->
 <div id="previewModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
-    <div class="relative top-20 mx-auto p-5 border w-4/5 max-w-4xl shadow-lg rounded-md bg-white max-h-screen overflow-y-auto">
-        <div class="mt-3">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-medium text-gray-900">Content Preview</h3>
-                <button onclick="closePreviewModal()" class="text-gray-400 hover:text-gray-600">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div id="previewContent" class="prose max-w-none"></div>
+    <div class="relative top-10 mx-auto p-5 border w-4/5 max-w-4xl shadow-lg rounded-md bg-white max-h-[90vh] flex flex-col">
+        <div class="flex justify-between items-center mb-4 pb-3 border-b">
+            <h3 class="text-lg font-medium text-gray-900">Content Preview</h3>
+            <button onclick="closePreviewModal()" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
         </div>
+        <div id="previewContent" class="prose max-w-none overflow-y-auto"></div>
     </div>
 </div>
 
 <script>
-// Simple content preview functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const editor = document.getElementById('wysiwyg-editor');
+    const textarea = document.getElementById('content');
+
+    // Initialize editor with existing content or convert HTML to text
+    if (textarea.value.trim() !== '') {
+        // If we have HTML content, parse it into the editor
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(textarea.value, 'text/html');
+        editor.innerHTML = doc.body.innerHTML || textarea.value;
+    } else {
+        // Start with empty paragraph for new content
+        editor.innerHTML = '<p><br></p>';
+    }
+
+    // Update textarea whenever editor content changes
+    updateTextarea();
+
+    // Focus and cursor management
+    editor.addEventListener('keydown', function(e) {
+        // Handle Enter key to create new paragraphs
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            document.execCommand('insertParagraph');
+        }
+
+        // Handle Ctrl+B, Ctrl+I, Ctrl+U for formatting
+        if (e.ctrlKey) {
+            switch(e.key.toLowerCase()) {
+                case 'b':
+                    e.preventDefault();
+                    formatText('bold');
+                    break;
+                case 'i':
+                    e.preventDefault();
+                    formatText('italic');
+                    break;
+                case 'u':
+                    e.preventDefault();
+                    formatText('underline');
+                    break;
+            }
+        }
+    });
+});
+
+// Update textarea with editor HTML
+function updateTextarea() {
+    const editor = document.getElementById('wysiwyg-editor');
+    const textarea = document.getElementById('content');
+    textarea.value = editor.innerHTML;
+}
+
+// Text formatting functions
+function formatText(command) {
+    document.execCommand(command, false, null);
+    updateTextarea();
+}
+
+function formatBlock(tagName) {
+    document.execCommand('formatBlock', false, tagName);
+    updateTextarea();
+}
+
+function insertList(listType) {
+    document.execCommand('insert' + (listType === 'ul' ? 'UnorderedList' : 'OrderedList'), false, null);
+    updateTextarea();
+}
+
+function insertLink() {
+    const url = prompt('Enter the URL:', 'http://');
+    if (url && url.trim() !== '') {
+        document.execCommand('createLink', false, url);
+        updateTextarea();
+    }
+}
+
+function insertInternalLink() {
+    const pages = <?php echo json_encode($all_pages); ?>;
+    if (pages.length === 0) {
+        alert('No pages available for linking.');
+        return;
+    }
+
+    // Create a modal or dropdown for page selection
+    const modal = document.createElement('div');
+    modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; align-items: center; justify-content: center;';
+    modal.innerHTML = `
+        <div style="background: white; padding: 20px; border-radius: 8px; max-width: 400px; width: 90%;">
+            <h3 style="margin-top: 0;">Select a Page to Link To</h3>
+            <select id="internal-page-select" style="width: 100%; padding: 8px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px;">
+                <option value="">Choose a page...</option>
+                <?php foreach ($all_pages as $page): ?>
+                <option value="<?php echo SITE_URL; ?>page/<?php echo htmlspecialchars($page['slug']); ?>"><?php echo htmlspecialchars($page['title']); ?></option>
+                <?php endforeach; ?>
+            </select>
+            <div style="text-align: right; margin-top: 15px;">
+                <button id="cancel-link" style="margin-right: 10px; padding: 8px 16px; background: #ccc;">Cancel</button>
+                <button id="insert-link" style="padding: 8px 16px; background: #000; color: white;">Insert Link</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    document.getElementById('insert-link').onclick = function() {
+        const selectedPage = document.getElementById('internal-page-select').value;
+        if (selectedPage) {
+            document.execCommand('createLink', false, selectedPage);
+            updateTextarea();
+        }
+        document.body.removeChild(modal);
+    };
+
+    document.getElementById('cancel-link').onclick = function() {
+        document.body.removeChild(modal);
+    };
+}
+
+function toggleCode() {
+    const editor = document.getElementById('wysiwyg-editor');
+    const textarea = document.getElementById('content');
+    const container = document.getElementById('editor-container');
+    const toolbar = document.getElementById('editor-toolbar');
+    const btn = event.target;
+
+    if (textarea.classList.contains('hidden')) {
+        // Show HTML code
+        textarea.classList.remove('hidden');
+        editor.classList.add('hidden');
+        textarea.value = editor.innerHTML;
+        btn.textContent = 'WYSIWYG';
+        btn.title = 'Switch to Visual Editor';
+    } else {
+        // Show visual editor
+        textarea.classList.add('hidden');
+        editor.classList.remove('hidden');
+        editor.innerHTML = textarea.value;
+        btn.textContent = 'HTML';
+        btn.title = 'Show/Hide HTML';
+    }
+}
+
+// Prevent form submission when clicking toolbar buttons
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('toolbar-btn')) {
+        e.preventDefault();
+    }
+});
+
 function previewContent() {
     const content = document.getElementById('content').value;
-    const previewContent = document.getElementById('previewContent');
-    previewContent.innerHTML = content;
+    document.getElementById('previewContent').innerHTML = content;
     document.getElementById('previewModal').classList.remove('hidden');
 }
 
@@ -153,19 +389,54 @@ function closePreviewModal() {
     document.getElementById('previewModal').classList.add('hidden');
 }
 
-// Auto-save draft (optional enhancement)
-let autoSaveTimeout;
-function autoSave() {
-    clearTimeout(autoSaveTimeout);
-    autoSaveTimeout = setTimeout(() => {
-        // Could implement auto-save to localStorage or server
-        console.log('Auto-saving draft...');
-    }, 30000); // 30 seconds
-}
-
-// Add auto-save on content change
-document.getElementById('content').addEventListener('input', autoSave);
-document.getElementById('title').addEventListener('input', autoSave);
+// Add some basic styling to ensure proper formatting
+document.addEventListener('DOMContentLoaded', function() {
+    const style = document.createElement('style');
+    style.textContent = `
+        #wysiwyg-editor h1 {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 0.67em 0;
+        }
+        #wysiwyg-editor h2 {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0.75em 0;
+        }
+        #wysiwyg-editor h3 {
+            font-size: 1.17em;
+            font-weight: bold;
+            margin: 0.83em 0;
+        }
+        #wysiwyg-editor p {
+            margin: 1em 0;
+        }
+        #wysiwyg-editor ul, #wysiwyg-editor ol {
+            margin-left: 2em;
+            padding-left: 0;
+        }
+        #wysiwyg-editor li {
+            margin-bottom: 0.5em;
+        }
+        #wysiwyg-editor a {
+            color: #3b82f6;
+            text-decoration: underline;
+        }
+        #wysiwyg-editor strong, #wysiwyg-editor b {
+            font-weight: bold;
+        }
+        #wysiwyg-editor em, #wysiwyg-editor i {
+            font-style: italic;
+        }
+        #wysiwyg-editor u {
+            text-decoration: underline;
+        }
+        #wysiwyg-editor[contenteditable]:focus {
+            outline: none;
+        }
+    `;
+    document.head.appendChild(style);
+});
 </script>
 
 <?php include 'footer.php'; ?>

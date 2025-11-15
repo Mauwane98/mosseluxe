@@ -1,9 +1,5 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-require_once 'includes/db_connect.php';
+require_once __DIR__ . '/includes/bootstrap.php';
 
 header('Content-Type: application/json');
 
@@ -19,6 +15,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 $user_id = $_SESSION['user_id'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['product_id'])) {
+    if (!validate_csrf_token()) {
+        $response = ['success' => false, 'message' => 'Invalid security token.'];
+        echo json_encode($response);
+        exit;
+    }
     $action = $_POST['action'];
     $product_id = filter_var($_POST['product_id'], FILTER_VALIDATE_INT);
 
@@ -72,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['pro
             $response['message'] = 'Unknown action.';
             break;
     }
-    $conn->close();
+
 }
 
 echo json_encode($response);

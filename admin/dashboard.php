@@ -1,6 +1,7 @@
 <?php
 // Include the admin bootstrap for automatic setup
 require_once 'bootstrap.php';
+$conn = get_db_connection();
 
 // --- Comprehensive Data Fetching ---
 
@@ -10,41 +11,117 @@ $todayStart = $today . ' 00:00:00';
 $todayEnd = $today . ' 23:59:59';
 
 // Today's Sales
-$todaySalesResult = $conn->query("SELECT SUM(total_price) as today_sales FROM orders WHERE status = 'Completed' AND created_at BETWEEN '$todayStart' AND '$todayEnd'");
-$todaySales = $todaySalesResult->fetch_assoc()['today_sales'] ?? 0;
+$todaySalesResult = $conn->prepare("SELECT SUM(total_price) as today_sales FROM orders WHERE status = 'Completed' AND created_at BETWEEN ? AND ?");
+if ($todaySalesResult) {
+    $todaySalesResult->bind_param("ss", $todayStart, $todayEnd);
+    if ($todaySalesResult->execute()) {
+        $todaySales = $todaySalesResult->get_result()->fetch_assoc()['today_sales'] ?? 0;
+    } else {
+        error_log("Error executing today's sales query: " . $todaySalesResult->error);
+    }
+    $todaySalesResult->close();
+} else {
+    error_log("Error preparing today's sales query: " . $conn->error);
+}
 
 // Today's Orders
-$todayOrdersResult = $conn->query("SELECT COUNT(id) as today_orders FROM orders WHERE created_at BETWEEN '$todayStart' AND '$todayEnd'");
-$todayOrders = $todayOrdersResult->fetch_assoc()['today_orders'] ?? 0;
+$todayOrdersResult = $conn->prepare("SELECT COUNT(id) as today_orders FROM orders WHERE created_at BETWEEN ? AND ?");
+if ($todayOrdersResult) {
+    $todayOrdersResult->bind_param("ss", $todayStart, $todayEnd);
+    if ($todayOrdersResult->execute()) {
+        $todayOrders = $todayOrdersResult->get_result()->fetch_assoc()['today_orders'] ?? 0;
+    } else {
+        error_log("Error executing today's orders query: " . $todayOrdersResult->error);
+    }
+    $todayOrdersResult->close();
+} else {
+    error_log("Error preparing today's orders query: " . $conn->error);
+}
 
 // Total Sales (All time)
-$totalSalesResult = $conn->query("SELECT SUM(total_price) as total_sales FROM orders WHERE status = 'Completed'");
-$totalSales = $totalSalesResult->fetch_assoc()['total_sales'] ?? 0;
+$totalSalesResult = $conn->prepare("SELECT SUM(total_price) as total_sales FROM orders WHERE status = 'Completed'");
+if ($totalSalesResult) {
+    if ($totalSalesResult->execute()) {
+        $totalSales = $totalSalesResult->get_result()->fetch_assoc()['total_sales'] ?? 0;
+    } else {
+        error_log("Error executing total sales query: " . $totalSalesResult->error);
+    }
+    $totalSalesResult->close();
+} else {
+    error_log("Error preparing total sales query: " . $conn->error);
+}
 
 // Total Orders
-$totalOrdersResult = $conn->query("SELECT COUNT(id) as total_orders FROM orders");
-$totalOrders = $totalOrdersResult->fetch_assoc()['total_orders'] ?? 0;
+$totalOrdersResult = $conn->prepare("SELECT COUNT(id) as total_orders FROM orders");
+if ($totalOrdersResult) {
+    if ($totalOrdersResult->execute()) {
+        $totalOrders = $totalOrdersResult->get_result()->fetch_assoc()['total_orders'] ?? 0;
+    } else {
+        error_log("Error executing total orders query: " . $totalOrdersResult->error);
+    }
+    $totalOrdersResult->close();
+} else {
+    error_log("Error preparing total orders query: " . $conn->error);
+}
 
 // Total Customers
-$totalCustomersResult = $conn->query("SELECT COUNT(id) as total_customers FROM users WHERE role = 'user'");
-$totalCustomers = $totalCustomersResult->fetch_assoc()['total_customers'] ?? 0;
+$totalCustomersResult = $conn->prepare("SELECT COUNT(id) as total_customers FROM users WHERE role = 'user'");
+if ($totalCustomersResult) {
+    if ($totalCustomersResult->execute()) {
+        $totalCustomers = $totalCustomersResult->get_result()->fetch_assoc()['total_customers'] ?? 0;
+    } else {
+        error_log("Error executing total customers query: " . $totalCustomersResult->error);
+    }
+    $totalCustomersResult->close();
+} else {
+    error_log("Error preparing total customers query: " . $conn->error);
+}
 
 // Total Products
-$totalProductsResult = $conn->query("SELECT COUNT(id) as total_products FROM products WHERE status = 1");
-$totalProducts = $totalProductsResult->fetch_assoc()['total_products'] ?? 0;
+$totalProductsResult = $conn->prepare("SELECT COUNT(id) as total_products FROM products WHERE status = 1");
+if ($totalProductsResult) {
+    if ($totalProductsResult->execute()) {
+        $totalProducts = $totalProductsResult->get_result()->fetch_assoc()['total_products'] ?? 0;
+    } else {
+        error_log("Error executing total products query: " . $totalProductsResult->error);
+    }
+    $totalProductsResult->close();
+} else {
+    error_log("Error preparing total products query: " . $conn->error);
+}
 
 // Low Stock Products
 $lowStockProducts = [];
-$sql = "SELECT id, name, stock FROM products WHERE stock <= 5 AND status = 1 ORDER BY stock ASC LIMIT 5";
-if ($result = $conn->query($sql)) {
-    while ($row = $result->fetch_assoc()) {
-        $lowStockProducts[] = $row;
+$sql = "SELECT id, name, stock FROM products WHERE stock <= ? AND status = 1 ORDER BY stock ASC LIMIT ?";
+if ($stmt = $conn->prepare($sql)) {
+    $limit = 5;
+    $stock_threshold = 5;
+    $stmt->bind_param("ii", $stock_threshold, $limit);
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $lowStockProducts[] = $row;
+        }
+    } else {
+        error_log("Error executing low stock products query: " . $stmt->error);
     }
+    $stmt->close();
+} else {
+    error_log("Error preparing low stock products query: " . $conn->error);
 }
 
 // Pending Orders
-$pendingOrdersResult = $conn->query("SELECT COUNT(id) as pending_orders FROM orders WHERE status = 'Pending'");
-$pendingOrders = $pendingOrdersResult->fetch_assoc()['pending_orders'] ?? 0;
+$pendingOrdersResult = $conn->prepare("SELECT COUNT(id) as pending_orders FROM orders WHERE status = 'Pending'");
+if ($pendingOrdersResult) {
+    if ($pendingOrdersResult->execute()) {
+        $pendingOrders = $pendingOrdersResult->get_result()->fetch_assoc()['pending_orders'] ?? 0;
+    } else {
+        error_log("Error executing pending orders query: " . $pendingOrdersResult->error);
+    }
+    $pendingOrdersResult->close();
+} else {
+    error_log("Error preparing pending orders query: " . $conn->error);
+}
 
 // Recent Orders
 $recentOrders = [];
@@ -52,11 +129,21 @@ $sql = "SELECT o.id, o.total_price, o.status, o.created_at, u.name as customer_n
         FROM orders o
         LEFT JOIN users u ON o.user_id = u.id
         ORDER BY o.created_at DESC
-        LIMIT 5";
-if ($result = $conn->query($sql)) {
-    while ($row = $result->fetch_assoc()) {
-        $recentOrders[] = $row;
+        LIMIT ?";
+if ($stmt = $conn->prepare($sql)) {
+    $limit = 5;
+    $stmt->bind_param("i", $limit);
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $recentOrders[] = $row;
+        }
+    } else {
+        error_log("Error executing recent orders query: " . $stmt->error);
     }
+    $stmt->close();
+} else {
+    error_log("Error preparing recent orders query: " . $conn->error);
 }
 
 // Top Selling Products
@@ -68,20 +155,40 @@ $sql = "SELECT p.name, SUM(oi.quantity) as total_sold
         WHERE o.status = 'Completed'
         GROUP BY oi.product_id
         ORDER BY total_sold DESC
-        LIMIT 5";
-if ($result = $conn->query($sql)) {
-    while ($row = $result->fetch_assoc()) {
-        $topProducts[] = $row;
+        LIMIT ?";
+if ($stmt = $conn->prepare($sql)) {
+    $limit = 5;
+    $stmt->bind_param("i", $limit);
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $topProducts[] = $row;
+        }
+    } else {
+        error_log("Error executing top selling products query: " . $stmt->error);
     }
+    $stmt->close();
+} else {
+    error_log("Error preparing top selling products query: " . $conn->error);
 }
 
 // Recent Messages
 $recentMessages = [];
-$sql = "SELECT id, name, subject, received_at, is_read FROM messages ORDER BY received_at DESC LIMIT 3";
-if ($result = $conn->query($sql)) {
-    while ($row = $result->fetch_assoc()) {
-        $recentMessages[] = $row;
+$sql = "SELECT id, name, subject, received_at, is_read FROM messages ORDER BY received_at DESC LIMIT ?";
+if ($stmt = $conn->prepare($sql)) {
+    $limit = 3;
+    $stmt->bind_param("i", $limit);
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $recentMessages[] = $row;
+        }
+    } else {
+        error_log("Error executing recent messages query: " . $stmt->error);
     }
+    $stmt->close();
+} else {
+    error_log("Error preparing recent messages query: " . $conn->error);
 }
 
 // Sales Chart Data (Last 7 Days)
@@ -94,13 +201,23 @@ for ($i = 6; $i >= 0; $i--) {
 
     $sql = "SELECT SUM(total_price) as daily_sales
             FROM orders
-            WHERE DATE(created_at) = '$date' AND status = 'Completed'";
-    $result = $conn->query($sql);
-    $row = $result->fetch_assoc();
-    $salesData[] = $row['daily_sales'] ?? 0;
+            WHERE DATE(created_at) = ? AND status = 'Completed'";
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("s", $date);
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $salesData[] = $row['daily_sales'] ?? 0;
+        } else {
+            error_log("Error executing daily sales query for date " . $date . ": " . $stmt->error);
+        }
+        $stmt->close();
+    } else {
+        error_log("Error preparing daily sales query for date " . $date . ": " . $conn->error);
+    }
 }
 
-$conn->close();
+
 
 $pageTitle = "Dashboard";
 include 'header.php';

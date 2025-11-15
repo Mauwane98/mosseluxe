@@ -1,6 +1,9 @@
 <?php
 // Include the admin bootstrap for automatic setup
 require_once 'bootstrap.php';
+$conn = get_db_connection();
+
+$csrf_token = generate_csrf_token(); // Generate CSRF token once for the page
 
 // --- Data Fetching ---
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
@@ -63,10 +66,14 @@ if ($stmt = $conn->prepare($sql)) {
     }
     $stmt->close();
 }
-$conn->close();
+
 
 $pageTitle = "Manage Users";
 include 'header.php';
+
+// Display any session messages
+displaySuccessMessage();
+displayErrorMessage();
 ?>
 
 <div class="bg-white p-6 rounded-lg shadow-md">
@@ -88,6 +95,23 @@ include 'header.php';
             <button type="submit" class="w-full bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">Filter</button>
         </div>
     </form>
+
+    <!-- Export Options -->
+    <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center space-x-2">
+            <a href="export_customers.php?format=csv"
+               class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors text-sm">
+                <i class="fas fa-file-csv mr-1"></i>Export Customers CSV
+            </a>
+            <a href="export_customers.php?format=pdf"
+               class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors text-sm">
+                <i class="fas fa-file-pdf mr-1"></i>Export Customers PDF
+            </a>
+        </div>
+        <div class="text-sm text-gray-600">
+            Showing <?php echo count($users); ?> of <?php echo $total_users; ?> users
+        </div>
+    </div>
 
     <!-- Users Table -->
     <div class="overflow-x-auto">
@@ -113,7 +137,7 @@ include 'header.php';
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><?php echo date('d M Y', strtotime($user['created_at'])); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <a href="edit_user.php?id=<?php echo $user['id']; ?>" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
-                                <a href="delete_user.php?id=<?php echo $user['id']; ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+                                <button onclick="confirmDelete(<?php echo $user['id']; ?>, '<?php echo htmlspecialchars($user['name']); ?>', 'user')" class="text-red-600 hover:text-red-900">Delete</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -139,6 +163,24 @@ include 'header.php';
             </nav>
         </div>
     <?php endif; ?>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3">
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Confirm Deletion</h3>
+            <p class="text-sm text-gray-500 mb-4" id="deleteMessage"></p>
+            <div class="flex justify-end space-x-4">
+                <button onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-colors">Cancel</button>
+                <form id="deleteForm" action="delete_user.php" method="POST" class="inline">
+                    <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
+                    <input type="hidden" name="id" id="deleteId">
+                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <?php include 'footer.php'; ?>

@@ -1,1425 +1,185 @@
-[31-Oct-2025 22:20:28 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:20:28 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
-[31-Oct-2025 22:21:32 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:21:32 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
-[31-Oct-2025 22:21:33 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:21:33 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
-[31-Oct-2025 22:22:30 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:22:30 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
-[31-Oct-2025 22:22:31 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:22:31 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
-[31-Oct-2025 22:24:22 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:24:22 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
-[31-Oct-2025 22:24:23 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:24:23 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
-[31-Oct-2025 22:24:24 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:24:24 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
-[31-Oct-2025 22:24:24 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:24:24 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
-[31-Oct-2025 22:24:25 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:24:25 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
-[31-Oct-2025 22:24:25 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:24:25 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
-[31-Oct-2025 22:24:25 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:24:25 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
-[31-Oct-2025 22:25:07 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:25:07 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
-[31-Oct-2025 22:26:11 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:26:11 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: NO)
-[31-Oct-2025 22:28:08 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:28:08 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: YES)
-[31-Oct-2025 22:28:09 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:28:09 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: YES)
-[31-Oct-2025 22:28:10 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:28:10 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: YES)
-[31-Oct-2025 22:29:12 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in C:\XAMP\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[31-Oct-2025 22:29:12 Europe/Berlin] Database Connection Failed: Access denied for user 'root'@'localhost' (using password: YES)
-[07-Nov-2025 17:39:14 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 17:39:21 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 17:39:27 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 18:09:42 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 18:09:49 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 18:09:59 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 18:11:49 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 18:11:50 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 18:11:51 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 18:12:01 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 18:12:04 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 18:49:57 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(13): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 18:51:34 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(13): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 18:52:28 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(13): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 18:56:04 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(13): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 18:56:06 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(13): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 18:56:07 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(13): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 18:58:18 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 18:58:19 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:02:08 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\shop.php(5): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:02:15 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\shop.php(5): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:02:22 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:05:35 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\shop.php(5): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:05:42 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\shop.php(5): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:05:42 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\shop.php(5): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:05:43 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\shop.php(5): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:05:43 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\shop.php(5): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:05:43 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\shop.php(5): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:05:43 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\shop.php(5): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:05:44 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\shop.php(5): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:05:44 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\shop.php(5): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:05:56 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\shop.php(5): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:05:59 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:06:03 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\shop.php(5): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:06:05 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:08:45 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\shop.php(5): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:08:47 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:16:20 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:16:36 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\shop.php(5): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 19:16:38 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\contact.php(12): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[07-Nov-2025 21:04:57 Europe/Berlin] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in C:\xampp\htdocs\mosse-luxe\includes\footer.php on line 3
-[07-Nov-2025 21:05:10 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "SITE_URL" in C:\xampp\htdocs\mosse-luxe\admin\login.php:105
+[14-Nov-2025 12:21:38 UTC] Login Debug: Attempting login for email: admin@mosse-luxe.com
+[14-Nov-2025 12:21:38 UTC] Login Debug: SQL statement prepared successfully.
+[14-Nov-2025 12:21:38 UTC] Login Debug: User found. Hashed password from DB: $2y$12$DMb8KPDSxrhcD.g8qk1uReQXxNAeRnsEDvq/cbQlk4n5fAOorPEXq
+[14-Nov-2025 12:21:38 UTC] Login Debug: Provided password: adminpassword
+[14-Nov-2025 12:21:38 UTC] Login Debug: Password verification successful.
+[14-Nov-2025 12:21:38 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated after headers have already been sent in C:\xampp\htdocs\mosse-luxe\admin\login.php on line 50
+[14-Nov-2025 12:21:38 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\mosse-luxe\simulate_admin_login.php:14) in C:\xampp\htdocs\mosse-luxe\admin\login.php on line 59
+[14-Nov-2025 12:26:12 UTC] PHP Warning:  Undefined array key "REQUEST_METHOD" in C:\xampp\htdocs\mosse-luxe\admin\login.php on line 16
+[14-Nov-2025 12:32:01 UTC] PHP Fatal error:  Test error after DB connection. in C:\xampp\htdocs\mosse-luxe\admin\login.php on line 6
+[14-Nov-2025 12:38:27 UTC] PHP Warning:  require(C:\xampp\htdocs\mosse-luxe/product.php?id=1): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\test_frontend_pages.php on line 61
+[14-Nov-2025 12:38:28 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\mosse-luxe/product.php?id=1' (include_path='.;C:\php\pear') in C:\xampp\htdocs\mosse-luxe\test_frontend_pages.php:61
 Stack trace:
 #0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\login.php on line 105
-[07-Nov-2025 21:16:10 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "SITE_URL" in C:\xampp\htdocs\mosse-luxe\admin\login.php:105
+  thrown in C:\xampp\htdocs\mosse-luxe\test_frontend_pages.php on line 61
+[14-Nov-2025 15:12:16 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "ImageService" not found in C:\xampp\htdocs\mosse-luxe\admin\manage_homepage.php:21
 Stack trace:
 #0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\login.php on line 105
-[07-Nov-2025 22:17:25 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\products.php:97
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\products.php(97): mysqli->query('SELECT id, name...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\products.php on line 97
-[07-Nov-2025 22:18:22 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\products.php:97
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\products.php(97): mysqli->query('SELECT id, name...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\products.php on line 97
-[07-Nov-2025 22:18:34 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\products.php:97
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\products.php(97): mysqli->query('SELECT id, name...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\products.php on line 97
-[07-Nov-2025 22:18:46 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\products.php:97
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\products.php(97): mysqli->query('SELECT id, name...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\products.php on line 97
-[07-Nov-2025 22:30:04 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\products.php:123
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\products.php(123): mysqli->query('SELECT id, name...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\products.php on line 123
-[07-Nov-2025 22:30:09 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\products.php:123
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\products.php(123): mysqli->query('SELECT id, name...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\products.php on line 123
-[07-Nov-2025 23:13:49 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\products.php:123
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\products.php(123): mysqli->query('SELECT id, name...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\products.php on line 123
-[07-Nov-2025 23:20:15 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\products.php:123
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\products.php(123): mysqli->query('SELECT id, name...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\products.php on line 123
-[07-Nov-2025 23:20:56 Europe/Berlin] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in C:\xampp\htdocs\mosse-luxe\includes\footer.php on line 3
-[08-Nov-2025 08:43:16 Europe/Berlin] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in C:\xampp\htdocs\mosse-luxe\includes\footer.php on line 3
-[08-Nov-2025 08:44:48 Europe/Berlin] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in C:\xampp\htdocs\mosse-luxe\includes\footer.php on line 3
-[08-Nov-2025 09:55:19 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\products.php:123
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\products.php(123): mysqli->query('SELECT id, name...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\products.php on line 123
-[08-Nov-2025 09:55:23 Europe/Berlin] PHP Warning:  Undefined variable $csrf_token in C:\xampp\htdocs\mosse-luxe\admin\orders.php on line 162
-[08-Nov-2025 09:55:27 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\products.php:123
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\products.php(123): mysqli->query('SELECT id, name...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\products.php on line 123
-[08-Nov-2025 09:58:45 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\products.php:123
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\products.php(123): mysqli->query('SELECT id, name...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\products.php on line 123
-[08-Nov-2025 09:58:54 Europe/Berlin] PHP Warning:  Undefined variable $csrf_token in C:\xampp\htdocs\mosse-luxe\admin\orders.php on line 162
-[08-Nov-2025 10:02:05 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\products.php:123
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\products.php(123): mysqli->query('SELECT id, name...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\products.php on line 123
-[08-Nov-2025 10:02:35 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\products.php:123
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\products.php(123): mysqli->query('SELECT id, name...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\products.php on line 123
-[08-Nov-2025 10:06:53 Europe/Berlin] PHP Warning:  Undefined variable $csrf_token in C:\xampp\htdocs\mosse-luxe\admin\orders.php on line 162
-[08-Nov-2025 10:06:54 Europe/Berlin] PHP Warning:  Undefined variable $csrf_token in C:\xampp\htdocs\mosse-luxe\admin\orders.php on line 162
-[08-Nov-2025 10:06:55 Europe/Berlin] PHP Warning:  Undefined variable $csrf_token in C:\xampp\htdocs\mosse-luxe\admin\orders.php on line 162
-[08-Nov-2025 10:08:26 Europe/Berlin] PHP Warning:  Undefined variable $csrf_token in C:\xampp\htdocs\mosse-luxe\admin\orders.php on line 162
-[08-Nov-2025 10:08:30 Europe/Berlin] PHP Warning:  Undefined variable $all_statuses in C:\xampp\htdocs\mosse-luxe\admin\orders.php on line 8
-[08-Nov-2025 10:08:30 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: in_array(): Argument #2 ($haystack) must be of type array, null given in C:\xampp\htdocs\mosse-luxe\admin\orders.php:8
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\orders.php(8): in_array('', NULL)
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\orders.php on line 8
-[08-Nov-2025 10:17:38 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\products.php:123
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\products.php(123): mysqli->query('SELECT id, name...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\products.php on line 123
-[08-Nov-2025 14:21:46 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:46 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:47 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:47 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:47 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:47 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:47 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:47 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:47 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:47 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:48 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:48 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:48 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:48 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:48 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:48 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:48 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:48 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:48 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:48 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:53 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:53 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:53 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:53 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:53 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:53 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:53 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:53 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:53 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:21:53 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:22:23 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:22:23 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:22:23 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:22:23 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:22:23 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:22:23 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:22:23 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:22:23 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:22:23 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:22:23 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:23:23 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:23:23 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:23:23 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:23:23 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:23:23 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:23:24 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:23:24 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:23:24 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:23:24 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:23:24 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:28:24 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:28:24 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:28:24 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:28:24 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:28:24 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:28:24 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:28:24 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:28:24 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:28:24 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:28:24 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:33:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:33:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:33:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:33:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:33:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:33:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:33:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:33:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:33:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:33:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:33:27 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:33:39 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:34:06 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:34:06 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\products.php:123
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\products.php(123): mysqli->query('SELECT id, name...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\products.php on line 123
-[08-Nov-2025 14:34:10 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:35:56 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:35:59 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:36:10 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:36:19 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:36:23 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:36:26 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:36:28 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:43:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:43:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:43:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:43:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:43:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:43:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:43:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:43:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:43:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:43:16 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:50:39 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 14:50:39 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\products.php:123
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\products.php(123): mysqli->query('SELECT id, name...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\products.php on line 123
-[08-Nov-2025 14:50:49 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:19 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:25 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:25 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:25 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:25 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:26 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:26 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:26 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:26 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:26 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:26 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:27 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:27 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:27 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:27 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:27 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:27 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:27 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:27 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:27 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:18:27 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:19:04 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:20:38 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:20:41 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:22:55 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:22:56 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:22:57 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:23:00 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:24:30 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:24:33 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:24:34 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:24:35 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:24:36 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:26:11 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:26:12 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:26:12 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:26:12 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:26:12 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:26:13 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:26:13 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:26:18 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:26:19 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:26:20 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:26:21 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:26:23 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:26:24 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:48:48 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 15:48:57 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 15:49:03 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:49:10 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:49:15 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 15:49:39 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 15:49:40 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 15:49:54 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:49:55 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:49:59 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:50:10 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:50:15 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:50:17 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:50:22 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 15:50:23 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 15:50:28 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 16:01:17 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 16:01:17 Europe/Berlin] PHP Warning:  include(../includes/admin_page_header.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\add_product.php on line 107
-[08-Nov-2025 16:01:17 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/admin_page_header.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\add_product.php on line 107
-[08-Nov-2025 16:01:17 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\add_product.php on line 110
-[08-Nov-2025 16:01:17 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\add_product.php on line 110
-[08-Nov-2025 16:01:19 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 16:01:19 Europe/Berlin] PHP Warning:  include(../includes/admin_page_header.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\add_product.php on line 107
-[08-Nov-2025 16:01:19 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/admin_page_header.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\add_product.php on line 107
-[08-Nov-2025 16:01:19 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\add_product.php on line 110
-[08-Nov-2025 16:01:19 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\add_product.php on line 110
-[08-Nov-2025 16:01:23 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 16:01:25 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 16:01:29 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 16:01:31 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 16:01:31 Europe/Berlin] PHP Warning:  include(../includes/admin_page_header.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\launching_soon.php on line 101
-[08-Nov-2025 16:01:31 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/admin_page_header.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\launching_soon.php on line 101
-[08-Nov-2025 16:01:31 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\launching_soon.php on line 104
-[08-Nov-2025 16:01:31 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\launching_soon.php on line 104
-[08-Nov-2025 16:01:35 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 16:01:37 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 16:01:37 Europe/Berlin] PHP Warning:  include(../includes/admin_page_header.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 104
-[08-Nov-2025 16:01:37 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/admin_page_header.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 104
-[08-Nov-2025 16:01:37 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 107
-[08-Nov-2025 16:01:37 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 107
-[08-Nov-2025 16:01:40 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 16:01:42 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 16:01:44 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 16:01:44 Europe/Berlin] PHP Warning:  include(../includes/admin_page_header.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 113
-[08-Nov-2025 16:01:44 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/admin_page_header.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 113
-[08-Nov-2025 16:01:44 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 116
-[08-Nov-2025 16:01:44 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 116
-[08-Nov-2025 16:21:47 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 16:21:47 Europe/Berlin] PHP Warning:  include(../includes/admin_page_header.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 113
-[08-Nov-2025 16:21:47 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/admin_page_header.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 113
-[08-Nov-2025 16:21:47 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 116
-[08-Nov-2025 16:21:47 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 116
-[08-Nov-2025 16:21:48 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 16:21:48 Europe/Berlin] PHP Warning:  include(../includes/admin_page_header.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 113
-[08-Nov-2025 16:21:48 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/admin_page_header.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 113
-[08-Nov-2025 16:21:48 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 116
-[08-Nov-2025 16:21:48 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 116
-[08-Nov-2025 16:21:49 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 16:21:52 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 16:21:55 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 16:21:57 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 16:21:57 Europe/Berlin] PHP Warning:  include(../includes/admin_page_header.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 104
-[08-Nov-2025 16:21:57 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/admin_page_header.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 104
-[08-Nov-2025 16:21:57 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 107
-[08-Nov-2025 16:21:57 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 107
-[08-Nov-2025 16:22:05 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 16:22:08 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 16:22:15 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 16:22:25 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 16:22:25 Europe/Berlin] PHP Warning:  include(../includes/admin_page_header.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 113
-[08-Nov-2025 16:22:25 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/admin_page_header.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 113
-[08-Nov-2025 16:22:25 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 116
-[08-Nov-2025 16:22:25 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 116
-[08-Nov-2025 16:22:31 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 16:22:33 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\manage_reviews.php on line 76
-[08-Nov-2025 16:22:33 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\manage_reviews.php on line 76
-[08-Nov-2025 16:22:44 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 16:22:44 Europe/Berlin] PHP Warning:  include(../includes/admin_page_header.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 58
-[08-Nov-2025 16:22:44 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/admin_page_header.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 58
-[08-Nov-2025 16:22:44 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 62
-[08-Nov-2025 16:22:44 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 62
-[08-Nov-2025 16:22:45 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:72
+  thrown in C:\xampp\htdocs\mosse-luxe\admin\manage_homepage.php on line 21
+[14-Nov-2025 15:15:50 Europe/Berlin] PHP Warning:  imagecreatefrompng(): gd-png: libpng warning: iCCP: known incorrect sRGB profile in C:\xampp\htdocs\mosse-luxe\includes\image_service.php on line 54
+[14-Nov-2025 15:18:49 Europe/Berlin] PHP Warning:  imagecreatefrompng(): gd-png: libpng warning: iCCP: known incorrect sRGB profile in C:\xampp\htdocs\mosse-luxe\includes\image_service.php on line 54
+[14-Nov-2025 15:22:40 Europe/Berlin] PHP Warning:  imagecreatefrompng(): gd-png: libpng warning: iCCP: known incorrect sRGB profile in C:\xampp\htdocs\mosse-luxe\includes\image_service.php on line 54
+[14-Nov-2025 15:54:05 Europe/Berlin] Error executing add category query: Duplicate entry 'T-Shirts' for key 'name'
+[14-Nov-2025 15:54:32 Europe/Berlin] Error executing add category query: Duplicate entry 'T-Shirts' for key 'name'
+[14-Nov-2025 16:46:16 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in C:\xampp\htdocs\mosse-luxe\login.php:78
 Stack trace:
 #0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 72
-[08-Nov-2025 16:22:47 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 17:56:02 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 17:56:08 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 17:56:10 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 17:56:10 Europe/Berlin] PHP Warning:  include(../includes/admin_page_header.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 104
-[08-Nov-2025 17:56:10 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/admin_page_header.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 104
-[08-Nov-2025 17:56:10 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 107
-[08-Nov-2025 17:56:10 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 107
-[08-Nov-2025 17:58:11 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 17:58:16 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 17:58:19 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 17:58:21 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 17:58:21 Europe/Berlin] PHP Warning:  include(../includes/admin_page_header.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 113
-[08-Nov-2025 17:58:21 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/admin_page_header.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 113
-[08-Nov-2025 17:58:21 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 116
-[08-Nov-2025 17:58:21 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 116
-[08-Nov-2025 17:58:40 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 17:58:40 Europe/Berlin] PHP Warning:  include(../includes/admin_page_header.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 113
-[08-Nov-2025 17:58:40 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/admin_page_header.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 113
-[08-Nov-2025 17:58:40 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 116
-[08-Nov-2025 17:58:40 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\manage_admins.php on line 116
-[08-Nov-2025 17:58:44 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 17:58:49 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 17:59:48 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 17:59:49 Europe/Berlin] PHP Warning:  include(../includes/admin_page_header.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\edit_category.php on line 63
-[08-Nov-2025 17:59:49 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/admin_page_header.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\edit_category.php on line 63
-[08-Nov-2025 17:59:49 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\edit_category.php on line 66
-[08-Nov-2025 17:59:49 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\edit_category.php on line 66
-[08-Nov-2025 18:00:05 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:00:10 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:00:12 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:00:13 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:00:15 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:00:17 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:00:27 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:00:33 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:00:35 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:00:36 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 18:00:37 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\manage_reviews.php on line 76
-[08-Nov-2025 18:00:37 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\manage_reviews.php on line 76
-[08-Nov-2025 18:00:55 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 18:00:55 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\manage_subscriptions.php on line 66
-[08-Nov-2025 18:00:55 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\manage_subscriptions.php on line 66
-[08-Nov-2025 18:01:01 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 18:01:01 Europe/Berlin] PHP Warning:  include(../includes/admin_page_header.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\pages.php on line 22
-[08-Nov-2025 18:01:01 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/admin_page_header.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\pages.php on line 22
-[08-Nov-2025 18:01:01 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\pages.php on line 25
-[08-Nov-2025 18:01:01 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\pages.php on line 25
-[08-Nov-2025 18:04:51 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:04:58 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:05:01 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:05:03 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:05:06 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:05:09 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:05:11 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:05:13 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 18:05:13 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\sales_report.php on line 171
-[08-Nov-2025 18:05:13 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\sales_report.php on line 171
-[08-Nov-2025 18:05:25 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 18:05:25 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\sales_report.php on line 171
-[08-Nov-2025 18:05:25 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\sales_report.php on line 171
-[08-Nov-2025 18:07:54 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:08:44 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:08:44 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:76
+  thrown in C:\xampp\htdocs\mosse-luxe\login.php on line 78
+[14-Nov-2025 16:49:30 Europe/Berlin] User carts table not found, skipping cart persistence
+[14-Nov-2025 16:56:41 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "Auth" not found in C:\xampp\htdocs\mosse-luxe\logout.php:5
 Stack trace:
 #0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 76
-[08-Nov-2025 18:08:52 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:08:59 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:09:01 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:14:51 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:14:53 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:14:53 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\dashboard.php on line 123
-[08-Nov-2025 18:15:34 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:15:36 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:15:39 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:15:41 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:15:46 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:15:53 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:15:57 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:16:00 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:16:12 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:16:14 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:16:15 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:16:16 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:16:16 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:16:19 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 18:16:45 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:16:45 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:76
+  thrown in C:\xampp\htdocs\mosse-luxe\logout.php on line 5
+[14-Nov-2025 16:59:45 Europe/Berlin] Failed to send welcome email to oleratodichaba44@gmail.com. Mailer Error: SMTP Error: Could not authenticate.
+[14-Nov-2025 16:59:45 Europe/Berlin] Failed to send welcome email to oleratodichaba44@gmail.com for user olerato
+[14-Nov-2025 17:00:27 Europe/Berlin] User carts table not found, skipping cart persistence
+[14-Nov-2025 17:07:08 Europe/Berlin] PHP Warning:  mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() in C:\xampp\htdocs\mosse-luxe\admin\messages.php on line 59
+[14-Nov-2025 17:08:52 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "NotificationService" not found in C:\xampp\htdocs\mosse-luxe\admin\messages.php:53
 Stack trace:
 #0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 76
-[08-Nov-2025 18:17:31 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:17:34 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 18:17:34 Europe/Berlin] PHP Warning:  include(../includes/admin_page_header.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\edit_page.php on line 61
-[08-Nov-2025 18:17:34 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/admin_page_header.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\edit_page.php on line 61
-[08-Nov-2025 18:17:34 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\edit_page.php on line 65
-[08-Nov-2025 18:17:34 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\edit_page.php on line 65
-[08-Nov-2025 18:23:32 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 17:28:12 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'status' in 'field list' in C:\xampp\htdocs\mosse-luxe\update_database.php:151
+  thrown in C:\xampp\htdocs\mosse-luxe\admin\messages.php on line 53
+[14-Nov-2025 17:33:21 Europe/Berlin] Failed to send message reply to oleratomauwane02@gmail.com. Mailer Error: SMTP Error: Could not authenticate.
+[14-Nov-2025 17:36:12 Europe/Berlin] Message reply sent successfully to oleratomauwane02@gmail.com for subject: Re: Welcome to Rise & Shine Chess Club!
+[14-Nov-2025 17:36:12 Europe/Berlin] Message reply sent successfully from admin to oleratomauwane02@gmail.com
+[14-Nov-2025 17:36:52 Europe/Berlin] Message reply sent successfully to oleratomauwane02@gmail.com for subject: Re: Welcome to Rise & Shine Chess Club!
+[14-Nov-2025 17:36:52 Europe/Berlin] Message reply sent successfully from admin to oleratomauwane02@gmail.com
+[14-Nov-2025 17:43:04 Europe/Berlin] Message reply sent successfully to oleratomauwane02@gmail.com for subject: Re: Welcome to Rise & Shine Chess Club!
+[14-Nov-2025 17:43:04 Europe/Berlin] Message reply sent successfully from admin to oleratomauwane02@gmail.com
+[14-Nov-2025 17:43:24 Europe/Berlin] Message reply sent successfully to oleratomauwane02@gmail.com for subject: Re: Welcome to Rise & Shine Chess Club!
+[14-Nov-2025 17:43:24 Europe/Berlin] Message reply sent successfully from admin to oleratomauwane02@gmail.com
+[14-Nov-2025 17:44:36 Europe/Berlin] PHP Warning:  mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() in C:\xampp\htdocs\mosse-luxe\test_smtp.php on line 19
+[14-Nov-2025 17:44:36 Europe/Berlin] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function NotificationService::sendMessageReply(), 4 passed in C:\xampp\htdocs\mosse-luxe\test_smtp.php on line 32 and exactly 5 expected in C:\xampp\htdocs\mosse-luxe\includes\notification_service.php:486
 Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\update_database.php(151): mysqli->prepare()
+#0 C:\xampp\htdocs\mosse-luxe\test_smtp.php(32): NotificationService::sendMessageReply('test@mosseluxe....', 'SMTP Tester', 'SMTP Test - Not...', 'This is a test ...')
 #1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\update_database.php on line 151
-[08-Nov-2025 18:29:11 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:29:15 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:29:15 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\dashboard.php on line 123
-[08-Nov-2025 18:29:26 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:29:32 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:32:17 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:32:39 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:32:46 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:32:49 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 73
-[08-Nov-2025 18:32:57 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 18:32:57 Europe/Berlin] PHP Warning:  include(../includes/admin_page_header.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\edit_admin.php on line 95
-[08-Nov-2025 18:32:57 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/admin_page_header.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\edit_admin.php on line 95
-[08-Nov-2025 18:32:57 Europe/Berlin] PHP Warning:  include(../includes/sidebar.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\edit_admin.php on line 98
-[08-Nov-2025 18:32:57 Europe/Berlin] PHP Warning:  include(): Failed opening '../includes/sidebar.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\edit_admin.php on line 98
-[08-Nov-2025 18:39:19 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 18:39:19 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 190
-[08-Nov-2025 18:39:19 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 207
-[08-Nov-2025 18:39:38 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 190
-[08-Nov-2025 18:39:38 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 207
-[08-Nov-2025 18:39:38 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\dashboard.php on line 123
-[08-Nov-2025 18:39:45 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 190
-[08-Nov-2025 18:39:45 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 207
-[08-Nov-2025 18:39:47 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 190
-[08-Nov-2025 18:39:47 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 207
-[08-Nov-2025 18:41:11 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function imagecreatefrompng() in C:\xampp\htdocs\mosse-luxe\includes\image_service.php:41
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\add_product.php(58): ImageService::processUpload(Array, 800, 800, '')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\image_service.php on line 41
-[08-Nov-2025 18:44:16 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function imagecreatefrompng() in C:\xampp\htdocs\mosse-luxe\includes\image_service.php:41
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\add_product.php(58): ImageService::processUpload(Array, 800, 800, '')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\image_service.php on line 41
-[08-Nov-2025 18:44:17 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 190
-[08-Nov-2025 18:44:17 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 207
-[08-Nov-2025 18:44:21 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 190
-[08-Nov-2025 18:44:21 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 207
-[08-Nov-2025 18:44:44 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 18:44:44 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_ID already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 18
-[08-Nov-2025 18:44:44 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_KEY already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 19
-[08-Nov-2025 18:44:44 Europe/Berlin] PHP Warning:  Constant PAYFAST_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 21
-[08-Nov-2025 18:44:44 Europe/Berlin] PHP Warning:  Constant SITE_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 25
-[08-Nov-2025 18:44:44 Europe/Berlin] PHP Warning:  Constant SHIPPING_COST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 28
-[08-Nov-2025 18:44:44 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_WIDTH already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 31
-[08-Nov-2025 18:44:44 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_HEIGHT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 32
-[08-Nov-2025 18:44:44 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_DIR already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 33
-[08-Nov-2025 18:44:44 Europe/Berlin] PHP Warning:  Constant SMTP_HOST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 37
-[08-Nov-2025 18:44:44 Europe/Berlin] PHP Warning:  Constant SMTP_USERNAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 38
-[08-Nov-2025 18:44:44 Europe/Berlin] PHP Warning:  Constant SMTP_PASSWORD already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 39
-[08-Nov-2025 18:44:44 Europe/Berlin] PHP Warning:  Constant SMTP_PORT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 40
-[08-Nov-2025 18:44:44 Europe/Berlin] PHP Warning:  Constant SMTP_ENCRYPTION already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 41
-[08-Nov-2025 18:44:44 Europe/Berlin] PHP Warning:  Constant CONTACT_PHONE already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 46
-[08-Nov-2025 18:44:44 Europe/Berlin] PHP Warning:  Constant CONTACT_ADDRESS already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 47
-[08-Nov-2025 18:44:53 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 190
-[08-Nov-2025 18:44:53 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 207
-[08-Nov-2025 18:52:24 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 190
-[08-Nov-2025 18:52:24 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 207
-[08-Nov-2025 17:55:37 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'status' in 'field list' in C:\xampp\htdocs\mosse-luxe\update_database.php:151
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\update_database.php(151): mysqli->prepare()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\update_database.php on line 151
-[08-Nov-2025 17:55:59 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'mosse_luxe_db.homepage_sections' doesn't exist in C:\xampp\htdocs\mosse-luxe\test_homepage.php:12
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\test_homepage.php(12): mysqli->query()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\test_homepage.php on line 12
-[08-Nov-2025 18:57:16 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 18:57:16 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 18:57:19 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 18:57:19 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 18:57:19 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\dashboard.php on line 123
-[08-Nov-2025 18:57:20 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 18:57:20 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 18:57:20 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\dashboard.php on line 123
-[08-Nov-2025 18:57:22 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 18:57:22 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 18:57:22 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\dashboard.php on line 123
-[08-Nov-2025 18:57:34 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 18:57:34 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 18:57:41 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 18:57:41 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 18:57:41 Europe/Berlin] PHP Warning:  Undefined array key "firstName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 18:57:41 Europe/Berlin] PHP Warning:  Undefined array key "lastName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 18:57:41 Europe/Berlin] PHP Warning:  Undefined array key "province" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 140
-[08-Nov-2025 18:58:08 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 18:58:08 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 18:58:08 Europe/Berlin] PHP Warning:  Undefined array key "firstName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 18:58:08 Europe/Berlin] PHP Warning:  Undefined array key "lastName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 18:58:08 Europe/Berlin] PHP Warning:  Undefined array key "province" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 140
-[08-Nov-2025 18:58:13 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 18:58:13 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 18:58:13 Europe/Berlin] PHP Warning:  Undefined array key "firstName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 18:58:13 Europe/Berlin] PHP Warning:  Undefined array key "lastName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 18:58:13 Europe/Berlin] PHP Warning:  Undefined array key "province" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 140
-[08-Nov-2025 18:58:51 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 18:58:51 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 18:58:54 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 18:58:54 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 18:59:00 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 18:59:00 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 18:59:02 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 18:59:02 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 18:59:05 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 18:59:05 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 18:59:09 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 18:59:09 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 18:59:13 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 18:59:13 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 18:59:22 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 18:59:22 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 18:59:22 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:76
+  thrown in C:\xampp\htdocs\mosse-luxe\includes\notification_service.php on line 486
+[14-Nov-2025 17:52:42 Europe/Berlin] Message reply sent successfully to oleratomauwane02@gmail.com for subject: Re: Welcome to Rise & Shine Chess Club!
+[14-Nov-2025 17:52:42 Europe/Berlin] Message reply sent successfully from admin to oleratomauwane02@gmail.com
+[14-Nov-2025 17:57:39 Europe/Berlin] Message reply sent successfully to oleratomauwane02@gmail.com for subject: Re: Welcome to Rise & Shine Chess Club!
+[14-Nov-2025 17:57:39 Europe/Berlin] Message reply sent successfully from admin to oleratomauwane02@gmail.com
+[14-Nov-2025 17:57:51 Europe/Berlin] Message reply sent successfully to oleratomauwane02@gmail.com for subject: Re: Welcome to Rise & Shine Chess Club!
+[14-Nov-2025 17:57:51 Europe/Berlin] Message reply sent successfully from admin to oleratomauwane02@gmail.com
+[14-Nov-2025 17:57:59 Europe/Berlin] Message reply sent successfully to oleratomauwane02@gmail.com for subject: Re: Welcome to Rise & Shine Chess Club!
+[14-Nov-2025 17:57:59 Europe/Berlin] Message reply sent successfully from admin to oleratomauwane02@gmail.com
+[14-Nov-2025 17:58:08 Europe/Berlin] Message reply sent successfully to oleratomauwane02@gmail.com for subject: Re: Welcome to Rise & Shine Chess Club!
+[14-Nov-2025 17:58:08 Europe/Berlin] Message reply sent successfully from admin to oleratomauwane02@gmail.com
+[14-Nov-2025 18:52:56 Europe/Berlin] Message reply sent successfully to oleratomauwane02@gmail.com for subject: Re: Welcome to Rise & Shine Chess Club!
+[14-Nov-2025 18:52:56 Europe/Berlin] Message reply sent successfully from admin to oleratomauwane02@gmail.com
+[14-Nov-2025 21:48:23 Europe/Berlin] PHP Warning:  include(includes/page_selector_component.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\mosse-luxe\admin\announcement.php on line 114
+[14-Nov-2025 21:48:23 Europe/Berlin] PHP Warning:  include(): Failed opening 'includes/page_selector_component.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\mosse-luxe\admin\announcement.php on line 114
+[14-Nov-2025 21:21:22 UTC] PHP Fatal error:  Uncaught Error: mysqli_stmt::bind_param(): Argument #2 could not be passed by reference in C:\xampp\htdocs\mosse-luxe\_private_scripts\enable_hero_buttons.php:7
 Stack trace:
 #0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 76
-[08-Nov-2025 19:12:55 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 19:12:55 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 19:12:55 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:76
+  thrown in C:\xampp\htdocs\mosse-luxe\_private_scripts\enable_hero_buttons.php on line 7
+[14-Nov-2025 23:07:22 Europe/Berlin] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\xampp\htdocs\mosse-luxe\admin\edit_hero_slide.php:60
+Stack trace:
+#0 C:\xampp\htdocs\mosse-luxe\admin\edit_hero_slide.php(60): mysqli_stmt->bind_param('sssssisii', '', 'Discover premiu...', 'Shop Now', '/shop', 'assets/images/h...', 1, 1, 4)
+#1 {main}
+  thrown in C:\xampp\htdocs\mosse-luxe\admin\edit_hero_slide.php on line 60
+[14-Nov-2025 23:08:13 Europe/Berlin] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\xampp\htdocs\mosse-luxe\admin\edit_hero_slide.php:60
+Stack trace:
+#0 C:\xampp\htdocs\mosse-luxe\admin\edit_hero_slide.php(60): mysqli_stmt->bind_param('sssssiisi', '', 'Discover premiu...', 'Shop Now', '/shop', 'assets/images/h...', 1, 1, 4)
+#1 {main}
+  thrown in C:\xampp\htdocs\mosse-luxe\admin\edit_hero_slide.php on line 60
+[14-Nov-2025 23:36:50 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in C:\xampp\htdocs\mosse-luxe\admin\edit_hero_slide.php:61
 Stack trace:
 #0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 76
-[08-Nov-2025 19:12:56 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 19:12:56 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 19:12:56 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:76
+  thrown in C:\xampp\htdocs\mosse-luxe\admin\edit_hero_slide.php on line 61
+[15-Nov-2025 12:22:38 Europe/Berlin] Error preparing products query: MySQL server has gone away
+[15-Nov-2025 12:22:38 Europe/Berlin] Error fetching categories for filter: MySQL server has gone away
+[15-Nov-2025 12:24:51 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/2002): No connection could be made because the target machine actively refused it in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[15-Nov-2025 12:24:51 Europe/Berlin] Database Connection Failed: No connection could be made because the target machine actively refused it
+[15-Nov-2025 12:24:51 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Database Connection Failed: No connection could be made because the target machine actively refused it in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:23
 Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 76
-[08-Nov-2025 19:13:01 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 19:13:01 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 19:13:06 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 194
-[08-Nov-2025 19:13:06 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 211
-[08-Nov-2025 19:19:31 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:19:31 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:19:35 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:19:35 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:19:35 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\dashboard.php on line 123
-[08-Nov-2025 19:19:37 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:19:37 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:19:39 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:19:39 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:19:40 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:19:40 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:19:42 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:19:42 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:19:43 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:19:43 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:19:45 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:19:45 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:20:16 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:20:16 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:20:20 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:20:20 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:20:20 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:76
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 76
-[08-Nov-2025 19:20:27 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:20:27 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:20:27 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:76
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 76
-[08-Nov-2025 19:26:23 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:26:23 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:26:23 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:76
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 76
-[08-Nov-2025 19:26:25 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:26:25 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:26:30 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:26:30 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:26:30 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:76
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 76
-[08-Nov-2025 19:26:32 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:26:32 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:26:32 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:76
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 76
-[08-Nov-2025 19:26:32 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:26:32 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:26:32 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:76
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 76
-[08-Nov-2025 19:26:37 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:26:37 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:30:02 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:30:02 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:30:11 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:30:11 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:30:11 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\dashboard.php on line 116
-[08-Nov-2025 19:30:14 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:30:14 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:30:18 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:30:18 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:32:53 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:32:53 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:35:22 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 378
-[08-Nov-2025 19:35:22 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 395
-[08-Nov-2025 19:37:50 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 413
-[08-Nov-2025 19:37:50 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 430
-[08-Nov-2025 19:37:54 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 413
-[08-Nov-2025 19:37:54 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 430
-[08-Nov-2025 19:37:54 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 413
-[08-Nov-2025 19:37:54 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 430
-[08-Nov-2025 19:37:54 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:64
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 64
-[08-Nov-2025 19:38:46 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 430
-[08-Nov-2025 19:38:46 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 430
-[08-Nov-2025 19:38:46 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:64
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 64
-[08-Nov-2025 19:38:47 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 430
-[08-Nov-2025 19:38:47 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\header.php on line 430
-[08-Nov-2025 19:38:47 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:64
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 64
-[08-Nov-2025 19:39:03 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token() in C:\xampp\htdocs\mosse-luxe\admin\categories.php:6
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 6
-[08-Nov-2025 19:39:06 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token() in C:\xampp\htdocs\mosse-luxe\admin\categories.php:6
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 6
-[08-Nov-2025 19:39:10 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token() in C:\xampp\htdocs\mosse-luxe\admin\categories.php:6
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 6
-[08-Nov-2025 19:39:11 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token() in C:\xampp\htdocs\mosse-luxe\admin\categories.php:6
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 6
-[08-Nov-2025 19:39:23 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token() in C:\xampp\htdocs\mosse-luxe\admin\categories.php:6
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 6
-[08-Nov-2025 19:40:27 Europe/Berlin] PHP Warning:  Undefined array key "name" in C:\xampp\htdocs\mosse-luxe\admin\dashboard.php on line 117
-[08-Nov-2025 19:40:46 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 19:40:46 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_ID already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 18
-[08-Nov-2025 19:40:46 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_KEY already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 19
-[08-Nov-2025 19:40:46 Europe/Berlin] PHP Warning:  Constant PAYFAST_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 21
-[08-Nov-2025 19:40:46 Europe/Berlin] PHP Warning:  Constant SITE_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 25
-[08-Nov-2025 19:40:46 Europe/Berlin] PHP Warning:  Constant SHIPPING_COST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 28
-[08-Nov-2025 19:40:46 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_WIDTH already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 31
-[08-Nov-2025 19:40:46 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_HEIGHT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 32
-[08-Nov-2025 19:40:46 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_DIR already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 33
-[08-Nov-2025 19:40:46 Europe/Berlin] PHP Warning:  Constant SMTP_HOST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 37
-[08-Nov-2025 19:40:46 Europe/Berlin] PHP Warning:  Constant SMTP_USERNAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 38
-[08-Nov-2025 19:40:46 Europe/Berlin] PHP Warning:  Constant SMTP_PASSWORD already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 39
-[08-Nov-2025 19:40:46 Europe/Berlin] PHP Warning:  Constant SMTP_PORT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 40
-[08-Nov-2025 19:40:46 Europe/Berlin] PHP Warning:  Constant SMTP_ENCRYPTION already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 41
-[08-Nov-2025 19:40:46 Europe/Berlin] PHP Warning:  Constant CONTACT_PHONE already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 46
-[08-Nov-2025 19:40:46 Europe/Berlin] PHP Warning:  Constant CONTACT_ADDRESS already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 47
-[08-Nov-2025 19:40:50 Europe/Berlin] PHP Warning:  Undefined array key "firstName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 19:40:50 Europe/Berlin] PHP Warning:  Undefined array key "lastName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 19:40:50 Europe/Berlin] PHP Warning:  Undefined array key "province" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 140
-[08-Nov-2025 19:40:53 Europe/Berlin] PHP Warning:  Undefined array key "firstName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 19:40:53 Europe/Berlin] PHP Warning:  Undefined array key "lastName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 19:40:53 Europe/Berlin] PHP Warning:  Undefined array key "province" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 140
-[08-Nov-2025 19:40:54 Europe/Berlin] PHP Warning:  Undefined array key "firstName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 19:40:54 Europe/Berlin] PHP Warning:  Undefined array key "lastName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 19:40:54 Europe/Berlin] PHP Warning:  Undefined array key "province" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 140
-[08-Nov-2025 19:40:55 Europe/Berlin] PHP Warning:  Undefined array key "firstName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 19:40:55 Europe/Berlin] PHP Warning:  Undefined array key "lastName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 19:40:55 Europe/Berlin] PHP Warning:  Undefined array key "province" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 140
-[08-Nov-2025 19:40:58 Europe/Berlin] PHP Warning:  Undefined array key "firstName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 19:40:58 Europe/Berlin] PHP Warning:  Undefined array key "lastName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 19:40:58 Europe/Berlin] PHP Warning:  Undefined array key "province" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 140
-[08-Nov-2025 19:41:00 Europe/Berlin] PHP Warning:  Undefined array key "firstName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 19:41:00 Europe/Berlin] PHP Warning:  Undefined array key "lastName" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 135
-[08-Nov-2025 19:41:00 Europe/Berlin] PHP Warning:  Undefined array key "province" in C:\xampp\htdocs\mosse-luxe\admin\view_order.php on line 140
-[08-Nov-2025 19:41:18 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 19:41:18 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_ID already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 18
-[08-Nov-2025 19:41:18 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_KEY already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 19
-[08-Nov-2025 19:41:18 Europe/Berlin] PHP Warning:  Constant PAYFAST_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 21
-[08-Nov-2025 19:41:18 Europe/Berlin] PHP Warning:  Constant SITE_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 25
-[08-Nov-2025 19:41:18 Europe/Berlin] PHP Warning:  Constant SHIPPING_COST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 28
-[08-Nov-2025 19:41:18 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_WIDTH already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 31
-[08-Nov-2025 19:41:18 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_HEIGHT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 32
-[08-Nov-2025 19:41:18 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_DIR already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 33
-[08-Nov-2025 19:41:18 Europe/Berlin] PHP Warning:  Constant SMTP_HOST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 37
-[08-Nov-2025 19:41:18 Europe/Berlin] PHP Warning:  Constant SMTP_USERNAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 38
-[08-Nov-2025 19:41:18 Europe/Berlin] PHP Warning:  Constant SMTP_PASSWORD already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 39
-[08-Nov-2025 19:41:18 Europe/Berlin] PHP Warning:  Constant SMTP_PORT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 40
-[08-Nov-2025 19:41:18 Europe/Berlin] PHP Warning:  Constant SMTP_ENCRYPTION already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 41
-[08-Nov-2025 19:41:18 Europe/Berlin] PHP Warning:  Constant CONTACT_PHONE already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 46
-[08-Nov-2025 19:41:18 Europe/Berlin] PHP Warning:  Constant CONTACT_ADDRESS already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 47
-[08-Nov-2025 19:41:27 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 19:41:27 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_ID already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 18
-[08-Nov-2025 19:41:27 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_KEY already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 19
-[08-Nov-2025 19:41:27 Europe/Berlin] PHP Warning:  Constant PAYFAST_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 21
-[08-Nov-2025 19:41:27 Europe/Berlin] PHP Warning:  Constant SITE_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 25
-[08-Nov-2025 19:41:27 Europe/Berlin] PHP Warning:  Constant SHIPPING_COST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 28
-[08-Nov-2025 19:41:27 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_WIDTH already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 31
-[08-Nov-2025 19:41:27 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_HEIGHT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 32
-[08-Nov-2025 19:41:27 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_DIR already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 33
-[08-Nov-2025 19:41:27 Europe/Berlin] PHP Warning:  Constant SMTP_HOST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 37
-[08-Nov-2025 19:41:27 Europe/Berlin] PHP Warning:  Constant SMTP_USERNAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 38
-[08-Nov-2025 19:41:27 Europe/Berlin] PHP Warning:  Constant SMTP_PASSWORD already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 39
-[08-Nov-2025 19:41:27 Europe/Berlin] PHP Warning:  Constant SMTP_PORT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 40
-[08-Nov-2025 19:41:27 Europe/Berlin] PHP Warning:  Constant SMTP_ENCRYPTION already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 41
-[08-Nov-2025 19:41:27 Europe/Berlin] PHP Warning:  Constant CONTACT_PHONE already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 46
-[08-Nov-2025 19:41:27 Europe/Berlin] PHP Warning:  Constant CONTACT_ADDRESS already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 47
-[08-Nov-2025 19:41:37 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 19:41:37 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_ID already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 18
-[08-Nov-2025 19:41:37 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_KEY already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 19
-[08-Nov-2025 19:41:37 Europe/Berlin] PHP Warning:  Constant PAYFAST_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 21
-[08-Nov-2025 19:41:37 Europe/Berlin] PHP Warning:  Constant SITE_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 25
-[08-Nov-2025 19:41:37 Europe/Berlin] PHP Warning:  Constant SHIPPING_COST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 28
-[08-Nov-2025 19:41:37 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_WIDTH already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 31
-[08-Nov-2025 19:41:37 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_HEIGHT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 32
-[08-Nov-2025 19:41:37 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_DIR already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 33
-[08-Nov-2025 19:41:37 Europe/Berlin] PHP Warning:  Constant SMTP_HOST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 37
-[08-Nov-2025 19:41:37 Europe/Berlin] PHP Warning:  Constant SMTP_USERNAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 38
-[08-Nov-2025 19:41:37 Europe/Berlin] PHP Warning:  Constant SMTP_PASSWORD already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 39
-[08-Nov-2025 19:41:37 Europe/Berlin] PHP Warning:  Constant SMTP_PORT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 40
-[08-Nov-2025 19:41:37 Europe/Berlin] PHP Warning:  Constant SMTP_ENCRYPTION already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 41
-[08-Nov-2025 19:41:37 Europe/Berlin] PHP Warning:  Constant CONTACT_PHONE already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 46
-[08-Nov-2025 19:41:37 Europe/Berlin] PHP Warning:  Constant CONTACT_ADDRESS already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 47
-[08-Nov-2025 19:42:13 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token() in C:\xampp\htdocs\mosse-luxe\admin\categories.php:6
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\categories.php on line 6
-[08-Nov-2025 19:46:56 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:64
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 64
-[08-Nov-2025 19:47:03 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:64
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 64
-[08-Nov-2025 19:50:15 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in C:\xampp\htdocs\mosse-luxe\index.php:49
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\index.php on line 49
-[08-Nov-2025 19:50:19 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in C:\xampp\htdocs\mosse-luxe\index.php:49
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\index.php on line 49
-[08-Nov-2025 19:50:22 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in C:\xampp\htdocs\mosse-luxe\index.php:49
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\index.php on line 49
-[08-Nov-2025 19:50:40 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in C:\xampp\htdocs\mosse-luxe\index.php:49
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\index.php on line 49
-[08-Nov-2025 19:54:50 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:160
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 160
-[08-Nov-2025 20:00:38 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:167
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 167
-[08-Nov-2025 20:00:39 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:167
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 167
-[08-Nov-2025 20:00:41 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:167
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 167
-[08-Nov-2025 20:00:41 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:167
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 167
-[08-Nov-2025 20:00:49 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:167
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 167
-[08-Nov-2025 20:01:04 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function generate_csrf_token_input() in C:\xampp\htdocs\mosse-luxe\admin\settings.php:64
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\settings.php on line 64
-[08-Nov-2025 20:02:55 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function verify_csrf_token() in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:50
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 50
-[08-Nov-2025 20:04:51 Europe/Berlin] POST data received: Array
-(
-    [csrf_token] => aff952404ab33dfcfbd852b5f690a32a96fe86f29bca928183ad3614b8c60742
-    [display_count] => 2
-    [new_arrivals_message] => New arrivals will be available soon. Please check back la
-    [update_settings] => 
-)
-
-[08-Nov-2025 20:04:51 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function verify_csrf_token() in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:53
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 53
-[08-Nov-2025 20:04:56 Europe/Berlin] POST data received: Array
-(
-    [csrf_token] => aff952404ab33dfcfbd852b5f690a32a96fe86f29bca928183ad3614b8c60742
-    [display_count] => 2
-    [new_arrivals_message] => New arrivals will be available soon. Please check back la
-    [update_settings] => 
-)
-
-[08-Nov-2025 20:04:56 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function verify_csrf_token() in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:53
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 53
-[08-Nov-2025 20:06:29 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:64
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php(64): mysqli->prepare('INSERT INTO set...')
+#0 C:\xampp\htdocs\mosse-luxe\index.php(6): get_db_connection()
 #1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 64
-[08-Nov-2025 20:06:33 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:64
+  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 23
+[15-Nov-2025 12:25:00 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/2002): No connection could be made because the target machine actively refused it in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[15-Nov-2025 12:25:00 Europe/Berlin] Database Connection Failed: No connection could be made because the target machine actively refused it
+[15-Nov-2025 12:25:00 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Database Connection Failed: No connection could be made because the target machine actively refused it in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:23
 Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php(64): mysqli->prepare('INSERT INTO set...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 64
-[08-Nov-2025 20:06:36 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:64
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php(64): mysqli->prepare('INSERT INTO set...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 64
-[08-Nov-2025 20:06:41 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:64
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php(64): mysqli->prepare('INSERT INTO set...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 64
-[08-Nov-2025 20:08:36 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:64
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php(64): mysqli->prepare('INSERT INTO set...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 64
-[08-Nov-2025 20:08:56 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:103
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php(103): mysqli->prepare('INSERT INTO new...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 103
-[08-Nov-2025 20:09:03 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:103
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php(103): mysqli->prepare('INSERT INTO new...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 103
-[08-Nov-2025 20:11:24 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:110
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php(110): mysqli->prepare('INSERT INTO new...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 110
-[08-Nov-2025 20:11:28 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:110
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php(110): mysqli->prepare('INSERT INTO new...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 110
-[08-Nov-2025 20:26:12 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:107
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php(107): mysqli->prepare('INSERT INTO new...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 107
-[08-Nov-2025 20:26:56 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:85
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php(85): mysqli->prepare('INSERT INTO set...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 85
-[08-Nov-2025 20:29:56 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:131
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php(131): mysqli->prepare('INSERT INTO new...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 131
-[08-Nov-2025 20:35:26 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli object is already closed in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php:108
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php(108): mysqli->prepare('INSERT INTO new...')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\admin\new_arrivals.php on line 108
-[08-Nov-2025 20:55:05 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\mosse-luxe\includes\header.php:6) in C:\xampp\htdocs\mosse-luxe\checkout.php on line 12
-[08-Nov-2025 20:05:48 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'status' in 'field list' in C:\xampp\htdocs\mosse-luxe\seed_pages.php:63
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\seed_pages.php(63): mysqli->prepare()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\seed_pages.php on line 63
-[08-Nov-2025 21:06:23 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in C:\xampp\htdocs\mosse-luxe\seed_pages.php:64
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\seed_pages.php on line 64
-[08-Nov-2025 21:06:37 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in C:\xampp\htdocs\mosse-luxe\seed_pages.php:64
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\seed_pages.php on line 64
-[08-Nov-2025 20:46:23 UTC] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\run_sql.php(4): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 21:50:32 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\ajax_cart_handler.php(14): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 21:50:33 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\ajax_cart_handler.php(14): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 21:50:42 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\ajax_cart_handler.php(14): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 21:50:45 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\ajax_cart_handler.php(14): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 21:57:16 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\index.php(4): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 21:58:23 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\login.php(9): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 20:58:51 UTC] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\test_db_connection.php(5): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 20:59:10 UTC] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\create_demo_user.php(4): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:00:33 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\ajax_cart_handler.php(14): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:00:34 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\login.php(9): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:00:38 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\login.php(9): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:00:40 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\ajax_cart_handler.php(14): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:00:41 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\login.php(9): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:00:43 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\ajax_cart_handler.php(14): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:00:47 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\index.php(4): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:00:51 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\ajax_cart_handler.php(14): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:00:55 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\ajax_cart_handler.php(14): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:00:57 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\index.php(4): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:00:59 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\ajax_cart_handler.php(14): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:01:01 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\login.php(9): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:21:02 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 22:21:02 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_ID already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 18
-[08-Nov-2025 22:21:02 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_KEY already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 19
-[08-Nov-2025 22:21:02 Europe/Berlin] PHP Warning:  Constant PAYFAST_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 21
-[08-Nov-2025 22:21:02 Europe/Berlin] PHP Warning:  Constant SITE_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 25
-[08-Nov-2025 22:21:02 Europe/Berlin] PHP Warning:  Constant SHIPPING_COST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 28
-[08-Nov-2025 22:21:02 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_WIDTH already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 31
-[08-Nov-2025 22:21:02 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_HEIGHT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 32
-[08-Nov-2025 22:21:02 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_DIR already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 33
-[08-Nov-2025 22:21:02 Europe/Berlin] PHP Warning:  Constant SMTP_HOST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 37
-[08-Nov-2025 22:21:02 Europe/Berlin] PHP Warning:  Constant SMTP_USERNAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 38
-[08-Nov-2025 22:21:02 Europe/Berlin] PHP Warning:  Constant SMTP_PASSWORD already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 39
-[08-Nov-2025 22:21:02 Europe/Berlin] PHP Warning:  Constant SMTP_PORT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 40
-[08-Nov-2025 22:21:02 Europe/Berlin] PHP Warning:  Constant SMTP_ENCRYPTION already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 41
-[08-Nov-2025 22:21:02 Europe/Berlin] PHP Warning:  Constant CONTACT_PHONE already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 46
-[08-Nov-2025 22:21:02 Europe/Berlin] PHP Warning:  Constant CONTACT_ADDRESS already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 47
-[08-Nov-2025 22:25:35 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 22:25:35 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_ID already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 18
-[08-Nov-2025 22:25:35 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_KEY already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 19
-[08-Nov-2025 22:25:35 Europe/Berlin] PHP Warning:  Constant PAYFAST_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 21
-[08-Nov-2025 22:25:35 Europe/Berlin] PHP Warning:  Constant SITE_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 25
-[08-Nov-2025 22:25:35 Europe/Berlin] PHP Warning:  Constant SHIPPING_COST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 28
-[08-Nov-2025 22:25:35 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_WIDTH already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 31
-[08-Nov-2025 22:25:35 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_HEIGHT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 32
-[08-Nov-2025 22:25:35 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_DIR already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 33
-[08-Nov-2025 22:25:35 Europe/Berlin] PHP Warning:  Constant SMTP_HOST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 37
-[08-Nov-2025 22:25:35 Europe/Berlin] PHP Warning:  Constant SMTP_USERNAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 38
-[08-Nov-2025 22:25:35 Europe/Berlin] PHP Warning:  Constant SMTP_PASSWORD already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 39
-[08-Nov-2025 22:25:35 Europe/Berlin] PHP Warning:  Constant SMTP_PORT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 40
-[08-Nov-2025 22:25:35 Europe/Berlin] PHP Warning:  Constant SMTP_ENCRYPTION already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 41
-[08-Nov-2025 22:25:35 Europe/Berlin] PHP Warning:  Constant CONTACT_PHONE already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 46
-[08-Nov-2025 22:25:35 Europe/Berlin] PHP Warning:  Constant CONTACT_ADDRESS already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 47
-[08-Nov-2025 22:35:59 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 22:35:59 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_ID already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 18
-[08-Nov-2025 22:35:59 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_KEY already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 19
-[08-Nov-2025 22:35:59 Europe/Berlin] PHP Warning:  Constant PAYFAST_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 21
-[08-Nov-2025 22:35:59 Europe/Berlin] PHP Warning:  Constant SITE_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 25
-[08-Nov-2025 22:35:59 Europe/Berlin] PHP Warning:  Constant SHIPPING_COST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 28
-[08-Nov-2025 22:35:59 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_WIDTH already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 31
-[08-Nov-2025 22:35:59 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_HEIGHT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 32
-[08-Nov-2025 22:35:59 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_DIR already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 33
-[08-Nov-2025 22:35:59 Europe/Berlin] PHP Warning:  Constant SMTP_HOST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 37
-[08-Nov-2025 22:35:59 Europe/Berlin] PHP Warning:  Constant SMTP_USERNAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 38
-[08-Nov-2025 22:35:59 Europe/Berlin] PHP Warning:  Constant SMTP_PASSWORD already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 39
-[08-Nov-2025 22:35:59 Europe/Berlin] PHP Warning:  Constant SMTP_PORT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 40
-[08-Nov-2025 22:35:59 Europe/Berlin] PHP Warning:  Constant SMTP_ENCRYPTION already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 41
-[08-Nov-2025 22:35:59 Europe/Berlin] PHP Warning:  Constant CONTACT_PHONE already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 46
-[08-Nov-2025 22:35:59 Europe/Berlin] PHP Warning:  Constant CONTACT_ADDRESS already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 47
-[08-Nov-2025 22:37:01 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 22:37:01 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_ID already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 18
-[08-Nov-2025 22:37:01 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_KEY already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 19
-[08-Nov-2025 22:37:01 Europe/Berlin] PHP Warning:  Constant PAYFAST_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 21
-[08-Nov-2025 22:37:01 Europe/Berlin] PHP Warning:  Constant SITE_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 25
-[08-Nov-2025 22:37:01 Europe/Berlin] PHP Warning:  Constant SHIPPING_COST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 28
-[08-Nov-2025 22:37:01 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_WIDTH already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 31
-[08-Nov-2025 22:37:01 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_HEIGHT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 32
-[08-Nov-2025 22:37:01 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_DIR already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 33
-[08-Nov-2025 22:37:01 Europe/Berlin] PHP Warning:  Constant SMTP_HOST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 37
-[08-Nov-2025 22:37:01 Europe/Berlin] PHP Warning:  Constant SMTP_USERNAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 38
-[08-Nov-2025 22:37:01 Europe/Berlin] PHP Warning:  Constant SMTP_PASSWORD already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 39
-[08-Nov-2025 22:37:01 Europe/Berlin] PHP Warning:  Constant SMTP_PORT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 40
-[08-Nov-2025 22:37:01 Europe/Berlin] PHP Warning:  Constant SMTP_ENCRYPTION already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 41
-[08-Nov-2025 22:37:01 Europe/Berlin] PHP Warning:  Constant CONTACT_PHONE already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 46
-[08-Nov-2025 22:37:01 Europe/Berlin] PHP Warning:  Constant CONTACT_ADDRESS already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 47
-[08-Nov-2025 22:37:54 Europe/Berlin] PHP Warning:  Constant DB_NAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 15
-[08-Nov-2025 22:37:54 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_ID already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 18
-[08-Nov-2025 22:37:54 Europe/Berlin] PHP Warning:  Constant PAYFAST_MERCHANT_KEY already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 19
-[08-Nov-2025 22:37:54 Europe/Berlin] PHP Warning:  Constant PAYFAST_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 21
-[08-Nov-2025 22:37:54 Europe/Berlin] PHP Warning:  Constant SITE_URL already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 25
-[08-Nov-2025 22:37:54 Europe/Berlin] PHP Warning:  Constant SHIPPING_COST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 28
-[08-Nov-2025 22:37:54 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_WIDTH already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 31
-[08-Nov-2025 22:37:54 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_HEIGHT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 32
-[08-Nov-2025 22:37:54 Europe/Berlin] PHP Warning:  Constant PRODUCT_IMAGE_DIR already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 33
-[08-Nov-2025 22:37:54 Europe/Berlin] PHP Warning:  Constant SMTP_HOST already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 37
-[08-Nov-2025 22:37:54 Europe/Berlin] PHP Warning:  Constant SMTP_USERNAME already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 38
-[08-Nov-2025 22:37:54 Europe/Berlin] PHP Warning:  Constant SMTP_PASSWORD already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 39
-[08-Nov-2025 22:37:54 Europe/Berlin] PHP Warning:  Constant SMTP_PORT already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 40
-[08-Nov-2025 22:37:54 Europe/Berlin] PHP Warning:  Constant SMTP_ENCRYPTION already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 41
-[08-Nov-2025 22:37:54 Europe/Berlin] PHP Warning:  Constant CONTACT_PHONE already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 46
-[08-Nov-2025 22:37:54 Europe/Berlin] PHP Warning:  Constant CONTACT_ADDRESS already defined in C:\xampp\htdocs\mosse-luxe\includes\config.php on line 47
-[08-Nov-2025 22:37:55 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function imagecreatefrompng() in C:\xampp\htdocs\mosse-luxe\includes\image_service.php:41
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\add_product.php(58): ImageService::processUpload(Array, 800, 800, '')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\image_service.php on line 41
-[08-Nov-2025 22:41:40 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function imagecreatefrompng() in C:\xampp\htdocs\mosse-luxe\includes\image_service.php:41
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\add_product.php(58): ImageService::processUpload(Array, 800, 800, '')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\image_service.php on line 41
-[08-Nov-2025 22:49:25 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\add_product.php(17): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:49:27 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\add_product.php(17): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:49:28 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\add_product.php(17): get_db_connection()
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:49:29 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\bootstrap.php(25): get_db_connection()
-#1 C:\xampp\htdocs\mosse-luxe\admin\products.php(3): require_once('C:\\xampp\\htdocs...')
+#0 C:\xampp\htdocs\mosse-luxe\includes\header.php(141): get_db_connection()
+#1 C:\xampp\htdocs\mosse-luxe\about.php(4): require_once('C:\\xampp\\htdocs...')
 #2 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:49:30 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
+  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 23
+[15-Nov-2025 12:25:19 Europe/Berlin] PHP Warning:  mysqli::__construct(): (HY000/2002): No connection could be made because the target machine actively refused it in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
+[15-Nov-2025 12:25:19 Europe/Berlin] Database Connection Failed: No connection could be made because the target machine actively refused it
+[15-Nov-2025 12:25:19 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Database Connection Failed: No connection could be made because the target machine actively refused it in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:23
 Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\bootstrap.php(25): get_db_connection()
-#1 C:\xampp\htdocs\mosse-luxe\admin\categories.php(3): require_once('C:\\xampp\\htdocs...')
-#2 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:49:30 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\bootstrap.php(25): get_db_connection()
-#1 C:\xampp\htdocs\mosse-luxe\admin\categories.php(3): require_once('C:\\xampp\\htdocs...')
-#2 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:49:35 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\bootstrap.php(25): get_db_connection()
-#1 C:\xampp\htdocs\mosse-luxe\admin\categories.php(3): require_once('C:\\xampp\\htdocs...')
-#2 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:49:37 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php:16
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\bootstrap.php(25): get_db_connection()
-#1 C:\xampp\htdocs\mosse-luxe\admin\categories.php(3): require_once('C:\\xampp\\htdocs...')
-#2 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 16
-[08-Nov-2025 22:57:31 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function imagecreatefrompng() in C:\xampp\htdocs\mosse-luxe\includes\image_service.php:41
-Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\add_product.php(58): ImageService::processUpload(Array, 800, 800, '')
+#0 C:\xampp\htdocs\mosse-luxe\index.php(6): get_db_connection()
 #1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\image_service.php on line 41
-[08-Nov-2025 23:00:11 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function imagecreatefrompng() in C:\xampp\htdocs\mosse-luxe\includes\image_service.php:41
+  thrown in C:\xampp\htdocs\mosse-luxe\includes\db_connect.php on line 23
+[15-Nov-2025 12:32:41 Europe/Berlin] PHP Warning:  imagecreatefrompng(): gd-png: libpng warning: iCCP: known incorrect sRGB profile in C:\xampp\htdocs\mosse-luxe\includes\image_service.php on line 54
+[15-Nov-2025 14:02:21 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 85
+[15-Nov-2025 14:02:21 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php:85
 Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\add_product.php(54): ImageService::processUpload(Array, 800, 800, '')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\image_service.php on line 41
-[08-Nov-2025 23:00:15 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function imagecreatefrompng() in C:\xampp\htdocs\mosse-luxe\includes\image_service.php:41
+#0 {main}
+  thrown in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 85
+[15-Nov-2025 14:02:39 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 137
+[15-Nov-2025 14:02:39 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php:137
 Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\add_product.php(54): ImageService::processUpload(Array, 800, 800, '')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\image_service.php on line 41
-[08-Nov-2025 23:00:53 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function imagecreatefrompng() in C:\xampp\htdocs\mosse-luxe\includes\image_service.php:41
+#0 {main}
+  thrown in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 137
+[15-Nov-2025 14:02:51 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 137
+[15-Nov-2025 14:02:51 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php:137
 Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\add_product.php(54): ImageService::processUpload(Array, 800, 800, '')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\image_service.php on line 41
-[08-Nov-2025 23:06:08 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function imagecreatefrompng() in C:\xampp\htdocs\mosse-luxe\includes\image_service.php:41
+#0 {main}
+  thrown in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 137
+[15-Nov-2025 14:02:52 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 137
+[15-Nov-2025 14:02:52 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php:137
 Stack trace:
-#0 C:\xampp\htdocs\mosse-luxe\admin\add_product.php(54): ImageService::processUpload(Array, 800, 800, '')
-#1 {main}
-  thrown in C:\xampp\htdocs\mosse-luxe\includes\image_service.php on line 41
+#0 {main}
+  thrown in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 137
+[15-Nov-2025 14:03:17 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 137
+[15-Nov-2025 14:03:17 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php:137
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 137
+[15-Nov-2025 14:04:25 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 137
+[15-Nov-2025 14:04:25 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php:137
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 137
+[15-Nov-2025 14:04:27 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 137
+[15-Nov-2025 14:04:27 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php:137
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 137
+[15-Nov-2025 14:04:34 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 137
+[15-Nov-2025 14:04:34 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php:137
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 137
+[15-Nov-2025 14:06:00 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 154
+[15-Nov-2025 14:06:00 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php:154
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 154
+[15-Nov-2025 14:07:03 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 154
+[15-Nov-2025 14:07:03 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php:154
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 154
+[15-Nov-2025 14:07:05 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 154
+[15-Nov-2025 14:07:05 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php:154
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php on line 154
+[15-Nov-2025 14:18:34 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php:1) in C:\xampp\htdocs\mosse-luxe\admin\bootstrap.php on line 12
+[15-Nov-2025 14:19:24 Europe/Berlin] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\mosse-luxe\admin\whatsapp.php:1) in C:\xampp\htdocs\mosse-luxe\admin\bootstrap.php on line 12
+[15-Nov-2025 14:45:09 UTC] PHP Fatal error:  Uncaught Error: mysqli_stmt::bind_param(): Argument #2 could not be passed by reference in C:\xampp\htdocs\mosse-luxe\_private_scripts\create_product_variants.php:110
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\mosse-luxe\_private_scripts\create_product_variants.php on line 110
+[15-Nov-2025 14:45:28 UTC] PHP Fatal error:  Uncaught Error: mysqli_stmt::bind_param(): Argument #2 could not be passed by reference in C:\xampp\htdocs\mosse-luxe\_private_scripts\create_product_variants.php:110
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\mosse-luxe\_private_scripts\create_product_variants.php on line 110
+[15-Nov-2025 14:57:33 UTC] PHP Fatal error:  Uncaught Error: mysqli_stmt::bind_param(): Argument #2 could not be passed by reference in C:\xampp\htdocs\mosse-luxe\_private_scripts\add_category_sizes.php:89
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\mosse-luxe\_private_scripts\add_category_sizes.php on line 89
+[15-Nov-2025 14:58:01 UTC] PHP Fatal error:  Uncaught Error: mysqli_stmt::bind_param(): Argument #2 could not be passed by reference in C:\xampp\htdocs\mosse-luxe\_private_scripts\add_category_sizes.php:89
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\mosse-luxe\_private_scripts\add_category_sizes.php on line 89

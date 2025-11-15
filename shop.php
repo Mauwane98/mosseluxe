@@ -1,9 +1,9 @@
 <?php
-$pageTitle = "Shop - Mossé Luxe";
-require_once 'includes/db_connect.php';
-$conn = get_db_connection();
+require_once 'includes/bootstrap.php';
+$pageTitle = get_setting('shop_title', 'Shop') . " - Mossé Luxe";
 require_once 'includes/header.php'; // Now include header after all PHP logic
 
+$conn = get_db_connection();
 $products = [];
 $categories = [];
 
@@ -27,7 +27,7 @@ $offset = ($page - 1) * $limit;
 
 // Build SQL query for counting total products
 $count_sql = "SELECT COUNT(id) as total FROM products WHERE status = 1";
-$sql = "SELECT id, name, price, sale_price, image FROM products WHERE status = 1";
+$sql = "SELECT id, name, price, sale_price, image, is_featured, is_coming_soon, is_bestseller, is_new FROM products WHERE status = 1";
 $params = [];
 $types = '';
 
@@ -88,15 +88,15 @@ if ($stmt = $conn->prepare($sql)) {
     }
     $stmt->close();
 }
-$conn->close();
+
 ?>
 
 <!-- Main Content -->
 <main>
     <div class="container mx-auto px-4 py-16 md:py-24">
         <div class="text-center mb-16">
-            <h1 class="text-4xl md:text-6xl font-black uppercase tracking-tighter">All Products</h1>
-            <p class="mt-4 text-lg text-black/70 max-w-2xl mx-auto">Discover our curated collection of luxury streetwear, crafted with precision and passion.</p>
+            <h1 class="text-4xl md:text-6xl font-black uppercase tracking-tighter"><?php echo htmlspecialchars(get_setting('shop_h1_title', 'All Products')); ?></h1>
+            <p class="mt-4 text-lg text-black/70 max-w-2xl mx-auto"><?php echo htmlspecialchars(get_setting('shop_sub_title', 'Discover our curated collection of luxury streetwear, crafted with precision and passion.')); ?></p>
         </div>
 
         <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
@@ -124,31 +124,106 @@ $conn->close();
 
         <?php if (!empty($products)): ?>
             <!-- Product Grid -->
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
                 <?php foreach ($products as $product): ?>
-                    <div class="group">
-                        <a href="product.php?id=<?php echo $product['id']; ?>">
-                            <div class="relative aspect-w-1 aspect-h-1 bg-neutral-100 rounded-md overflow-hidden border border-transparent group-hover:border-black/10 transition-colors">
-                                <img 
-                                    src="<?php echo htmlspecialchars($product['image']); ?>" 
-                                    alt="<?php echo htmlspecialchars($product['name']); ?>" 
-                                    class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
-                                    onerror="this.src='https://placehold.co/600x600/f1f1f1/000000?text=Mossé+Luxe'"
-                                >
-                                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 w-11/12">
-                                    <button class="w-full bg-white/90 text-black text-sm font-bold uppercase py-2.5 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-300 backdrop-blur-sm hover:bg-white quick-add-btn" data-product-id="<?php echo $product['id']; ?>">
-                                        Quick Add
+                    <div class="group relative">
+                        <a href="product/<?php echo $product['id']; ?>/<?php echo urlencode(str_replace(' ', '-', strtolower($product['name'] ?? 'product'))); ?>">
+            <div class="relative aspect-w-1 aspect-h-1 bg-neutral-50 rounded-2xl overflow-hidden border border-transparent group-hover:border-black/20 transition-colors duration-300 hover:shadow-lg">
+                                <!-- Premium Badges - Fixed position for better visibility -->
+                                <div class="absolute top-4 left-4 flex flex-col gap-2 z-10">
+                                    <?php if ($product['sale_price'] > 0): ?>
+                                        <span class="inline-flex items-center bg-gradient-to-r from-red-500 to-red-600 text-white text-[10px] font-black px-2.5 py-1.5 rounded-full shadow-xl border-2 border-white/20 backdrop-blur-sm">
+                                            SALE
+                                        </span>
+                                    <?php endif; ?>
+                                    <?php if ($product['is_featured']): ?>
+                                        <span class="inline-flex items-center bg-gradient-to-r from-amber-400 to-orange-500 text-black text-[10px] font-black px-2.5 py-1.5 rounded-full shadow-xl border-2 border-white/30 backdrop-blur-sm">
+                                            FEATURED
+                                        </span>
+                                    <?php endif; ?>
+                                    <?php if ($product['is_new']): ?>
+                                        <span class="inline-flex items-center bg-gradient-to-r from-green-500 to-emerald-600 text-white text-[10px] font-black px-2.5 py-1.5 rounded-full shadow-xl border-2 border-white/20 backdrop-blur-sm">
+                                            NEW
+                                        </span>
+                                    <?php endif; ?>
+                                    <!-- Additional badges can be added here -->
+                                </div>
+
+                                    <img
+                                        src="<?php echo SITE_URL . htmlspecialchars($product['image']); ?>"
+                                        alt="<?php echo htmlspecialchars($product['name']); ?>"
+                                        class="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-300 ease-out"
+                                        loading="eager"
+                                        onerror="this.src='<?php echo SITE_URL; ?>assets/images/product-placeholder.png'"
+                                    >
+
+                                <!-- Top-right Buttons (Always visible, enhanced interactions) -->
+                                <div class="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <!-- Wishlist Button -->
+                                    <button class="bg-white/90 backdrop-blur-sm text-black p-2 rounded-full border border-white/50 shadow-xl hover:bg-red-50 hover:text-red-600 transition-all duration-300"
+                                            onclick="event.preventDefault(); toggleWishlist(<?php echo $product['id']; ?>, this)"
+                                            title="Add to Wishlist">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                        </svg>
                                     </button>
                                 </div>
+
+                                <!-- Quick Actions Overlay -->
+                                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                    <div class="flex gap-3 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                                        <!-- Quick View Button -->
+                                        <button class="bg-white/95 backdrop-blur-sm text-black p-3 rounded-full border-2 border-white/50 shadow-2xl hover:bg-white hover:scale-110 transition-all duration-300"
+                                                onclick="event.preventDefault(); openQuickView(<?php echo $product['id']; ?>)"
+                                                title="Quick View">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                            </svg>
+                                        </button>
+
+                                        <!-- Quick Add Button -->
+                                        <button class="bg-black text-white p-3 rounded-full border-2 border-white/50 shadow-2xl hover:bg-white hover:text-black hover:scale-110 transition-all duration-300"
+                                                onclick="event.preventDefault(); handleQuickAdd(<?php echo $product['id']; ?>, 'quick-add-form-shop-<?php echo $product['id']; ?>')"
+                                                title="Add to Cart">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-4 4m0 0h18m-4 4H7m0 0l-2-2"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Hidden Quick Add Form -->
+                                <form id="quick-add-form-shop-<?php echo $product['id']; ?>" class="hidden" action="ajax_cart_handler.php" method="POST">
+                                    <?php echo generate_csrf_token_input(); ?>
+                                    <input type="hidden" name="action" value="add">
+                                    <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+                                    <input type="hidden" name="quantity" value="1">
+                                </form>
+
+                                <!-- Subtle border indicator -->
+                                <div class="absolute inset-0 rounded-2xl border-2 border-black/0 group-hover:border-black/10 transition-colors duration-500"></div>
                             </div>
-                            <div class="mt-4 text-left">
-                                <h4 class="text-sm text-black/60">Mossé Luxe</h4>
-                                <h3 class="text-base md:text-lg font-bold truncate"><?php echo htmlspecialchars($product['name']); ?></h3>
-                                <?php if ($product['sale_price'] > 0): ?>
-                                    <p class="text-md font-semibold mt-1"><span class="text-red-600">R <?php echo number_format($product['sale_price'], 2); ?></span> <span class="line-through text-black/50">R <?php echo number_format($product['price'], 2); ?></span></p>
-                                <?php else: ?>
-                                    <p class="text-md font-semibold mt-1">R <?php echo number_format($product['price'], 2); ?></p>
-                                <?php endif; ?>
+
+                            <!-- Enhanced Product Information -->
+                            <div class="mt-6 text-left space-y-1">
+                                <!-- Brand -->
+                                <h4 class="text-xs font-semibold uppercase tracking-widest text-black/60">Mossé Luxe</h4>
+
+                                <!-- Product Name -->
+                                <h3 class="text-lg font-black leading-tight text-black group-hover:text-gray-800 transition-colors"><?php echo htmlspecialchars($product['name'] ?? 'PRODUCT'); ?></h3>
+
+                                <!-- Price -->
+                                <div class="mt-2">
+                                    <?php if ($product['sale_price'] > 0): ?>
+                                        <p class="flex items-baseline gap-2">
+                                            <span class="text-lg font-black text-black">R <?php echo number_format($product['sale_price'], 2); ?></span>
+                                            <span class="text-sm text-black/50 line-through">R <?php echo number_format($product['price'], 2); ?></span>
+                                        </p>
+                                    <?php else: ?>
+                                        <p class="text-lg font-black text-black">R <?php echo number_format($product['price'], 2); ?></p>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </a>
                     </div>
@@ -176,42 +251,9 @@ $conn->close();
         <?php endif; ?>
     </div>
 </main>
-<?php
-?>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.quick-add-btn').forEach(button => {
-        button.addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent default button action
-            const productId = this.dataset.productId;
-            const quantity = 1; // Quick add always adds 1 item
 
-            const formData = new FormData();
-            formData.append('action', 'add');
-            formData.append('product_id', productId);
-            formData.append('quantity', quantity);
 
-            fetch('ajax_cart_handler.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-                    updateCartCountDisplay(); // Update cart count in header
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while adding to cart.');
-            });
-        });
-    });
-});
-</script>
+
 <?php
 require_once 'includes/footer.php';
 ?>

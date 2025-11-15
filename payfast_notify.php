@@ -1,10 +1,5 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-require_once 'includes/db_connect.php';
-require_once 'includes/config.php';
+require_once __DIR__ . '/includes/bootstrap.php';
 
 // Custom logging function
 function log_itn_message($message) {
@@ -78,8 +73,8 @@ log_itn_message("ITN Validated Successfully. Transaction Status: " . $_POST['pay
 $conn = get_db_connection();
 
 $order_id = filter_var($_POST['m_payment_id'], FILTER_VALIDATE_INT);
-$pf_payment_id = filter_var($_POST['pf_payment_id'], FILTER_SANITIZE_STRING);
-$payment_status = filter_var($_POST['payment_status'], FILTER_SANITIZE_STRING);
+$pf_payment_id = htmlspecialchars(trim($_POST['pf_payment_id']));
+$payment_status = htmlspecialchars(trim($_POST['payment_status']));
 $amount_paid = filter_var($_POST['amount_gross'], FILTER_VALIDATE_FLOAT);
 
 // Fetch order details to compare total amount
@@ -127,6 +122,9 @@ if ($order['status'] !== $new_order_status) {
 
     // 4. Handling stock and sending confirmation emails for successful payments
     if ($new_order_status === 'Completed') {
+        $conn->begin_transaction();
+        $stock_update_successful = true;
+
         // Reduce stock
         $stmt_items = $conn->prepare("SELECT product_id, quantity FROM order_items WHERE order_id = ?");
         $stmt_items->bind_param("i", $order_id);
@@ -135,13 +133,21 @@ if ($order['status'] !== $new_order_status) {
         while ($item = $result_items->fetch_assoc()) {
             $stmt_stock = $conn->prepare("UPDATE products SET stock = stock - ? WHERE id = ?");
             $stmt_stock->bind_param("ii", $item['quantity'], $item['product_id']);
-            $stmt_stock->execute();
+            if (!$stmt_stock->execute()) {
+                $stock_update_successful = false;
+                break;
+            }
             $stmt_stock->close();
         }
         $stmt_items->close();
-        log_itn_message("Stock reduced for Order ID " . $order_id);
 
-
+        if ($stock_update_successful) {
+            $conn->commit();
+            log_itn_message("Stock reduced for Order ID " . $order_id);
+        } else {
+            $conn->rollback();
+            log_itn_message("Failed to reduce stock for Order ID " . $order_id . ". Transaction rolled back.");
+        }
     }
 }
 

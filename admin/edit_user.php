@@ -1,17 +1,13 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once '../includes/admin_auth.php';
-require_once '../includes/db_connect.php';
-require_once '../includes/csrf.php';
+require_once 'bootstrap.php';
 $conn = get_db_connection();
 
 $csrf_token = generate_csrf_token();
-$error = '';
+
 $user_id = isset($_GET['id']) ? filter_var($_GET['id'], FILTER_VALIDATE_INT, array('options' => array('min_range' => 1))) : 0;
 
 if (!$user_id) {
+    $_SESSION['error_message'] = "No user ID provided.";
     header("Location: users.php");
     exit();
 }
@@ -25,27 +21,34 @@ $user = $result->fetch_assoc();
 $stmt->close();
 
 if (!$user) {
-    header("Location: users.php?error=not_found");
+    $_SESSION['error_message'] = "User not found.";
+    header("Location: users.php");
     exit();
 }
 
+$edit_user_error = ''; // Initialize error variable
+
 // Handle form submission for updating the user
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_user'])) {
-    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        $error = 'Invalid CSRF token.';
+    // Repopulate $user with POST data to retain values on error
+    $user['name'] = trim($_POST['name']);
+    $user['email'] = trim($_POST['email']);
+    $user['role'] = trim($_POST['role']);
+
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+        $edit_user_error = 'Invalid CSRF token.';
     } else {
         $name = trim($_POST['name']);
         $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
         $role = trim($_POST['role']);
         $password = trim($_POST['password']);
+        $confirm_password = trim($_POST['confirm_password']); // Get confirm password here
 
         // Validate inputs
         if (empty($name) || !filter_var($email, FILTER_VALIDATE_EMAIL) || empty($role)) {
-            $error = "Name, valid email, and role are required.";
-        } elseif (!preg_match("/^[a-zA-Z\s]+$/", $name)) {
-            $error = "Name can only contain alphabetic characters and spaces.";
-        } elseif (!in_array($role, ['admin', 'customer'])) {
-            $error = "Invalid user role selected.";
+            $edit_user_error = "Name, valid email, and role are required.";
+        } elseif (!in_array($role, ['admin', 'user'])) { // Changed 'customer' to 'user' for consistency
+            $edit_user_error = "Invalid user role selected.";
         } else {
             // Check if email is being changed and if the new one is already taken
             if ($email !== $user['email']) {
@@ -55,16 +58,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_user'])) {
                 $stmt_check->execute();
                 $stmt_check->store_result();
                 if ($stmt_check->num_rows > 0) {
-                    $error = "This email address is already in use by another account.";
+                    $edit_user_error = "This email address is already in use by another account.";
                 }
                 $stmt_check->close();
             }
 
-            if (empty($error)) {
+            if (empty($edit_user_error)) { // Only proceed if no prior error
                 if (!empty($password)) {
-                    // Update with new password
-                    if (strlen($password) < 8) {
-                        $error = "New password must be at least 8 characters long.";
+                    if ($password !== $confirm_password) {
+                        $edit_user_error = "New password and confirm password do not match.";
+                    } elseif (strlen($password) < 8) {
+                        $edit_user_error = "New password must be at least 8 characters long.";
                     } else {
                         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                         $sql_update = "UPDATE users SET name = ?, email = ?, role = ?, password = ? WHERE id = ?";
@@ -78,12 +82,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_user'])) {
                     $stmt_update->bind_param("sssi", $name, $email, $role, $user_id);
                 }
 
-                if (empty($error)) {
+                if (empty($edit_user_error)) { // Only proceed if no prior error
                     if (isset($stmt_update) && $stmt_update->execute()) {
-                        header("Location: users.php?success=updated");
+                        $_SESSION['success_message'] = "User updated successfully!";
+                        regenerate_csrf_token();
+                        header("Location: users.php");
                         exit();
                     } else {
-                        $error = "Failed to update user.";
+                        error_log("Error executing user update query: " . $stmt_update->error);
+                        $edit_user_error = "Failed to update user.";
                     }
                 }
                 if (isset($stmt_update)) $stmt_update->close();
@@ -102,9 +109,9 @@ include 'header.php';
         <a href="users.php" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">Back to Users</a>
     </div>
 
-    <?php if(!empty($error)): ?>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            <?php echo $error; ?>
+    <?php if(!empty($edit_user_error)): ?>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+            <?php echo $edit_user_error; ?>
         </div>
     <?php endif; ?>
 
@@ -162,7 +169,7 @@ include 'header.php';
 
                 <div>
                     <label for="confirm_password" class="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
-                    <input type="password" id="confirm_password"
+                    <input type="password" id="confirm_password" name="confirm_password"
                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
                 </div>
             </div>
@@ -175,25 +182,5 @@ include 'header.php';
         </div>
     </form>
 </div>
-
-<script>
-// Password confirmation validation
-document.querySelector('form').addEventListener('submit', function(e) {
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirm_password').value;
-
-    if (password !== confirmPassword) {
-        e.preventDefault();
-        alert('Passwords do not match. Please try again.');
-        return false;
-    }
-
-    if (password && password.length < 8) {
-        e.preventDefault();
-        alert('Password must be at least 8 characters long.');
-        return false;
-    }
-});
-</script>
 
 <?php include 'footer.php'; ?>

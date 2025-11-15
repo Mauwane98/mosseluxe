@@ -1,13 +1,13 @@
 <?php
-// Start session and include admin authentication
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once '../includes/admin_auth.php';
-require_once '../includes/db_connect.php';
+require_once 'bootstrap.php';
+require_once '../includes/export_handler.php';
 $conn = get_db_connection();
 
 // --- 1. Get Filtering & Searching Parameters from URL ---
+$format = isset($_GET['format']) ? strtolower($_GET['format']) : 'csv';
+if (!in_array($format, ['csv', 'pdf'])) {
+    $format = 'csv';
+}
 $search_query = isset($_GET['search_query']) ? trim($_GET['search_query']) : '';
 $filter_status = isset($_GET['filter_status']) ? trim($_GET['filter_status']) : '';
 
@@ -52,42 +52,7 @@ if ($stmt = $conn->prepare($sql_orders)) {
     }
     $stmt->close();
 }
-$conn->close();
 
-// --- 4. Generate and Output CSV ---
-$filename = "mosse_luxe_orders_" . date('Y-m-d') . ".csv";
-
-// Set headers to force download
-header('Content-Type: text/csv');
-header('Content-Disposition: attachment; filename="' . $filename . '"');
-
-// Open output stream
-$output = fopen('php://output', 'w');
-
-// Write the header row
-fputcsv($output, [
-    'Order ID',
-    'Customer Name',
-    'Customer Email',
-    'Order Date',
-    'Total Price (R)',
-    'Status'
-]);
-
-// Write the data rows
-if (!empty($orders)) {
-    foreach ($orders as $order) {
-        fputcsv($output, [
-            'ML-' . $order['id'],
-            $order['customer_name'] ?? 'Guest',
-            $order['customer_email'] ?? 'N/A',
-            $order['created_at'],
-            number_format($order['total_price'], 2, '.', ''),
-            $order['status']
-        ]);
-    }
-}
-
-fclose($output);
-exit();
+// --- 4. Use ExportHandler to generate and output the report ---
+ExportHandler::exportOrders($orders, $format);
 ?>

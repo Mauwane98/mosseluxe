@@ -1,8 +1,6 @@
 <?php
 $pageTitle = "My Wishlist - Mossé Luxe";
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+require_once 'includes/bootstrap.php';
 
 // If user is not logged in, redirect to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
@@ -11,7 +9,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 }
 
 require_once 'includes/header.php';
-require_once 'includes/db_connect.php';
 $conn = get_db_connection();
 
 $user_id = $_SESSION['user_id'];
@@ -27,7 +24,7 @@ if ($stmt = $conn->prepare($sql)) {
     }
     $stmt->close();
 }
-$conn->close();
+
 ?>
 
 <!-- Main Content -->
@@ -80,7 +77,7 @@ $conn->close();
 
                             <!-- Action Buttons -->
                             <div class="space-y-3">
-                                <a href="product.php?id=<?php echo $item['id']; ?>" class="w-full block text-center bg-black text-white py-3 px-4 font-bold uppercase rounded-md hover:bg-black/80 transition-colors tracking-wider text-sm">
+                                <a href="<?php echo SITE_URL; ?>product/<?php echo $item['id']; ?>/<?php echo urlencode(str_replace(' ', '-', strtolower($item['name']))); ?>" class="w-full block text-center bg-black text-white py-3 px-4 font-bold uppercase rounded-md hover:bg-black/80 transition-colors tracking-wider text-sm">
                                     View Product
                                 </a>
                                 <button type="button" class="w-full bg-neutral-100 text-black py-3 px-4 font-bold uppercase rounded-md hover:bg-neutral-200 transition-colors tracking-wider text-sm add-to-cart-from-wishlist-btn" data-product-id="<?php echo $item['id']; ?>">
@@ -94,7 +91,7 @@ $conn->close();
 
             <!-- Continue Shopping CTA -->
             <div class="text-center mt-12">
-                <a href="shop.php" class="inline-flex items-center gap-2 bg-black text-white py-4 px-8 font-bold uppercase rounded-md hover:bg-black/80 transition-colors tracking-wider">
+                <a href="<?php echo SITE_URL; ?>shop" class="inline-flex items-center gap-2 bg-black text-white py-4 px-8 font-bold uppercase rounded-md hover:bg-black/80 transition-colors tracking-wider">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                     </svg>
@@ -111,7 +108,7 @@ $conn->close();
                 </div>
                 <h2 class="text-2xl font-bold mb-4">Your Wishlist is Empty</h2>
                 <p class="text-black/70 mb-8 max-w-md mx-auto">Save items you love for later. Start browsing our collection and add your favorites to your wishlist.</p>
-                <a href="shop.php" class="inline-flex items-center gap-2 bg-black text-white py-4 px-8 font-bold uppercase rounded-md hover:bg-black/80 transition-colors tracking-wider">
+                <a href="<?php echo SITE_URL; ?>shop" class="inline-flex items-center gap-2 bg-black text-white py-4 px-8 font-bold uppercase rounded-md hover:bg-black/80 transition-colors tracking-wider">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                     </svg>
@@ -125,83 +122,3 @@ $conn->close();
 <?php
 include 'includes/footer.php';
 ?>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Function to update the wishlist UI (e.g., remove item from display)
-    function updateWishlistUI(productId) {
-        const itemElement = document.querySelector(`.remove-from-wishlist-btn[data-product-id="${productId}"]`).closest('.bg-white');
-        if (itemElement) {
-            itemElement.remove();
-        }
-        // If wishlist becomes empty, reload the page to show empty state
-        if (document.querySelectorAll('.group.bg-white').length === 0) {
-            location.reload();
-        }
-    }
-
-    // Remove from wishlist via AJAX
-    document.querySelectorAll('.remove-from-wishlist-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            if (!confirm('Are you sure you want to remove this item from your wishlist?')) {
-                return;
-            }
-
-            const productId = this.dataset.productId;
-            const formData = new FormData();
-            formData.append('action', 'remove');
-            formData.append('product_id', productId);
-
-            fetch('wishlist_actions.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-                    updateWishlistUI(productId);
-                } else {
-                    alert(data.message || 'An error occurred.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while removing item from wishlist.');
-            });
-        });
-    });
-
-    // Add to cart from wishlist via AJAX
-    document.querySelectorAll('.add-to-cart-from-wishlist-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const productId = this.dataset.productId;
-            const quantity = 1; // Always add 1 from wishlist
-
-            const formData = new FormData();
-            formData.append('action', 'add');
-            formData.append('product_id', productId);
-            formData.append('quantity', quantity);
-
-            fetch('ajax_cart_handler.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-                    if (typeof updateCartCountDisplay === 'function') {
-                        updateCartCountDisplay(); // Update cart count in header
-                    }
-                } else {
-                    alert(data.message || 'An error occurred.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while adding item to cart.');
-            });
-        });
-    });
-});
-</script>

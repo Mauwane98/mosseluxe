@@ -1,6 +1,7 @@
 <?php
 // Include the admin bootstrap for automatic setup
 require_once 'bootstrap.php';
+$conn = get_db_connection();
 
 // Ensure admin is logged in
 if (!isset($_SESSION["admin_loggedin"]) || $_SESSION["admin_loggedin"] !== true) {
@@ -10,7 +11,7 @@ if (!isset($_SESSION["admin_loggedin"]) || $_SESSION["admin_loggedin"] !== true)
 
 require_once '../includes/image_service.php';
 
-$conn = get_db_connection();
+
 
 $add_product_error = '';
 $csrf_token = generate_csrf_token();
@@ -27,10 +28,18 @@ $status = '1'; // Default to 'Published'
 // Fetch categories for the dropdown
 $categories = [];
 $sql_categories = "SELECT id, name FROM categories ORDER BY name ASC";
-if ($result_categories = $conn->query($sql_categories)) {
-    while ($row_category = $result_categories->fetch_assoc()) {
-        $categories[] = $row_category;
+if ($stmt_categories = $conn->prepare($sql_categories)) {
+    if ($stmt_categories->execute()) {
+        $result_categories = $stmt_categories->get_result();
+        while ($row_category = $result_categories->fetch_assoc()) {
+            $categories[] = $row_category;
+        }
+    } else {
+        error_log("Error executing categories query: " . $stmt_categories->error);
     }
+    $stmt_categories->close();
+} else {
+    error_log("Error preparing categories query: " . $conn->error);
 }
 
 // Handle form submission
@@ -51,20 +60,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // New Image upload handling using ImageService
         $image_path = '';
         if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
-            $image_path = ImageService::processUpload($_FILES['image'], PRODUCT_IMAGE_WIDTH, PRODUCT_IMAGE_HEIGHT, $add_product_error);
+            $image_path = ImageService::processUpload($_FILES['image'], PRODUCT_IMAGE_DIR, PRODUCT_IMAGE_WIDTH, PRODUCT_IMAGE_HEIGHT, $add_product_error);
         } elseif (isset($_FILES['image']) && $_FILES['image']['error'] != UPLOAD_ERR_NO_FILE) {
-            $add_product_error = 'There was an error with the image upload.';
+            $add_product_error = 'There was an error with the image upload: ' . $_FILES['image']['error'];
         } else {
             $add_product_error = 'Please select an image to upload.';
         }
 
         // Basic validation
-        if (empty($name) || empty($description) || $price === false || $category_id === false || $stock === false || $status === false || empty($image_path)) {
-            if(empty($image_path)) {
-                // Do nothing, error is already set
-            } else {
-                $add_product_error = 'Please fill out all required fields.';
-            }
+        if (!empty($add_product_error)) { // If image processing already failed, don't proceed with other validations
+            // error message is already set by ImageService::processUpload
+        } elseif (empty($name) || empty($description) || $price === false || $category_id === false || $stock === false || $status === false) {
+            $add_product_error = 'Please fill out all required fields.';
+        } elseif (empty($image_path)) { // Only set this error if no other image error occurred
+            $add_product_error = 'Image upload failed or no image selected.';
         } elseif ($price <= 0) {
             $add_product_error = 'Price must be a positive number.';
         } elseif ($sale_price !== null && $sale_price >= $price) {
@@ -89,14 +98,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Attempt to execute
                 if ($stmt_insert->execute()) {
-                    $success_message = 'Product added successfully!';
-                    header("Location: products.php?success=added");
+                    $_SESSION['success_message'] = 'Product added successfully!';
+                    header("Location: products.php");
                     exit();
                 } else {
+                    error_log("Error executing product insert query: " . $stmt_insert->error);
                     $add_product_error = 'Something went wrong. Please try again later.';
                 }
                 $stmt_insert->close();
             } else {
+                error_log("Error preparing product insert query: " . $conn->error);
                 $add_product_error = 'Error preparing statement. Please try again later.';
             }
         }

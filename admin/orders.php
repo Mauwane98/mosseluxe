@@ -1,6 +1,7 @@
 <?php
 // Include the admin bootstrap for automatic setup
 require_once 'bootstrap.php';
+$conn = get_db_connection();
 
 // --- Data Fetching ---
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
@@ -40,9 +41,14 @@ if ($stmt_count = $conn->prepare($count_sql)) {
     if (!empty($params)) {
         $stmt_count->bind_param($types, ...$params);
     }
-    $stmt_count->execute();
-    $total_orders = $stmt_count->get_result()->fetch_assoc()['total'];
+    if ($stmt_count->execute()) {
+        $total_orders = $stmt_count->get_result()->fetch_assoc()['total'];
+    } else {
+        error_log("Error executing order count query: " . $stmt_count->error);
+    }
     $stmt_count->close();
+} else {
+    error_log("Error preparing order count query: " . $conn->error);
 }
 $total_pages = ceil($total_orders / $limit);
 
@@ -57,14 +63,19 @@ if ($stmt = $conn->prepare($sql)) {
     if (!empty($params)) {
         $stmt->bind_param($types, ...$params);
     }
-    $stmt->execute();
-    $result = $stmt->get_result();
-    while ($row = $result->fetch_assoc()) {
-        $orders[] = $row;
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $orders[] = $row;
+        }
+    } else {
+        error_log("Error executing orders query: " . $stmt->error);
     }
     $stmt->close();
+} else {
+    error_log("Error preparing orders query: " . $conn->error);
 }
-$conn->close();
+
 
 $status_classes = [
     'pending' => 'bg-yellow-100 text-yellow-800',
@@ -120,6 +131,16 @@ include 'header.php';
                 </select>
                 <button id="applyBulkStatus" class="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700">Apply</button>
             </div>
+        </div>
+        <div class="flex items-center space-x-2">
+            <a href="export_orders.php?search=<?php echo urlencode($search); ?>&status=<?php echo urlencode($status_filter); ?>&format=csv"
+               class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors text-sm">
+                <i class="fas fa-file-csv mr-1"></i>Export CSV
+            </a>
+            <a href="export_orders.php?search=<?php echo urlencode($search); ?>&status=<?php echo urlencode($status_filter); ?>&format=pdf"
+               class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors text-sm">
+                <i class="fas fa-file-pdf mr-1"></i>Export PDF
+            </a>
         </div>
         <div class="text-sm text-gray-600">
             Showing <?php echo count($orders); ?> of <?php echo $total_orders; ?> orders
@@ -190,114 +211,5 @@ include 'header.php';
         </div>
     <?php endif; ?>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Bulk Actions Functionality for Orders
-    const selectAllOrdersCheckbox = document.getElementById('selectAllOrders');
-    const orderCheckboxes = document.querySelectorAll('.order-checkbox');
-    const bulkOrderActions = document.getElementById('bulkOrderActions');
-
-    // Handle select all checkbox
-    selectAllOrdersCheckbox.addEventListener('change', function() {
-        orderCheckboxes.forEach(checkbox => {
-            checkbox.checked = this.checked;
-        });
-        updateBulkOrderActionsVisibility();
-    });
-
-    // Handle individual checkboxes
-    orderCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const checkedBoxes = document.querySelectorAll('.order-checkbox:checked');
-            selectAllOrdersCheckbox.checked = checkedBoxes.length === orderCheckboxes.length;
-            selectAllOrdersCheckbox.indeterminate = checkedBoxes.length > 0 && checkedBoxes.length < orderCheckboxes.length;
-            updateBulkOrderActionsVisibility();
-        });
-    });
-
-    function updateBulkOrderActionsVisibility() {
-        const checkedBoxes = document.querySelectorAll('.order-checkbox:checked');
-        if (checkedBoxes.length > 0) {
-            bulkOrderActions.classList.remove('hidden');
-        } else {
-            bulkOrderActions.classList.add('hidden');
-        }
-    }
-
-    // Bulk Status Update
-    document.getElementById('applyBulkStatus').addEventListener('click', function() {
-        const selectedIds = Array.from(document.querySelectorAll('.order-checkbox:checked')).map(cb => cb.value);
-        const newStatus = document.getElementById('bulkStatusSelect').value;
-
-        if (selectedIds.length === 0 || !newStatus) {
-            alert('Please select orders and a status to apply.');
-            return;
-        }
-
-        if (confirm(`Are you sure you want to change the status of ${selectedIds.length} selected orders to "${newStatus}"?`)) {
-            bulkUpdateOrderStatus(selectedIds, newStatus);
-        }
-    });
-
-    function bulkUpdateOrderStatus(orderIds, status) {
-        fetch('ajax_update_order_status.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `ids=${orderIds.join(',')}&status=${status}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert(`Successfully updated ${data.updated_count} orders.`);
-                location.reload();
-            } else {
-                alert('Failed to update orders. Please try again.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again.');
-        });
-    }
-
-    // Inline Status Update
-    document.querySelectorAll('.status-select').forEach(select => {
-        select.addEventListener('change', function() {
-            const orderId = this.dataset.orderId;
-            const newStatus = this.value;
-
-            fetch('ajax_update_order_status.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `ids=${orderId}&status=${newStatus}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Update the select styling based on new status
-                    const statusClasses = {
-                        'Pending': 'bg-yellow-100 text-yellow-800',
-                        'Processing': 'bg-blue-100 text-blue-800',
-                        'Shipped': 'bg-indigo-100 text-indigo-800',
-                        'Completed': 'bg-green-100 text-green-800',
-                        'Cancelled': 'bg-red-100 text-red-800'
-                    };
-
-                    this.className = `status-select px-2 py-1 text-xs rounded-full border-0 text-white ${statusClasses[newStatus] || 'bg-gray-100 text-gray-800'}`;
-                } else {
-                    alert('Failed to update order status.');
-                    location.reload(); // Reload to revert changes
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again.');
-                location.reload();
-            });
-        });
-    });
-});
-</script>
 
 <?php include 'footer.php'; ?>

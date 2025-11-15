@@ -1,12 +1,25 @@
 <?php
-require_once '../includes/db_connect.php';
-require_once '../includes/admin_auth.php';
+require_once __DIR__ . '/../includes/bootstrap.php'; // Includes db_connect.php, config.php, csrf.php, and starts session (if not already started)
+require_once __DIR__ . '/../includes/auth_service.php'; // Auth class
+
+// Ensure admin is logged in
+Auth::checkAdmin(); // Redirects to login if not authenticated
 
 header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
-    $product_id = (int)$_POST['product_id'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) { // Validate CSRF token
+        echo json_encode(['success' => false, 'message' => 'Invalid security token.']);
+        exit;
+    }
     
+    if (!isset($_POST['id'])) {
+        echo json_encode(['success' => false, 'message' => 'Product ID is missing.']);
+        exit;
+    }
+    
+    $product_id = filter_var($_POST['id'], FILTER_VALIDATE_INT);
+
     $conn = get_db_connection();
     
     // First, get the current status
@@ -24,7 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
         $stmt_update->bind_param('ii', $new_status, $product_id);
         
         if ($stmt_update->execute()) {
-            echo json_encode(['success' => true, 'status' => $new_status]);
+            $status_text = $new_status ? 'published' : 'set to draft';
+            echo json_encode(['success' => true, 'new_status' => $new_status, 'message' => "Product successfully {$status_text}."]);
         } else {
             echo json_encode(['success' => false, 'message' => 'Failed to update status.']);
         }

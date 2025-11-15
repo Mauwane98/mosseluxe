@@ -1,16 +1,8 @@
 <?php
-// Start session
 $pageTitle = "Contact Us - Mossé Luxe";
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Include header, database connection, CSRF protection
-require_once 'includes/db_connect.php';
-require_once 'includes/csrf.php';
+require_once 'includes/bootstrap.php';
 
 $conn = get_db_connection();
-
 $contact_error = '';
 $success_message = '';
 $csrf_token = generate_csrf_token(); // Generate token for the form
@@ -133,7 +125,7 @@ require_once 'includes/header.php';
                             <div class="text-black/50 pt-1"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></div>
                             <div>
                                 <h3 class="text-xl font-bold uppercase tracking-wider">Email Us</h3>
-                                <p class="text-black/70 text-lg mt-1"><?php echo SMTP_USERNAME; ?></p>
+                                <p class="text-black/70 text-lg mt-1"><?php echo CONTACT_EMAIL; ?></p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -197,23 +189,4 @@ require_once 'includes/header.php';
         </div>
     </section>
 </main>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const faqToggles = document.querySelectorAll('.faq-toggle');
-    faqToggles.forEach(toggle => {
-        toggle.addEventListener('click', () => {
-            const content = toggle.nextElementSibling;
-            const icon = toggle.querySelector('svg');
-
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                content.style.maxHeight = content.scrollHeight + 'px';
-                icon.style.transform = 'rotate(180deg)';
-            }
-        });
-    });
-});
-</script>
 <?php require_once 'includes/footer.php'; ?>

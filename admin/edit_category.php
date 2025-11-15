@@ -1,58 +1,65 @@
 <?php
-// Start session and include admin authentication
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once '../includes/admin_auth.php';
-require_once '../includes/db_connect.php';
-require_once '../includes/csrf.php';
+require_once 'bootstrap.php';
 $conn = get_db_connection();
 
+// Generate CSRF token
 $csrf_token = generate_csrf_token();
-$category_id = isset($_GET['id']) ? filter_var($_GET['id'], FILTER_VALIDATE_INT, array('options' => array('min_range' => 1))) : 0;
-$error = '';
 
-if (!$category_id) {
+$error = '';
+$success = '';
+
+// Check if ID is provided
+if (!isset($_GET['id']) || empty($_GET['id'])) {
     header("Location: categories.php");
     exit();
 }
 
-// Fetch category details
-$stmt = $conn->prepare("SELECT * FROM categories WHERE id = ?");
-$stmt->bind_param("i", $category_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$category = $result->fetch_assoc();
-if (!$category) {
-    header("Location: categories.php?error=not_found");
-    exit();
+$id = (int)$_GET['id'];
+
+// Fetch category data
+$category = [];
+$sql = "SELECT id, name FROM categories WHERE id = ?";
+if ($stmt = $conn->prepare($sql)) {
+    $stmt->bind_param("i", $id);
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        if ($result->num_rows == 1) {
+            $category = $result->fetch_assoc();
+        } else {
+            header("Location: categories.php");
+            exit();
+        }
+    } else {
+        $error = "Database error.";
+    }
+    $stmt->close();
+} else {
+    $error = "Failed to prepare statement.";
 }
 
-// Handle form submission for updating the category
+// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_category'])) {
-    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        $error = 'Invalid CSRF token.';
-    } else {
-        $name = trim($_POST['name']);
-        if (!empty($name)) {
-            // Validate category name: alphanumeric, spaces, hyphens, apostrophes
-            if (!preg_match("/^[a-zA-Z0-9\s\-'’]+$/", $name)) {
-                $error = "Category name can only contain letters, numbers, spaces, hyphens, and apostrophes.";
-            } else {
-                $sql = "UPDATE categories SET name=? WHERE id=?";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("si", $name, $category_id);
+    $name = trim($_POST['name']);
 
-                if ($stmt->execute()) {
-                    header("Location: categories.php?success=updated");
-                    exit();
-                } else {
-                    $error = "Error updating record: " . $conn->error;
-                }
-                $stmt->close();
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+        $error = 'Invalid CSRF token.';
+    } elseif (empty($name)) {
+        $error = "Category name cannot be empty.";
+    } elseif (!preg_match("/^[a-zA-Z0-9\s\-'’]+$/", $name)) {
+        $error = "Category name can only contain letters, numbers, spaces, hyphens, and apostrophes.";
+    } else {
+        $sql_update = "UPDATE categories SET name = ? WHERE id = ?";
+        if ($stmt = $conn->prepare($sql_update)) {
+            $stmt->bind_param("si", $name, $id);
+            if ($stmt->execute()) {
+                $success = "Category updated successfully!";
+                $category['name'] = $name; // Update for form display
+            } else {
+                $error = "Error updating category.";
             }
+            $stmt->close();
         } else {
-            $error = "Category name cannot be empty.";
+            $error = "Failed to prepare statement.";
         }
     }
 }
@@ -61,53 +68,32 @@ $pageTitle = 'Edit Category';
 include 'header.php';
 ?>
 
-<div class="bg-white p-6 rounded-lg shadow-md">
+<div class="bg-white p-6 rounded-lg shadow-md max-w-md">
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-gray-800">Edit Category</h2>
-        <a href="categories.php" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">Back to Categories</a>
+        <a href="categories.php" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors">Back to Categories</a>
     </div>
 
     <?php if(!empty($error)): ?>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
             <?php echo $error; ?>
         </div>
     <?php endif; ?>
 
-    <form action="edit_category.php?id=<?php echo $category_id; ?>" method="post" class="space-y-6">
+    <?php if(!empty($success)): ?>
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+            <?php echo $success; ?>
+        </div>
+    <?php endif; ?>
+
+    <form action="edit_category.php?id=<?php echo $id; ?>" method="post">
         <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Category Name -->
-            <div class="md:col-span-2">
-                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Category Name</label>
-                <input type="text" id="name" name="name" required
-                       value="<?php echo htmlspecialchars($category['name']); ?>"
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
-                <p class="text-xs text-gray-500 mt-1">Only letters, numbers, spaces, hyphens, and apostrophes allowed</p>
-            </div>
-
-            <!-- Category ID (Read-only) -->
-            <div>
-                <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2">Category ID</label>
-                <input type="text" id="category_id" readonly
-                       value="#<?php echo htmlspecialchars($category['id']); ?>"
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-600">
-            </div>
-
-            <!-- Created Date (Read-only) -->
-            <div>
-                <label for="created_date" class="block text-sm font-medium text-gray-700 mb-2">Created Date</label>
-                <input type="text" id="created_date" readonly
-                       value="<?php echo date('d M Y', strtotime($category['created_at'])); ?>"
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-600">
-            </div>
+        <div class="mb-4">
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Category Name</label>
+            <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($category['name']); ?>" required
+                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
         </div>
-
-        <!-- Submit Buttons -->
-        <div class="flex justify-end space-x-4">
-            <a href="categories.php" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">Cancel</a>
-            <button type="submit" name="update_category" class="px-6 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition-colors">Update Category</button>
-        </div>
+        <button type="submit" name="update_category" class="w-full bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors">Update Category</button>
     </form>
 </div>
 

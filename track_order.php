@@ -1,10 +1,6 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-require_once 'includes/db_connect.php';
-require_once 'includes/csrf.php';
+$pageTitle = "Track Order - Mossé Luxe";
+require_once __DIR__ . '/includes/bootstrap.php';
 $conn = get_db_connection();
 require_once 'includes/header.php'; // Now include header after all PHP logic
 
@@ -101,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <?php if ($order): ?>
                     <!-- Display Order Status -->
-                    <h3 class="text-2xl font-bold uppercase tracking-wider mb-2">Order #ML-<?php echo htmlspecialchars($order['id']); ?></h3>
+                                <h3 class="text-2xl font-bold uppercase tracking-wider mb-2">Order <?php echo htmlspecialchars(get_order_id_from_numeric_id($order['id'])); ?></h3>
                     <p class="text-black/60 mb-6">Here is the current status of your order.</p>
                     
                     <div class="space-y-4">

@@ -1,47 +1,47 @@
 <?php
 $pageTitle = "Register - Mossé Luxe";
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-require_once 'includes/db_connect.php';
-require_once 'includes/csrf.php';
+require_once __DIR__ . '/includes/bootstrap.php';
 $conn = get_db_connection();
 
 $name = $email = $password = $confirm_password = '';
 $name_err = $email_err = $password_err = $confirm_password_err = $register_err = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Temporarily disable CSRF validation for testing
-    // if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-    //     $register_err = 'Invalid security token. Please try again.';
-    // } else {
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+        $register_err = 'Invalid security token. Please try again.';
+    } else {
+        // Trim all inputs once
+        $name_input = trim($_POST["name"]);
+        $email_input = trim($_POST["email"]);
+        $password_input = trim($_POST["password"]);
+        $confirm_password_input = trim($_POST["confirm_password"]);
+
         // Validate name
-        if (empty(trim($_POST["name"]))) {
+        if (empty($name_input)) {
             $name_err = "Please enter your name.";
-        } elseif (strlen(trim($_POST["name"])) < 2) {
+        } elseif (strlen($name_input) < 2) {
             $name_err = "Name must have at least 2 characters.";
         } else {
-            $name = trim($_POST["name"]);
+            $name = $name_input;
         }
 
         // Validate email
-        if (empty(trim($_POST["email"]))) {
+        if (empty($email_input)) {
             $email_err = "Please enter an email.";
-        } elseif (!filter_var(trim($_POST["email"]), FILTER_VALIDATE_EMAIL)) {
+        } elseif (!filter_var($email_input, FILTER_VALIDATE_EMAIL)) {
             $email_err = "Please enter a valid email address.";
         } else {
             // Prepare a select statement
             $sql = "SELECT id FROM users WHERE email = ?";
             if ($stmt = $conn->prepare($sql)) {
                 $stmt->bind_param("s", $param_email);
-                $param_email = trim($_POST["email"]);
+                $param_email = $email_input;
                 if ($stmt->execute()) {
                     $stmt->store_result();
                     if ($stmt->num_rows == 1) {
                         $email_err = "This email is already taken.";
                     } else {
-                        $email = trim($_POST["email"]);
+                        $email = $email_input;
                     }
                 } else {
                     $register_err = "Oops! Something went wrong. Please try again later.";
@@ -51,19 +51,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Validate password
-        if (empty(trim($_POST["password"]))) {
+        if (empty($password_input)) {
             $password_err = "Please enter a password.";
-        } elseif (strlen(trim($_POST["password"])) < 6) {
-            $password_err = "Password must have at least 6 characters.";
+        } elseif (strlen($password_input) < 8) {
+            $password_err = "Password must have at least 8 characters.";
         } else {
-            $password = trim($_POST["password"]);
+            $password = $password_input;
         }
 
         // Validate confirm password
-        if (empty(trim($_POST["confirm_password"]))) {
+        if (empty($confirm_password_input)) {
             $confirm_password_err = "Please confirm password.";
         } else {
-            $confirm_password = trim($_POST["confirm_password"]);
+            $confirm_password = $confirm_password_input;
             if (empty($password_err) && ($password != $confirm_password)) {
                 $confirm_password_err = "Password did not match.";
             }
@@ -82,6 +82,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
 
                 if ($stmt->execute()) {
+// Send welcome email to new user
+                    require_once __DIR__ . '/includes/notification_service.php';
+                    $welcomeEmailSent = NotificationService::sendWelcomeEmail($name, $email);
+
+                    if ($welcomeEmailSent) {
+                        error_log("Welcome email sent successfully to " . $email . " for user " . $name);
+                    } else {
+                        error_log("Failed to send welcome email to " . $email . " for user " . $name);
+                        // Continue with registration flow - email isn't critical for account creation
+                    }
+
                     // Registration successful, redirect to login page
                     header("location: login.php?registered=1");
                     exit;
@@ -92,10 +103,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->close();
             }
         }
-    // }
+    }
 }
 
-$conn->close();
+
 
 // Only include header if we're displaying the registration form (not redirecting)
 require_once 'includes/header.php';
@@ -125,12 +136,6 @@ require_once 'includes/header.php';
                     </div>
                 <?php endif; ?>
 
-                <?php if (isset($_GET['registered']) && $_GET['registered'] == '1'): ?>
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-                        Registration successful! Please log in with your credentials.
-                    </div>
-                <?php endif; ?>
-
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="space-y-6">
                     <input type="hidden" name="csrf_token" value="<?php echo generate_csrf_token(); ?>">
 
@@ -150,7 +155,7 @@ require_once 'includes/header.php';
 
                     <div>
                         <label for="password" class="block text-sm font-medium text-black/80 mb-1">Password</label>
-                        <input type="password" id="password" name="password" required
+                        <input type="password" id="password" name="password" required minlength="8"
                                class="w-full p-3 bg-white border border-black/20 rounded-md focus:outline-none focus:ring-2 focus:ring-black <?php echo (!empty($password_err)) ? 'border-red-500' : ''; ?>">
                         <span class="text-red-500 text-sm"><?php echo $password_err; ?></span>
                     </div>

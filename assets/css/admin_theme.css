@@ -1,0 +1,256 @@
+/*
+==============================================
+   Mossé Luxe Admin - Dark/Light Theme System
+==============================================
+*/
+
+/* Admin Dark Theme Variables */
+:root {
+    --admin-bg-primary: #ffffff;
+    --admin-bg-secondary: #f8f9fa;
+    --admin-bg-tertiary: #ffffff;
+    --admin-text-primary: #212529;
+    --admin-text-secondary: #6c757d;
+    --admin-text-muted: #adb5bd;
+    --admin-border: #dee2e6;
+    --admin-border-light: #e9ecef;
+    --admin-shadow: rgba(0,0,0,0.1);
+    --admin-gold: #d4af37;
+    --admin-gold-hover: #b8860b;
+    --admin-radius: 0.375rem;
+}
+
+html.admin-dark {
+    --admin-bg-primary: #1a1a1a;
+    --admin-bg-secondary: #2d2d2d;
+    --admin-bg-tertiary: #212529;
+    --admin-text-primary: #ffffff;
+    --admin-text-secondary: #adb5bd;
+    --admin-text-muted: #6c757d;
+    --admin-border: #495057;
+    --admin-border-light: #343a40;
+    --admin-shadow: rgba(0,0,0,0.3);
+}
+
+/* Smooth transitions for theme changes */
+html.admin-dark * {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Admin Body Styles */
+html.admin-dark body {
+    background-color: var(--admin-bg-primary);
+    color: var(--admin-text-primary);
+}
+
+/* Admin Sidebar */
+html.admin-dark #sidebar {
+    background-color: var(--admin-bg-secondary);
+    color: var(--admin-text-primary);
+    border-color: var(--admin-border);
+}
+
+html.admin-dark #sidebar .border-black\/10 {
+    border-color: var(--admin-border) !important;
+}
+
+html.admin-dark #sidebar a {
+    color: var(--admin-text-primary);
+}
+
+html.admin-dark #sidebar a:hover {
+    background-color: var(--admin-bg-tertiary);
+}
+
+html.admin-dark #sidebar .text-gold-400 {
+    color: var(--admin-gold) !important;
+}
+
+html.admin-dark #sidebar .bg-gradient-to-r.from-gold-500.to-gold-600 {
+    background: linear-gradient(to right, var(--admin-gold), var(--admin-gold-hover));
+}
+
+/* Admin Logo */
+html.admin-dark .text-black\/90 {
+    color: var(--admin-text-primary) !important;
+}
+
+/* Admin Header */
+html.admin-dark header {
+    background-color: var(--admin-bg-tertiary) !important;
+    border-color: var(--admin-border) !important;
+}
+
+html.admin-dark .text-black {
+    color: var(--admin-text-primary) !important;
+}
+
+html.admin-dark .text-gray-600 {
+    color: var(--admin-text-secondary) !important;
+}
+
+/* Dark Mode Toggle Button */
+.dark-mode-toggle {
+    position: relative;
+    width: 50px;
+    height: 26px;
+    border-radius: 13px;
+    background: var(--admin-border);
+    cursor: pointer;
+    transition: background 0.3s ease;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--admin-text-secondary);
+}
+
+html.admin-dark .dark-mode-toggle {
+    background: var(--admin-gold);
+    color: var(--admin-bg-primary);
+}
+
+.dark-mode-toggle:focus {
+    outline: 2px solid var(--admin-gold);
+    outline-offset: 2px;
+}
+
+/* Admin Cards and Components */
+html.admin-dark .bg-white {
+    background-color: var(--admin-bg-tertiary) !important;
+    border: 1px solid var(--admin-border);
+}
+
+html.admin-dark .shadow-md,
+html.admin-dark .shadow-sm,
+html.admin-dark .shadow-2xl {
+    box-shadow: 0 4px 6px var(--admin-shadow) !important;
+}
+
+html.admin-dark .border-gray-300 {
+    border-color: var(--admin-border) !important;
+}
+
+html.admin-dark .divide-gray-200 > * + * {
+    border-color: var(--admin-border) !important;
+}
+
+/* Table Styling */
+html.admin-dark table th,
+html.admin-dark table td {
+    border-color: var(--admin-border) !important;
+    color: var(--admin-text-primary) !important;
+}
+
+html.admin-dark .bg-gray-50 {
+    background-color: var(--admin-bg-secondary) !important;
+}
+
+/* Form Elements */
+html.admin-dark input,
+html.admin-dark textarea,
+html.admin-dark select {
+    background-color: var(--admin-bg-primary);
+    color: var(--admin-text-primary);
+    border-color: var(--admin-border);
+}
+
+html.admin-dark input:focus,
+html.admin-dark textarea:focus,
+html.admin-dark select:focus {
+    border-color: var(--admin-gold);
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+}
+
+/* Buttons */
+html.admin-dark .btn-primary-dark,
+html.admin-dark .bg-green-600 {
+    background-color: var(--admin-gold) !important;
+    border-color: var(--admin-gold) !important;
+    color: var(--admin-bg-primary) !important;
+}
+
+html.admin-dark .hover\:bg-green-700:hover {
+    background-color: var(--admin-gold-hover) !important;
+}
+
+/* Charts and Data Visualization */
+html.admin-dark canvas {
+    background-color: var(--admin-bg-tertiary);
+}
+
+/* Toast Notifications */
+html.admin-dark .toast-notification {
+    background-color: var(--admin-bg-secondary) !important;
+    border: 1px solid var(--admin-border);
+}
+
+/* Main Background */
+html.admin-dark main.bg-neutral-100 {
+    background-color: var(--admin-bg-primary) !important;
+}
+
+/* Status Badges */
+html.admin-dark .bg-yellow-100 {
+    background-color: rgba(212, 175, 55, 0.2) !important;
+    color: var(--admin-gold) !important;
+}
+
+html.admin-dark .bg-blue-100 {
+    background-color: rgba(59, 130, 246, 0.2) !important;
+    color: #60a5fa !important;
+}
+
+html.admin-dark .bg-green-100 {
+    background-color: rgba(34, 197, 94, 0.2) !important;
+    color: #34d399 !important;
+}
+
+html.admin-dark .bg-red-100 {
+    background-color: rgba(239, 68, 68, 0.2) !important;
+    color: #f87171 !important;
+}
+
+/* Gold Text */
+html.admin-dark .text-gold-400 {
+    color: var(--admin-gold) !important;
+}
+
+html.admin-dark .text-yellow-400 {
+    color: var(--admin-gold) !important;
+}
+
+/* Gold Buttons */
+.gold-btn {
+    background-color: var(--admin-gold);
+    border-color: var(--admin-gold);
+    color: var(--admin-bg-primary);
+    border-radius: 0;
+    padding: 0.75rem 1.5rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+}
+
+.gold-btn:hover {
+    background-color: var(--admin-gold-hover);
+    border-color: var(--admin-gold-hover);
+}
+
+/* Override Tailwind classes for admin dark theme */
+html.admin-dark .hover\:bg-white\/10:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Mobile Sidebar Toggle */
+#sidebar.sidebar-open-mobile {
+    transform: translateX(0) !important;
+}
+
+@media (max-width: 1023px) {
+    #sidebar.sidebar-open-mobile {
+        transform: translateX(0) !important;
+    }
+}

@@ -1,5 +1,6 @@
 <?php
 $pageTitle = "About Us - Mossé Luxe";
+require_once 'includes/bootstrap.php';
 require_once 'includes/header.php';
 ?>
 

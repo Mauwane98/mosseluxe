@@ -4,25 +4,14 @@
  * Automatically includes all necessary files and sets up enhanced admin functionality
  */
 
-// Start session if not already started
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Include database connection
-require_once '../includes/db_connect.php';
-
-// Include CSRF protection
-require_once '../includes/csrf.php';
+// Include essential files from the main application bootstrap
+require_once __DIR__ . '/../includes/bootstrap.php';
 
 // Check admin authentication
 if (!isset($_SESSION["admin_loggedin"]) || $_SESSION["admin_loggedin"] !== true) {
     header("location: login.php");
     exit;
 }
-
-// Get database connection
-$conn = get_db_connection();
 
 // Set default page title if not set
 if (!isset($pageTitle)) {

@@ -1,14 +1,23 @@
 <?php
-require_once 'includes/db_connect.php';
-require_once 'includes/config.php';
+require_once 'includes/bootstrap.php'; // This includes db_connect.php, config.php, and csrf.php
+
+header('Content-Type: application/json'); // Change to JSON response for AJAX form
+
+$response = ['success' => false, 'message' => 'Invalid request.'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!validate_csrf_token()) {
+        $response = ['success' => false, 'message' => 'Invalid security token.'];
+        echo json_encode($response);
+        exit;
+    }
+
     $conn = get_db_connection();
     $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $_SESSION['error_message'] = "Invalid email address.";
-        header("Location: index.php#newsletter-signup");
+        $response = ['success' => false, 'message' => "Invalid email address."];
+        echo json_encode($response);
         exit();
     }
 
@@ -20,8 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_check->store_result();
 
         if ($stmt_check->num_rows > 0) {
-            $_SESSION['error_message'] = "This email is already subscribed.";
-            header("Location: index.php#newsletter-signup");
+            $response = ['success' => false, 'message' => "This email is already subscribed."];
+            echo json_encode($response);
             exit();
         }
         $stmt_check->close();
@@ -32,19 +41,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt_insert = $conn->prepare($sql_insert)) {
         $stmt_insert->bind_param("s", $email);
         if ($stmt_insert->execute()) {
-            $_SESSION['success_message'] = "Thank you for subscribing!";
+            $response = ['success' => true, 'message' => "Thank you for subscribing!"];
         } else {
-            $_SESSION['error_message'] = "Something went wrong. Please try again.";
+            $response = ['success' => false, 'message' => "Something went wrong. Please try again."];
         }
         $stmt_insert->close();
     } else {
-        $_SESSION['error_message'] = "Database error. Please try again.";
+        $response = ['success' => false, 'message' => "Database error. Please try again."];
     }
     $conn->close();
-    header("Location: index.php#newsletter-signup");
-    exit();
 } else {
-    header("Location: index.php");
-    exit();
+    $response = ['success' => false, 'message' => 'Invalid request method.'];
 }
-?>
+
+echo json_encode($response);

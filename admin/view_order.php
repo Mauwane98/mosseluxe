@@ -1,17 +1,5 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once '../includes/db_connect.php';
-
-// Ensure admin is logged in
-if (!isset($_SESSION["admin_loggedin"]) || $_SESSION["admin_loggedin"] !== true) {
-    header("location: login.php");
-    exit;
-}
-
-require_once '../includes/csrf.php';
-require_once '../includes/config.php'; // For SHIPPING_COST
+require_once 'bootstrap.php';
 $conn = get_db_connection();
 
 $order_id = isset($_GET['id']) ? filter_var($_GET['id'], FILTER_VALIDATE_INT, array('options' => array('min_range' => 1))) : 0;
@@ -25,12 +13,18 @@ if (!$order_id) {
 // Fetch order details
 $sql = "SELECT o.*, u.name as user_name, u.email as user_email, o.shipping_address_json
         FROM orders o LEFT JOIN users u ON o.user_id = u.id WHERE o.id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $order_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$order = $result->fetch_assoc();
-$stmt->close();
+if ($stmt = $conn->prepare($sql)) {
+    $stmt->bind_param("i", $order_id);
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        $order = $result->fetch_assoc();
+    } else {
+        error_log("Error executing order details query in view_order.php: " . $stmt->error);
+    }
+    $stmt->close();
+} else {
+    error_log("Error preparing order details query in view_order.php: " . $conn->error);
+}
 
 if (!$order) {
     header("Location: orders.php?error=not_found");
@@ -39,15 +33,21 @@ if (!$order) {
 
 // Fetch order items
 $sql = "SELECT oi.*, p.name as product_name FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $order_id);
-$stmt->execute();
-$order_items = $stmt->get_result();
-$stmt->close();
+if ($stmt = $conn->prepare($sql)) {
+    $stmt->bind_param("i", $order_id);
+    if ($stmt->execute()) {
+        $order_items = $stmt->get_result();
+    } else {
+        error_log("Error executing order items query in view_order.php: " . $stmt->error);
+    }
+    $stmt->close();
+} else {
+    error_log("Error preparing order items query in view_order.php: " . $conn->error);
+}
 
 // Handle status update
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_status'])) {
-    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
         $error = 'Invalid CSRF token.';
     } else {
         $status = trim($_POST['status']); // Trim whitespace
@@ -56,15 +56,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_status'])) {
             $error = 'Invalid order status provided.';
         } else {
             $sql = "UPDATE orders SET status = ? WHERE id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("si", $status, $order_id);
-            if ($stmt->execute()) {
-                header("Location: view_order.php?id=" . $order_id . "&success=status_updated");
-                exit();
+            if ($stmt = $conn->prepare($sql)) {
+                $stmt->bind_param("si", $status, $order_id);
+                if ($stmt->execute()) {
+                    header("Location: view_order.php?id=" . $order_id . "&success=status_updated");
+                    exit();
+                } else {
+                    error_log("Error executing order status update query: " . $stmt->error);
+                    $error = "Error updating record: " . $conn->error;
+                }
+                $stmt->close();
             } else {
-                $error = "Error updating record: " . $conn->error;
+                error_log("Error preparing order status update query: " . $conn->error);
+                $error = "Error preparing statement. Please try again later.";
             }
-            $stmt->close();
         }
     }
 }
@@ -105,11 +110,11 @@ include 'header.php';
                         <td colspan="3" class="px-6 py-4 text-right text-sm font-medium text-gray-500">Subtotal:</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">R<?php echo number_format($subtotal, 2); ?></td>
                     </tr>
-                    <?php if (isset($order['discount_code']) && !empty($order['discount_code'])): ?>
                     <tr>
                         <td colspan="3" class="px-6 py-4 text-right text-sm font-medium text-gray-500">Shipping:</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">R<?php echo number_format(SHIPPING_COST, 2); ?></td>
                     </tr>
+                    <?php if (isset($order['discount_code']) && !empty($order['discount_code'])): ?>
                     <tr>
                         <td colspan="3" class="px-6 py-4 text-right text-sm font-medium text-gray-500">Discount (<?php echo htmlspecialchars($order['discount_code']); ?>):</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-red-600">-R<?php echo number_format($order['discount_amount'], 2); ?></td>

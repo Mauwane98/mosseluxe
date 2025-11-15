@@ -1,6 +1,7 @@
 <?php
 // Include the admin bootstrap for automatic setup
 require_once 'bootstrap.php';
+$conn = get_db_connection();
 
 $pageTitle = "Manage Products";
 include 'header.php';
@@ -12,8 +13,8 @@ $limit = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
-$sql = "SELECT p.id, p.name, p.price, p.sale_price, p.stock, p.status, p.image, p.is_featured, c.name as category_name 
-        FROM products p 
+$sql = "SELECT p.id, p.name, p.price, p.sale_price, p.stock, p.status, p.image, p.is_featured, p.is_coming_soon, p.is_bestseller, p.is_new, c.name as category_name
+        FROM products p
         LEFT JOIN categories c ON p.category = c.id";
 $count_sql = "SELECT COUNT(p.id) as total FROM products p";
 
@@ -43,9 +44,14 @@ if ($stmt_count = $conn->prepare($count_sql)) {
     if (!empty($params)) {
         $stmt_count->bind_param($types, ...$params);
     }
-    $stmt_count->execute();
-    $total_products = $stmt_count->get_result()->fetch_assoc()['total'];
+    if ($stmt_count->execute()) {
+        $total_products = $stmt_count->get_result()->fetch_assoc()['total'];
+    } else {
+        error_log("Error executing product count query: " . $stmt_count->error);
+    }
     $stmt_count->close();
+} else {
+    error_log("Error preparing product count query: " . $conn->error);
 }
 $total_pages = ceil($total_products / $limit);
 
@@ -60,12 +66,17 @@ if ($stmt = $conn->prepare($sql)) {
     if (!empty($params)) {
         $stmt->bind_param($types, ...$params);
     }
-    $stmt->execute();
-    $result = $stmt->get_result();
-    while ($row = $result->fetch_assoc()) {
-        $products[] = $row;
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $products[] = $row;
+        }
+    } else {
+        error_log("Error executing products query: " . $stmt->error);
     }
     $stmt->close();
+} else {
+    error_log("Error preparing products query: " . $conn->error);
 }
 
 // Fetch categories for the filter dropdown
@@ -75,9 +86,11 @@ if ($result_categories = $conn->query($sql_categories)) {
     while ($row_category = $result_categories->fetch_assoc()) {
         $categories[] = $row_category;
     }
+} else {
+    error_log("Error fetching categories for filter: " . $conn->error);
 }
 
-$conn->close();
+
 
 $pageTitle = "Manage Products";
 
@@ -156,7 +169,7 @@ displayErrorMessage();
                                 <input type="checkbox" class="product-checkbox rounded border-gray-300 text-black focus:ring-black" value="<?php echo $product['id']; ?>">
                             </td>
                             <td class="px-6 py-4">
-                                <img src="../<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="h-12 w-12 object-cover rounded-md">
+                                <img src="<?php echo SITE_URL . htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="h-12 w-12 object-cover rounded-md">
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900"><?php echo htmlspecialchars($product['name']); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
@@ -187,7 +200,11 @@ displayErrorMessage();
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <a href="edit_product.php?id=<?php echo $product['id']; ?>" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
-                                <a href="delete_product.php?id=<?php echo $product['id']; ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+                                <form action="delete_product.php" method="post" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                    <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
+                                    <?php echo generate_csrf_token_input(); ?>
+                                    <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                                </form>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -214,174 +231,5 @@ displayErrorMessage();
         </div>
     <?php endif; ?>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Handle Status Toggle
-    document.querySelectorAll('.status-toggle').forEach(button => {
-        button.addEventListener('click', function() {
-            const productId = this.dataset.id;
-            const span = this.querySelector('span');
-
-            fetch('ajax_toggle_status.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `id=${productId}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    if (data.new_status === 1) {
-                        this.classList.remove('bg-gray-300');
-                        this.classList.add('bg-green-500');
-                        span.classList.remove('translate-x-1');
-                        span.classList.add('translate-x-6');
-                    } else {
-                        this.classList.remove('bg-green-500');
-                        this.classList.add('bg-gray-300');
-                        span.classList.remove('translate-x-6');
-                        span.classList.add('translate-x-1');
-                    }
-                } else {
-                    alert('Failed to update status.');
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    });
-
-    // Handle Featured Toggle
-    document.querySelectorAll('.featured-toggle').forEach(button => {
-        button.addEventListener('click', function() {
-            const productId = this.dataset.id;
-
-            fetch('ajax_toggle_featured.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `id=${productId}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    if (data.new_status === 1) {
-                        this.classList.remove('text-gray-300');
-                        this.classList.add('text-yellow-400');
-                    } else {
-                        this.classList.remove('text-yellow-400');
-                        this.classList.add('text-gray-300');
-                    }
-                } else {
-                    alert('Failed to update featured status.');
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    });
-
-    // Bulk Actions Functionality
-    const selectAllCheckbox = document.getElementById('selectAll');
-    const productCheckboxes = document.querySelectorAll('.product-checkbox');
-    const bulkActions = document.getElementById('bulkActions');
-
-    // Handle select all checkbox
-    selectAllCheckbox.addEventListener('change', function() {
-        productCheckboxes.forEach(checkbox => {
-            checkbox.checked = this.checked;
-        });
-        updateBulkActionsVisibility();
-    });
-
-    // Handle individual checkboxes
-    productCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const checkedBoxes = document.querySelectorAll('.product-checkbox:checked');
-            selectAllCheckbox.checked = checkedBoxes.length === productCheckboxes.length;
-            selectAllCheckbox.indeterminate = checkedBoxes.length > 0 && checkedBoxes.length < productCheckboxes.length;
-            updateBulkActionsVisibility();
-        });
-    });
-
-    function updateBulkActionsVisibility() {
-        const checkedBoxes = document.querySelectorAll('.product-checkbox:checked');
-        if (checkedBoxes.length > 0) {
-            bulkActions.classList.remove('hidden');
-        } else {
-            bulkActions.classList.add('hidden');
-        }
-    }
-
-    // Bulk Publish
-    document.getElementById('bulkPublish').addEventListener('click', function() {
-        const selectedIds = Array.from(document.querySelectorAll('.product-checkbox:checked')).map(cb => cb.value);
-        if (selectedIds.length === 0) return;
-
-        if (confirm(`Are you sure you want to publish ${selectedIds.length} selected products?`)) {
-            bulkUpdateStatus(selectedIds, 1);
-        }
-    });
-
-    // Bulk Draft
-    document.getElementById('bulkDraft').addEventListener('click', function() {
-        const selectedIds = Array.from(document.querySelectorAll('.product-checkbox:checked')).map(cb => cb.value);
-        if (selectedIds.length === 0) return;
-
-        if (confirm(`Are you sure you want to move ${selectedIds.length} selected products to draft?`)) {
-            bulkUpdateStatus(selectedIds, 0);
-        }
-    });
-
-    // Bulk Delete
-    document.getElementById('bulkDelete').addEventListener('click', function() {
-        const selectedIds = Array.from(document.querySelectorAll('.product-checkbox:checked')).map(cb => cb.value);
-        if (selectedIds.length === 0) return;
-
-        if (confirm(`Are you sure you want to delete ${selectedIds.length} selected products? This action cannot be undone.`)) {
-            bulkDeleteProducts(selectedIds);
-        }
-    });
-
-    function bulkUpdateStatus(productIds, status) {
-        fetch('ajax_bulk_update_status.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `ids=${productIds.join(',')}&status=${status}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert(`Successfully updated ${data.updated_count} products.`);
-                location.reload();
-            } else {
-                alert('Failed to update products. Please try again.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again.');
-        });
-    }
-
-    function bulkDeleteProducts(productIds) {
-        fetch('ajax_bulk_delete_products.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `ids=${productIds.join(',')}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert(`Successfully deleted ${data.deleted_count} products.`);
-                location.reload();
-            } else {
-                alert('Failed to delete products. Please try again.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again.');
-        });
-    }
-});
-</script>
 
 <?php include 'footer.php'; ?>

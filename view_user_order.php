@@ -1,8 +1,6 @@
 <?php
 $pageTitle = "Order Details - Mossé Luxe";
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/includes/bootstrap.php';
 
 // If user is not logged in, redirect to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
@@ -10,7 +8,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit;
 }
 
-require_once 'includes/db_connect.php';
+$conn = get_db_connection();
 require_once 'includes/header.php';
 
 $user_id = $_SESSION['user_id'];
@@ -20,8 +18,6 @@ $order_items = [];
 $shipping_address = null;
 
 if ($order_id) {
-    $conn = get_db_connection();
-
     // Fetch order details, ensuring it belongs to the logged-in user
     $stmt = $conn->prepare("SELECT id, total_price, status, created_at, shipping_address_json FROM orders WHERE id = ? AND user_id = ?");
     $stmt->bind_param("ii", $order_id, $user_id);
@@ -45,7 +41,7 @@ if ($order_id) {
         $stmt_items->close();
     }
 
-    $conn->close();
+
 }
 ?>
 
@@ -62,7 +58,7 @@ if ($order_id) {
                 <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
                     <h2 class="text-2xl font-bold mb-4">Order Information</h2>
                     <div class="mb-4">
-                        <p class="text-black/70"><strong>Order ID:</strong> #ML-<?php echo htmlspecialchars($order_details['id']); ?></p>
+                    <p class="text-black/70"><strong>Order ID:</strong> <?php echo htmlspecialchars(get_order_id_from_numeric_id($order_details['id'])); ?></p>
                         <p class="text-black/70"><strong>Order Date:</strong> <?php echo date('d M Y, H:i', strtotime($order_details['created_at'])); ?></p>
                         <p class="text-black/70"><strong>Total Amount:</strong> R <?php echo number_format($order_details['total_price'], 2); ?></p>
                         <p class="text-black/70"><strong>Status:</strong> 

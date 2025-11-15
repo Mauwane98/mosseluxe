@@ -1,105 +1,99 @@
 <?php
-// Start session and include admin authentication
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once '../includes/admin_auth.php';
-require_once '../includes/db_connect.php';
-require_once '../includes/csrf.php';
-require_once '../includes/config.php';
-require_once '../includes/image_service.php';
+require_once 'bootstrap.php';
 $conn = get_db_connection();
 
+require_once '../includes/image_service.php';
+
 $csrf_token = generate_csrf_token();
-$edit_item_error = '';
-$item_id = null;
-$item_data = null;
 
-// Check if item ID is provided in the URL
-if (isset($_GET['id']) && !empty($_GET['id'])) {
-    $item_id = filter_var(trim($_GET['id']), FILTER_VALIDATE_INT, array('options' => array('min_range' => 1)));
+$item_id = isset($_GET['id']) ? filter_var(trim($_GET['id']), FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) : 0;
 
-    // Fetch item details from the database
-    $sql_fetch_item = "SELECT id, name, image, status FROM launching_soon WHERE id = ?";
-    if ($stmt_fetch = $conn->prepare($sql_fetch_item)) {
-        $stmt_fetch->bind_param("i", $param_id);
-        $param_id = $item_id;
+if (!$item_id) {
+    $_SESSION['toast_message'] = ['message' => 'No item ID provided.', 'type' => 'error'];
+    header("Location: launching_soon.php");
+    exit();
+}
 
-        if ($stmt_fetch->execute()) {
-            $result_fetch = $stmt_fetch->get_result();
-            if ($row_fetch = $result_fetch->fetch_assoc()) {
-                $item_data = $row_fetch;
-            } else {
-                header("Location: launching_soon.php?error=item_not_found");
-                exit();
-            }
-        } else {
-            header("Location: launching_soon.php?error=fetch_failed");
-            exit();
-        }
-        $stmt_fetch->close();
-    } else {
-        header("Location: launching_soon.php?error=prepare_failed");
-        exit();
-    }
-} else {
-    header("Location: launching_soon.php?error=no_id");
+// Fetch item details from the database
+$stmt_fetch = $conn->prepare("SELECT id, name, image, status FROM launching_soon WHERE id = ?");
+$stmt_fetch->bind_param("i", $item_id);
+if (!$stmt_fetch->execute()) {
+    $_SESSION['toast_message'] = ['message' => 'Failed to fetch item details.', 'type' => 'error'];
+    header("Location: launching_soon.php");
+    exit();
+}
+$result_fetch = $stmt_fetch->get_result();
+$item_data = $result_fetch->fetch_assoc();
+$stmt_fetch->close();
+
+if (!$item_data) {
+    $_SESSION['toast_message'] = ['message' => 'Item not found.', 'type' => 'error'];
+    header("Location: launching_soon.php");
     exit();
 }
 
 // Handle form submission for updating item
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        $edit_item_error = 'Invalid CSRF token. Please try again.';
-    } else {
-        // Sanitize and validate inputs
-        $name = trim($_POST["name"]);
-        $status = filter_var(trim($_POST["status"]), FILTER_VALIDATE_INT, array('options' => array('min_range' => 0, 'max_range' => 1)));
-        
-        // New Image upload handling using ImageService
-        $image_path = $item_data['image']; // Keep old image if new one is not uploaded
-        if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
-            $new_image_path = ImageService::processUpload($_FILES['image'], PRODUCT_IMAGE_WIDTH, PRODUCT_IMAGE_HEIGHT, $edit_item_error);
-            if ($new_image_path) {
-                // Delete old image if a new one was successfully uploaded and it's not the same as the old one
-                if (!empty($item_data['image']) && $item_data['image'] !== $new_image_path && file_exists('../' . $item_data['image'])) {
-                    unlink('../' . $item_data['image']);
-                }
-                $image_path = $new_image_path;
-            }
-        } elseif (isset($_FILES['image']) && $_FILES['image']['error'] != UPLOAD_ERR_NO_FILE) {
-            $edit_item_error = 'There was an error with the new image upload.';
-        }
-
-        if (empty($name) || !isset($status)) {
-            $edit_item_error = 'Please fill out all required fields.';
-        } elseif (!preg_match("/^[a-zA-Z0-9\s\-'’]+$/", $name)) {
-            $edit_item_error = "Item name can only contain letters, numbers, spaces, hyphens, and apostrophes.";
-        } else {
-            // Prepare an update statement
-            $sql_update_item = "UPDATE launching_soon SET name = ?, image = ?, status = ? WHERE id = ?";
-            
-            if ($stmt_update = $conn->prepare($sql_update_item)) {
-                $stmt_update->bind_param("ssii", $param_name, $param_image, $param_status, $param_id);
-
-                // Set parameters
-                $param_name = $name;
-                $param_image = $image_path;
-                $param_status = $status;
-                $param_id = $item_id;
-
-                if ($stmt_update->execute()) {
-                    header("Location: launching_soon.php?success=updated");
-                    exit();
-                } else {
-                    $edit_item_error = 'Something went wrong. Please try again later.';
-                }
-                $stmt_update->close();
-            } else {
-                $edit_item_error = 'Error preparing statement. Please try again later.';
-            }
-        }
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+        $_SESSION['toast_message'] = ['message' => 'Invalid CSRF token. Please try again.', 'type' => 'error'];
+        header("Location: edit_launching_soon.php?id=" . $item_id);
+        exit();
     }
+
+    $name = trim($_POST["name"]);
+    $status = filter_var(trim($_POST["status"]), FILTER_VALIDATE_INT, ['options' => ['min_range' => 0, 'max_range' => 1]]);
+
+    if (empty($name) || !isset($status) || !preg_match("/^[a-zA-Z0-9\s\-'’]+$/", $name)) {
+        $_SESSION['toast_message'] = ['message' => 'Please fill all fields with valid data.', 'type' => 'error'];
+        header("Location: edit_launching_soon.php?id=" . $item_id);
+        exit();
+    }
+
+    $image_path = $item_data['image']; // Keep old image by default
+    $upload_error = null;
+
+    if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+        // Correctly call the ImageService
+        $new_image_path = ImageService::processUpload($_FILES['image'], PRODUCT_IMAGE_DIR, PRODUCT_IMAGE_WIDTH, PRODUCT_IMAGE_HEIGHT, $upload_error);
+        
+        if ($new_image_path) {
+            // Delete old image if a new one was successfully uploaded
+            if (!empty($item_data['image']) && file_exists(ABSPATH . '/' . $item_data['image'])) {
+                unlink(ABSPATH . '/' . $item_data['image']);
+            }
+            $image_path = $new_image_path;
+        } else {
+            // If upload fails, stay on the page and show the error
+            $_SESSION['toast_message'] = ['message' => $upload_error ?: 'Failed to process new image.', 'type' => 'error'];
+            header("Location: edit_launching_soon.php?id=" . $item_id);
+            exit();
+        }
+    } elseif (isset($_FILES['image']) && $_FILES['image']['error'] != UPLOAD_ERR_NO_FILE) {
+        $_SESSION['toast_message'] = ['message' => 'There was an error with the new image upload.', 'type' => 'error'];
+        header("Location: edit_launching_soon.php?id=" . $item_id);
+        exit();
+    }
+
+    // Prepare and execute the update statement
+    $sql_update_item = "UPDATE launching_soon SET name = ?, image = ?, status = ? WHERE id = ?";
+    if ($stmt_update = $conn->prepare($sql_update_item)) {
+        $stmt_update->bind_param("ssii", $name, $image_path, $status, $item_id);
+
+        if ($stmt_update->execute()) {
+            $_SESSION['toast_message'] = ['message' => 'Item updated successfully!', 'type' => 'success'];
+            regenerate_csrf_token();
+            header("Location: launching_soon.php");
+            exit();
+        } else {
+            $_SESSION['toast_message'] = ['message' => 'Database error: Failed to update item.', 'type' => 'error'];
+        }
+        $stmt_update->close();
+    } else {
+        $_SESSION['toast_message'] = ['message' => 'Error preparing database statement.', 'type' => 'error'];
+    }
+    
+    header("Location: edit_launching_soon.php?id=" . $item_id);
+    exit();
 }
 
 $pageTitle = 'Edit "Launching Soon" Item';
@@ -112,11 +106,7 @@ include 'header.php';
         <a href="launching_soon.php" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">Back to Launching Soon</a>
     </div>
 
-    <?php if (!empty($edit_item_error)): ?>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            <?php echo $edit_item_error; ?>
-        </div>
-    <?php endif; ?>
+
 
     <?php if ($item_data): ?>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . '?id=' . $item_id; ?>" method="POST" enctype="multipart/form-data" class="space-y-6">

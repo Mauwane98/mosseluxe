@@ -1,15 +1,5 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once '../includes/db_connect.php';
-
-// Ensure admin is logged in
-if (!isset($_SESSION["admin_loggedin"]) || $_SESSION["admin_loggedin"] !== true) {
-    header("location: login.php");
-    exit;
-}
-
+require_once 'bootstrap.php';
 $conn = get_db_connection();
 
 // --- Date Filtering Logic ---
@@ -122,8 +112,6 @@ if ($stmt_discount_usage = $conn->prepare($sql_discount_usage)) {
     $stmt_discount_usage->close();
 }
 
-$conn->close();
-
 // --- Prepare data for Chart.js ---
 $labels = [];
 $data = [];
@@ -170,10 +158,10 @@ include 'header.php';
             <h3 class="text-lg font-bold text-gray-800">Filter Report</h3>
             <div class="flex space-x-2">
                 <button onclick="exportToCSV()" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors text-sm">
-                    <i class="fas fa-download mr-2"></i>Export CSV
+                    <i class="fas fa-file-csv mr-1"></i>Export CSV
                 </button>
                 <button onclick="exportToPDF()" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors text-sm">
-                    <i class="fas fa-file-pdf mr-2"></i>Export PDF
+                    <i class="fas fa-file-pdf mr-1"></i>Export PDF
                 </button>
             </div>
         </div>
@@ -443,6 +431,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function exportToCSV() {
     const startDate = document.getElementById('start_date').value;
     const endDate = document.getElementById('end_date').value;
+    const csrfToken = '<?php echo generate_csrf_token(); ?>'; // Get CSRF token from PHP
 
     // Create a form to submit export request
     const form = document.createElement('form');
@@ -465,9 +454,15 @@ function exportToCSV() {
     endInput.name = 'end_date';
     endInput.value = endDate;
 
+    const csrfInput = document.createElement('input'); // CSRF token input
+    csrfInput.type = 'hidden';
+    csrfInput.name = 'csrf_token';
+    csrfInput.value = csrfToken;
+
     form.appendChild(formatInput);
     form.appendChild(startInput);
     form.appendChild(endInput);
+    form.appendChild(csrfInput); // Append CSRF token
     document.body.appendChild(form);
     form.submit();
     document.body.removeChild(form);
@@ -476,8 +471,9 @@ function exportToCSV() {
 function exportToPDF() {
     const startDate = document.getElementById('start_date').value;
     const endDate = document.getElementById('end_date').value;
+    const csrfToken = '<?php echo generate_csrf_token(); ?>';
 
-    // Create a form to submit export request
+    // Create a form to submit PDF export request
     const form = document.createElement('form');
     form.method = 'POST';
     form.action = 'export_sales_report.php';
@@ -498,13 +494,21 @@ function exportToPDF() {
     endInput.name = 'end_date';
     endInput.value = endDate;
 
+    const csrfInput = document.createElement('input');
+    csrfInput.type = 'hidden';
+    csrfInput.name = 'csrf_token';
+    csrfInput.value = csrfToken;
+
     form.appendChild(formatInput);
     form.appendChild(startInput);
     form.appendChild(endInput);
+    form.appendChild(csrfInput);
     document.body.appendChild(form);
     form.submit();
     document.body.removeChild(form);
 }
+
+
 </script>
 
 <?php include 'footer.php'; ?>

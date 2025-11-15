@@ -1,0 +1,86 @@
+# Disable directory listing
+Options -Indexes
+
+# Custom error pages
+ErrorDocument 404 /mosse-luxe/404.php
+
+# Performance optimizations - Caching headers
+<IfModule mod_headers.c>
+    # Cache static assets for 1 year
+    <FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|webp|svg|woff|woff2|ttf|eot)$">
+        Header set Cache-Control "max-age=31536000, public"
+    </FilesMatch>
+
+    # Don't cache PHP files
+    <FilesMatch "\.php$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires 0
+    </FilesMatch>
+
+    # Rate limiting for checkout (basic protection)
+    <FilesMatch "(checkout\.php|yoco_process\.php|payfast_process\.php)">
+        Header set X-RateLimit-Limit 10
+        Header set X-RateLimit-Window "60"
+    </FilesMatch>
+
+    # Security headers
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" env=HTTPS
+
+    # Remove server information
+    Header unset X-Powered-By
+    Header unset Server
+</IfModule>
+
+# Enable compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+</IfModule>
+
+# Enable URL rewriting
+RewriteEngine On
+
+# Set the base path for rewrite rules
+RewriteBase /mosse-luxe/
+
+# Redirect all HTTP traffic to HTTPS (uncomment and configure if SSL is available)
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Exclude existing files and directories from being rewritten
+RewriteCond %{REQUEST_FILENAME} -d [OR]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Rewrite rules for clean URLs
+RewriteRule ^/?$ index.php [L]
+RewriteRule ^shop/?$ shop.php [L]
+RewriteRule ^cart/?$ cart.php [L]
+RewriteRule ^checkout/?$ checkout.php [L]
+RewriteRule ^login/?$ login.php [L]
+RewriteRule ^register/?$ register.php [L]
+RewriteRule ^contact/?$ contact.php [L]
+RewriteRule ^track-order/?$ track_order.php [L]
+RewriteRule ^product/([0-9]+)/([^/]+)/?$ product.php?id=$1 [L,QSA]
+RewriteRule ^about/?$ about.php [L]
+RewriteRule ^my-account/?$ my_account.php [L]
+RewriteRule ^wishlist/?$ wishlist.php [L]
+RewriteRule ^search/?$ search.php [L]
+RewriteRule ^careers/?$ careers.php [L]
+RewriteRule ^faq/?$ faq.php [L]
+RewriteRule ^shipping-returns/?$ shipping-returns.php [L]
+RewriteRule ^privacy-policy/?$ privacy-policy.php [L]
+RewriteRule ^terms-of-service/?$ terms-of-service.php [L]
+RewriteRule ^test-careers/?$ test_careers.php [L]

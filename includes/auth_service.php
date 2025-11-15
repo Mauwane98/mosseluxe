@@ -1,7 +1,6 @@
 <?php
 
-require_once __DIR__ . '/db_connect.php';
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/bootstrap.php'; // Includes db_connect.php and config.php
 
 class Auth {
 
@@ -42,10 +41,6 @@ class Auth {
                 self::redirectToAdminLogin();
             }
             $stmt->close();
-        } else {
-            error_log("Auth::checkAdmin() - SQL prepare error: " . $conn->error);
-            self::logout();
-            self::redirectToAdminLogin();
         }
         // The connection will be closed by the script that included this service.
     }
@@ -56,9 +51,6 @@ class Auth {
      * @param array $adminData The admin user data from the database.
      */
     public static function loginAdmin($adminData) {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
         session_regenerate_id(true); // Regenerate session ID to prevent session fixation
 
         $_SESSION['admin_loggedin'] = true;
@@ -118,10 +110,6 @@ class Auth {
      * Logs out the user by destroying the session.
      */
     public static function logout() {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-        
         // Clear "Remember Me" cookie and token if it exists
         if (isset($_COOKIE['remember_admin'])) {
             list($selector, ) = explode(':', $_COOKIE['remember_admin']);
@@ -144,7 +132,7 @@ class Auth {
         $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
         $host = $_SERVER['HTTP_HOST'];
         $path = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-        header("Location: " . BASE_URL . "/admin/login.php");
+        header("Location: " . SITE_URL . "admin/login.php");
         exit();
     }
 

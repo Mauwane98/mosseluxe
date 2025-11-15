@@ -1,6 +1,6 @@
 <?php
 $pageTitle = "Search Results - Mossé Luxe";
-require_once 'includes/db_connect.php';
+require_once 'includes/bootstrap.php'; // Changed from db_connect.php
 $conn = get_db_connection();
 require_once 'includes/header.php';
 
@@ -41,8 +41,7 @@ if (!empty($query) && strlen($query) >= 2) {
         $stmt->close();
     }
 }
-
-$conn->close();
+}
 ?>
 
 <main>
@@ -101,13 +100,14 @@ $conn->close();
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
                 <?php foreach ($results as $product): ?>
                     <div class="group">
-                        <a href="product.php?id=<?php echo $product['id']; ?>">
+                        <a href="<?php echo SITE_URL; ?>product/<?php echo $product['id']; ?>/<?php echo urlencode(str_replace(' ', '-', strtolower($product['name']))); ?>">
                             <div class="relative aspect-w-1 aspect-h-1 bg-neutral-100 rounded-md overflow-hidden border border-transparent group-hover:border-black/10 transition-colors">
                                 <img
                                     src="<?php echo htmlspecialchars($product['image']); ?>"
                                     alt="<?php echo htmlspecialchars($product['name']); ?>"
                                     class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
                                     onerror="this.src='https://placehold.co/600x600/f1f1f1/000000?text=Mossé+Luxe'"
+                                    loading="eager"
                                 >
                                 <div class="absolute bottom-4 left-1/2 -translate-x-1/2 w-11/12">
                                     <button class="w-full bg-white/90 text-black text-sm font-bold uppercase py-2.5 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-300 backdrop-blur-sm hover:bg-white quick-add-btn" data-product-id="<?php echo $product['id']; ?>">
@@ -131,40 +131,5 @@ $conn->close();
         <?php endif; ?>
     </div>
 </main>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.quick-add-btn').forEach(button => {
-        button.addEventListener('click', function(event) {
-            event.preventDefault();
-            const productId = this.dataset.productId;
-            const quantity = 1;
-
-            const formData = new FormData();
-            formData.append('action', 'add');
-            formData.append('product_id', productId);
-            formData.append('quantity', quantity);
-
-            fetch('ajax_cart_handler.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-                    updateCartCountDisplay();
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while adding to cart.');
-            });
-        });
-    });
-});
-</script>
 
 <?php require_once 'includes/footer.php'; ?>

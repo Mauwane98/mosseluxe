@@ -132,3 +132,221 @@ body {
     background-color: #000;
     color: #fff;
 }
+
+/* Enhanced Admin Panel Styles */
+.sidebar-link {
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(197, 165, 114, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.sidebar-link:hover::before {
+    left: 100%;
+}
+
+.sidebar-link:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.nav-tooltip {
+    position: relative;
+}
+
+.nav-tooltip:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-left: 10px;
+    opacity: 0;
+    animation: fadeInTooltip 0.3s ease forwards;
+}
+
+@keyframes fadeInTooltip {
+    to {
+        opacity: 1;
+    }
+}
+
+.pulse-notification {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.sidebar-collapsed .sidebar-link span {
+    opacity: 0;
+    width: 0;
+}
+
+.sidebar-toggle-btn {
+    transition: all 0.3s ease;
+}
+
+.sidebar-toggle-btn:hover {
+    transform: rotate(180deg);
+}
+
+/* Enhanced form interactions */
+.form-group {
+    position: relative;
+}
+
+.form-control:focus + .form-label,
+.form-control:not(:placeholder-shown) + .form-label {
+    transform: translateY(-25px);
+    font-size: 12px;
+    color: #C5A572;
+}
+
+.form-label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    color: #6c757d;
+}
+
+/* Loading states */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #C5A572;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Success/Error animations */
+.success-message {
+    animation: slideInFromTop 0.5s ease;
+}
+
+.error-message {
+    animation: shake 0.5s ease;
+}
+
+@keyframes slideInFromTop {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Keyboard navigation */
+.sidebar-link:focus {
+    outline: 2px solid #C5A572;
+    outline-offset: 2px;
+}
+
+/* Dark mode toggle */
+.dark-mode-toggle {
+    position: relative;
+    width: 50px;
+    height: 24px;
+    background: #ccc;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.dark-mode-toggle.active {
+    background: #C5A572;
+}
+
+.dark-mode-toggle::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.dark-mode-toggle.active::before {
+    transform: translateX(26px);
+}
+
+/* Prevent unwanted scrolling on navigation links */
+html, body {
+    scroll-behavior: auto; /* Override any smooth scrolling */
+}
+
+/* Ensure independent scrolling works properly */
+.admin-layout {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.admin-sidebar {
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.admin-main {
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Prevent page jumps on link clicks */
+a[href^="#"] {
+    scroll-behavior: auto;
+}
+
+/* Ensure pagination and navigation links don't cause scrolling */
+.pagination a,
+.nav-link,
+.sidebar-link {
+    scroll-behavior: auto;
+}

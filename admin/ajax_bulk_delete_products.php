@@ -1,19 +1,19 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once '../includes/admin_auth.php';
-require_once '../includes/db_connect.php';
+require_once __DIR__ . '/../includes/bootstrap.php'; // Includes db_connect.php, config.php, csrf.php, and starts session (if not already started)
+require_once __DIR__ . '/../includes/auth_service.php'; // Auth class
+
+// Ensure admin is logged in
+Auth::checkAdmin(); // Redirects to login if not authenticated
 
 header('Content-Type: application/json');
 
-if (!isset($_SESSION["admin_loggedin"]) || $_SESSION["admin_loggedin"] !== true) {
-    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['success' => false, 'message' => 'Invalid request method']);
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['success' => false, 'message' => 'Invalid request method']);
+if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) { // Validate CSRF token
+    echo json_encode(['success' => false, 'message' => 'Invalid security token.']);
     exit;
 }
 
@@ -49,6 +49,20 @@ if ($order_count > 0) {
     exit;
 }
 
+// Retrieve image paths before deleting products
+$image_paths_to_delete = [];
+$sql_get_images = "SELECT image FROM products WHERE id IN ($placeholders)";
+$stmt_get_images = $conn->prepare($sql_get_images);
+$stmt_get_images->bind_param($types, ...$idArray);
+$stmt_get_images->execute();
+$result_images = $stmt_get_images->get_result();
+while ($row = $result_images->fetch_assoc()) {
+    if (!empty($row['image'])) {
+        $image_paths_to_delete[] = $row['image'];
+    }
+}
+$stmt_get_images->close();
+
 // Prepare the delete statement
 $sql = "DELETE FROM products WHERE id IN ($placeholders)";
 
@@ -62,6 +76,17 @@ $stmt->bind_param($types, ...$idArray);
 
 if ($stmt->execute()) {
     $deleted_count = $stmt->affected_rows;
+
+    // Delete image files from the server
+    foreach ($image_paths_to_delete as $image_path) {
+        $full_image_path = ABSPATH . '/' . $image_path;
+        if (file_exists($full_image_path)) {
+            if (!unlink($full_image_path)) {
+                error_log("Failed to delete image file during bulk deletion: " . $full_image_path);
+            }
+        }
+    }
+
     echo json_encode([
         'success' => true,
         'deleted_count' => $deleted_count,
