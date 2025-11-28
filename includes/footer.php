@@ -81,27 +81,20 @@
     </div> <!-- End Page Wrapper -->
 
 <?php if (!isset($_GET['no_js'])): ?>
-    <!-- Modal System -->
-    <script src="<?php echo SITE_URL; ?>assets/js/modals.js"></script>
-    
-    <!-- Referral Notification -->
-    <script src="<?php echo SITE_URL; ?>assets/js/referral-notification.js"></script>
-    
-    <!-- Yoco SDK -->
+    <!-- Core Scripts (needed for page functionality) -->
+    <script src="<?php echo SITE_URL; ?>assets/js/toast.js"></script>
+    <script src="<?php echo SITE_URL; ?>assets/js/loading.js"></script>
     <script src="<?php echo SITE_URL; ?>assets/js/cart-ui.js"></script>
     <script src="<?php echo SITE_URL; ?>assets/js/cart.js"></script>
     <script src="<?php echo SITE_URL; ?>assets/js/main.js"></script>
-    <script src="<?php echo SITE_URL; ?>assets/js/quick-view.js?v=<?php echo time(); ?>"></script>
-    <script src="<?php echo SITE_URL; ?>assets/js/countdown-timer.js"></script>
-
-    <!-- Accessibility and Interactive Features -->
-    <script src="<?php echo SITE_URL; ?>assets/js/accessibility.js"></script>
-    <script src="<?php echo SITE_URL; ?>assets/js/interactive-features.js"></script>
-
-    <!-- Toast Notification System -->
-    <script src="<?php echo SITE_URL; ?>assets/js/toast.js"></script>
-    <!-- Loading State Utilities -->
-    <script src="<?php echo SITE_URL; ?>assets/js/loading.js"></script>
+    
+    <!-- Deferred Scripts (non-critical, load after page) -->
+    <script src="<?php echo SITE_URL; ?>assets/js/modals.js" defer></script>
+    <script src="<?php echo SITE_URL; ?>assets/js/quick-view.js" defer></script>
+    <script src="<?php echo SITE_URL; ?>assets/js/countdown-timer.js" defer></script>
+    <script src="<?php echo SITE_URL; ?>assets/js/accessibility.js" defer></script>
+    <script src="<?php echo SITE_URL; ?>assets/js/interactive-features.js" defer></script>
+    <script src="<?php echo SITE_URL; ?>assets/js/referral-notification.js" defer></script>
 
     <script>
         // Newsletter Form Handler
