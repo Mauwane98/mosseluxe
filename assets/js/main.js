@@ -26,6 +26,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const slides = document.querySelectorAll('.carousel-slide');
     let currentIndex = 0;
 
+    // Read hero data from data-attributes (CSP compliant) or fallback to window
+    const heroDataEl = document.getElementById('hero-data');
+    let heroSlideData = window.heroSlideData || [];
+    let heroButtonsEnabled = window.heroButtonsEnabled || false;
+    
+    if (heroDataEl) {
+        try {
+            heroSlideData = JSON.parse(heroDataEl.dataset.slides || '[]');
+            heroButtonsEnabled = heroDataEl.dataset.buttonsEnabled === 'true';
+        } catch (e) {
+            console.warn('Could not parse hero data:', e);
+        }
+    }
+
     if (slidesContainer && slides.length > 0) {
         // Create dots
         slides.forEach((_, index) => {
@@ -40,12 +54,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const updateHeroButton = () => {
             // Check if hero buttons are globally enabled
-            if (!window.heroButtonsEnabled) {
+            if (!heroButtonsEnabled) {
                 return;
             }
 
-            if (window.heroSlideData && window.heroSlideData[currentIndex]) {
-                const slideData = window.heroSlideData[currentIndex];
+            if (heroSlideData && heroSlideData[currentIndex]) {
+                const slideData = heroSlideData[currentIndex];
                 const buttonContainer = document.getElementById('hero-button-container');
                 const heroButton = document.getElementById('hero-button');
 
