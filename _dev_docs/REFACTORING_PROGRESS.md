@@ -49,7 +49,7 @@ mosseluxe/
 
 ---
 
-## Phase 2: Architecture Refactor 🔄 IN PROGRESS
+## Phase 2: Architecture Refactor ✅ COMPLETE
 
 ### Created MVC Components
 
@@ -57,20 +57,26 @@ mosseluxe/
 - [x] `Database.php` - Singleton database wrapper with prepared statements
 - [x] `InputSanitizer.php` - Strict input validation for all request data
 
+#### Repositories (`app/Repositories/`)
+- [x] `ProductRepository.php` - Centralized product database queries
+
 #### Controllers (`app/Controllers/`)
 - [x] `ProductController.php` - Product listing, details, filtering
 - [x] `WishlistController.php` - Wishlist with guest + user support
 - [x] `CartController.php` - Cart with session + cookie persistence
+- [x] `ShopController.php` - Shop page filtering, sorting, pagination
+- [x] `HomeController.php` - Homepage data (hero, new arrivals, sections)
 
 ### Refactored Files
-- [x] `product-details.php` - Now uses ProductController and InputSanitizer
+- [x] `product-details.php` - Uses ProductController, InputSanitizer, JSON-LD Schema
 - [x] `ajax_wishlist_handler.php` - Uses WishlistController, returns strict JSON
+- [x] `shop.php` - Uses ShopController, AJAX filtering enabled
+- [x] `index.php` - Uses HomeController for data fetching
 
-### Pending
-- [ ] Refactor `shop.php` to use ProductController
-- [ ] Refactor `cart.php` to use CartController
-- [ ] Create PageController for static pages
-- [ ] Update router.php for clean URLs
+### CSP Compliance
+- [x] `product-details.php` - Data passed via data-attributes
+- [x] `index.php` - Hero slide data via data-attributes
+- [x] `main.js` - Reads from data-attributes with window fallback
 
 ---
 
