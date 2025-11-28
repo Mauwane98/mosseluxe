@@ -45,8 +45,49 @@ if (!empty($product_variants)) {
     $available_sizes = array_column($product_variants['Size'] ?? [], 'variant_value');
 }
 
+// Generate Product Schema for SEO
+$productSchema = [
+    '@context' => 'https://schema.org',
+    '@type' => 'Product',
+    'name' => $product['name'],
+    'description' => strip_tags($product['description'] ?? ''),
+    'image' => SITE_URL . ltrim($product['image'], '/'),
+    'sku' => $product['sku'] ?? 'ML-' . $product['id'],
+    'brand' => [
+        '@type' => 'Brand',
+        'name' => 'Mossé Luxe'
+    ],
+    'offers' => [
+        '@type' => 'Offer',
+        'url' => SITE_URL . 'product/' . $product['id'] . '/' . urlencode(str_replace(' ', '-', strtolower($product['name']))),
+        'priceCurrency' => 'ZAR',
+        'price' => ($product['sale_price'] > 0 && $product['sale_price'] < $product['price']) 
+            ? number_format($product['sale_price'], 2, '.', '') 
+            : number_format($product['price'], 2, '.', ''),
+        'availability' => ($product['stock'] > 0) 
+            ? 'https://schema.org/InStock' 
+            : 'https://schema.org/OutOfStock',
+        'seller' => [
+            '@type' => 'Organization',
+            'name' => 'Mossé Luxe'
+        ]
+    ]
+];
+
+// Add images array if available
+if (!empty($product_images)) {
+    $productSchema['image'] = array_map(function($img) {
+        return SITE_URL . ltrim($img['image_path'], '/');
+    }, $product_images);
+}
+
 require_once 'includes/header.php';
 ?>
+
+<!-- Product Schema JSON-LD for SEO -->
+<script type="application/ld+json">
+<?php echo json_encode($productSchema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>
+</script>
 
 <!-- Main Content -->
 <main>
@@ -176,16 +217,12 @@ m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547
 
 <?php require_once 'includes/footer.php'; ?>
 
-<script>
-window.productImages = <?php
-echo json_encode($product_images, JSON_PRETTY_PRINT);
-?>;
-</script>
-
-<script>
-// All cart functionality is now handled by assets/js/cart.js
-// This script can be used for any other product-details-specific functionality.
-document.addEventListener('DOMContentLoaded', function() {
-
-});
-</script>
+<!-- Product data passed via data-attributes instead of inline JS for CSP compliance -->
+<div id="product-data" 
+     data-product-id="<?php echo $product['id']; ?>"
+     data-product-name="<?php echo htmlspecialchars($product['name']); ?>"
+     data-product-price="<?php echo $product['price']; ?>"
+     data-product-sale-price="<?php echo $product['sale_price'] ?? 0; ?>"
+     data-product-stock="<?php echo $product['stock']; ?>"
+     data-product-images='<?php echo htmlspecialchars(json_encode($product_images), ENT_QUOTES, 'UTF-8'); ?>'
+     style="display:none;"></div>

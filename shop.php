@@ -1,153 +1,44 @@
 <?php
+/**
+ * Shop Page
+ * 
+ * Displays product catalog with filtering, sorting, and pagination.
+ * Uses ShopController for business logic separation.
+ */
+
 require_once 'includes/bootstrap.php';
-require_once 'includes/cache_service.php';
-$pageTitle = get_setting('shop_title', 'Shop') . " - Mossé Luxe";
-require_once 'includes/header.php'; // Now include header after all PHP logic
+require_once __DIR__ . '/app/Services/InputSanitizer.php';
+require_once __DIR__ . '/app/Repositories/ProductRepository.php';
+require_once __DIR__ . '/app/Controllers/ShopController.php';
 
-// Error reporting is now handled in bootstrap.php based on APP_ENV
-
+// Initialize controller
 $conn = get_db_connection();
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-$products = [];
-$categories = [];
+$shopController = new \App\Controllers\ShopController($conn);
 
-// Fetch categories for the filter dropdown
-$sql_categories = "SELECT id, name FROM categories ORDER BY name ASC";
-if ($result_categories = $conn->query($sql_categories)) {
-    while ($row_category = $result_categories->fetch_assoc()) {
-        $categories[] = $row_category;
-    }
-    $result_categories->free();
-} else {
-    // If categories table doesn't exist, add some default categories for filtering
-    $categories = [
-        ['id' => 1, 'name' => 'All Categories']
-    ];
-    error_log("Categories table query failed: " . $conn->error);
-}
+// Get shop data from controller
+$shopData = $shopController->index($_GET);
 
-// Get filter and sort parameters
-$selected_category = isset($_GET['category']) ? (int)$_GET['category'] : 0;
-$sort_by = isset($_GET['sort_by']) ? $_GET['sort_by'] : 'newest'; // Default sort
-$search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
+// Extract data for view
+$products = $shopData['products'];
+$categories = $shopData['categories'];
+$pagination = $shopData['pagination'];
+$filters = $shopData['filters'];
+$priceRange = $shopData['price_range'];
 
-// Price range filter
-$min_price = isset($_GET['min_price']) ? (float)$_GET['min_price'] : 0;
-$max_price = isset($_GET['max_price']) ? (float)$_GET['max_price'] : 0;
+// Legacy variable names for template compatibility
+$selected_category = $filters['category'];
+$sort_by = $filters['sort_by'];
+$search_query = $filters['search'];
+$min_price = $filters['min_price'];
+$max_price = $filters['max_price'];
+$absolute_min = $priceRange['min'];
+$absolute_max = $priceRange['max'];
+$total_products = $pagination['total'];
+$total_pages = $pagination['pages'];
+$page = $pagination['current'];
 
-// Get price range for slider
-$price_range_query = "SELECT MIN(price) as min_price, MAX(price) as max_price FROM products WHERE status = 1";
-$price_range_result = $conn->query($price_range_query);
-$price_range = $price_range_result->fetch_assoc();
-$absolute_min = floor($price_range['min_price']);
-$absolute_max = ceil($price_range['max_price']);
-
-// Set defaults if not provided
-if ($min_price == 0) $min_price = $absolute_min;
-if ($max_price == 0) $max_price = $absolute_max;
-
-// Pagination
-$limit = 8; // Number of products per page
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-// Build the base query for filtering
-$base_sql = "FROM products WHERE status = 1";
-$count_params = [];
-$count_types = '';
-
-// Add search filter
-if (!empty($search_query)) {
-    $base_sql .= " AND (name LIKE ? OR description LIKE ?)";
-    $search_param = '%' . $search_query . '%';
-    $count_params[] = $search_param;
-    $count_params[] = $search_param;
-    $count_types .= 'ss';
-}
-
-if ($selected_category > 0) {
-    $base_sql .= " AND category = ?";
-    $count_params[] = $selected_category;
-    $count_types .= 'i';
-}
-
-// Add price range filter
-if ($min_price > 0 || $max_price < $absolute_max) {
-    $base_sql .= " AND price BETWEEN ? AND ?";
-    $count_params[] = $min_price;
-    $count_params[] = $max_price;
-    $count_types .= 'dd';
-}
-
-// Get total count for pagination
-$count_sql = "SELECT COUNT(id) as total " . $base_sql;
-$total_products = 0;
-if (!($stmt_count = $conn->prepare($count_sql))) {
-    die("Count Query Prepare failed: (" . $conn->errno . ") " . $conn->error);
-}
-if ($stmt_count) {
-    if (!empty($count_params)) {
-        $stmt_count->bind_param($count_types, ...$count_params);
-    }
-    $stmt_count->execute();
-    $result_count = $stmt_count->get_result();
-    $total_products = $result_count->fetch_assoc()['total'];
-    $stmt_count->close();
-}
-$total_pages = ceil($total_products / $limit);
-
-// Build the final query with sorting and pagination
-$sql = "SELECT id, name, price, sale_price, image, is_featured, is_coming_soon, is_bestseller, is_new " . $base_sql;
-
-switch ($sort_by) {
-    case 'price_asc':
-        $sql .= " ORDER BY price ASC";
-        break;
-    case 'price_desc':
-        $sql .= " ORDER BY price DESC";
-        break;
-    case 'name_asc':
-        $sql .= " ORDER BY name ASC";
-        break;
-    case 'name_desc':
-        $sql .= " ORDER BY name DESC";
-        break;
-    case 'newest':
-    default:
-        $sql .= " ORDER BY created_at DESC";
-        break;
-}
-
-$sql .= " LIMIT ?, ?";
-
-// Final parameters for the product query
-$product_params = $count_params;
-$product_params[] = $offset;
-$product_params[] = $limit;
-$product_types = $count_types . 'ii';
-
-// Fetch products for the current page
-$cache_key = 'products_page_' . $page . '_' . md5($sql . implode(',', $product_params));
-$products = CacheService::get($cache_key);
-
-if ($products === false) {
-    $products = [];
-    if ($stmt = $conn->prepare($sql)) {
-        if (!empty($product_params)) {
-            $stmt->bind_param($product_types, ...$product_params);
-        }
-        $stmt->execute();
-        $result = $stmt->get_result();
-        while ($row = $result->fetch_assoc()) {
-            $products[] = $row;
-        }
-        $stmt->close();
-        CacheService::set($cache_key, $products);
-    }
-}
-
+$pageTitle = get_setting('shop_title', 'Shop') . " - Mossé Luxe";
+require_once 'includes/header.php';
 ?>
 
 <!-- Main Content -->
@@ -219,9 +110,14 @@ if ($products === false) {
             </form>
         </div>
 
+        <!-- Result Count -->
+        <div class="flex justify-between items-center mb-6">
+            <p data-result-count class="text-gray-600"><?php echo $total_products; ?> product<?php echo $total_products !== 1 ? 's' : ''; ?> found</p>
+        </div>
+
         <?php if (!empty($products)): ?>
             <!-- Product Grid -->
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 product-grid" data-product-grid>
                 <?php foreach ($products as $product): ?>
                     <div class="group relative product-card">
                         <div class="relative aspect-w-1 aspect-h-1 bg-neutral-50 rounded-2xl overflow-hidden border border-transparent group-hover:border-black/20 transition-colors duration-300 hover:shadow-lg">
@@ -413,44 +309,30 @@ if ($products === false) {
     </div>
 </div>
 
+<!-- AJAX Shop Filter Module -->
+<script src="<?php echo SITE_URL; ?>assets/js/shop-filter.js"></script>
+
 <script>
-// All cart functionality is now handled by assets/js/cart.js
-// This script can be used for any other shop-specific functionality.
-document.addEventListener('DOMContentLoaded', function() {
-    // Price range slider functionality
-    const minPrice = document.getElementById('min-price');
-    const maxPrice = document.getElementById('max-price');
-    const minDisplay = document.getElementById('price-min-display');
-    const maxDisplay = document.getElementById('price-max-display');
-
-    if (minPrice && maxPrice) {
-        minPrice.addEventListener('input', function() {
-            const min = parseInt(this.value);
-            const max = parseInt(maxPrice.value);
-            
-            if (min > max) {
-                this.value = max;
-            }
-            
-            minDisplay.textContent = parseInt(this.value).toLocaleString();
-        });
-
-        maxPrice.addEventListener('input', function() {
-            const min = parseInt(minPrice.value);
-            const max = parseInt(this.value);
-            
-            if (max < min) {
-                this.value = min;
-            }
-            
-            maxDisplay.textContent = parseInt(this.value).toLocaleString();
-        });
-    }
-});
-
-// Reset filters function
+// Reset filters function - clears all filters and refreshes
 function resetFilters() {
-    window.location.href = 'shop.php';
+    // Clear form inputs
+    const form = document.getElementById('filter-form');
+    if (form) {
+        form.reset();
+        // Reset price displays
+        const minDisplay = document.getElementById('price-min-display');
+        const maxDisplay = document.getElementById('price-max-display');
+        const minInput = document.getElementById('min-price');
+        const maxInput = document.getElementById('max-price');
+        if (minDisplay && minInput) minDisplay.textContent = parseInt(minInput.min).toLocaleString();
+        if (maxDisplay && maxInput) maxDisplay.textContent = parseInt(maxInput.max).toLocaleString();
+    }
+    // Trigger AJAX refresh or fallback to page reload
+    if (window.ShopFilter) {
+        window.ShopFilter.refresh();
+    } else {
+        window.location.href = 'shop.php';
+    }
 }
 </script>
 
