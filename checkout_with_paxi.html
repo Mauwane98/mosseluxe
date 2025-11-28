@@ -1,0 +1,216 @@
+<!-- 
+PAXI INTEGRATION - ADD TO CHECKOUT PAGE
+Copy this section and add it to checkout.php after the shipping address fields
+-->
+
+<!-- Shipping Method Selection -->
+<div class="mb-6 p-4 bg-gray-50 rounded-lg">
+    <label class="block text-sm font-medium text-gray-700 mb-3">Delivery Method <span class="text-red-500">*</span></label>
+    
+    <div class="space-y-3">
+        <!-- Standard Delivery Option -->
+        <label class="flex items-start p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-black transition-colors" id="standard-delivery-option">
+            <input type="radio" name="shipping_method" value="standard" checked class="mt-1 mr-3" onchange="updateShippingMethod('standard')">
+            <div class="flex-grow">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="font-semibold text-gray-900">Standard Home Delivery</p>
+                        <p class="text-sm text-gray-600 mt-1">Delivered to your door</p>
+                        <p class="text-xs text-gray-500 mt-1">📦 3-5 business days</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-bold text-gray-900" id="standard-cost">R100.00</p>
+                        <p class="text-xs text-green-600 mt-1" id="standard-free-notice" style="display: none;">FREE!</p>
+                    </div>
+                </div>
+            </div>
+        </label>
+
+        <!-- Paxi Delivery Option -->
+        <label class="flex items-start p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-black transition-colors" id="paxi-delivery-option">
+            <input type="radio" name="shipping_method" value="paxi" class="mt-1 mr-3" onchange="updateShippingMethod('paxi')">
+            <div class="flex-grow">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="font-semibold text-gray-900 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                            </svg>
+                            Paxi Point Pickup
+                        </p>
+                        <p class="text-sm text-gray-600 mt-1">Collect from a Paxi Point near you</p>
+                        <p class="text-xs text-gray-500 mt-1">⚡ 2-3 business days • 📍 10+ locations</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-bold text-gray-900" id="paxi-cost">R65.00</p>
+                        <p class="text-xs text-green-600 mt-1" id="paxi-free-notice" style="display: none;">FREE!</p>
+                    </div>
+                </div>
+            </div>
+        </label>
+    </div>
+</div>
+
+<!-- Paxi Point Selection (shown when Paxi is selected) -->
+<div id="paxi-point-selection" class="mb-6 hidden">
+    <label class="block text-sm font-medium text-gray-700 mb-2">Select Paxi Point <span class="text-red-500">*</span></label>
+    
+    <!-- Search/Filter -->
+    <div class="mb-3">
+        <input type="text" id="paxi-search" placeholder="Search by location..." class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-black focus:border-black">
+    </div>
+    
+    <!-- Paxi Points List -->
+    <div id="paxi-points-list" class="space-y-2 max-h-96 overflow-y-auto border border-gray-200 rounded-lg p-3">
+        <div class="text-center py-8 text-gray-500">
+            <svg class="animate-spin h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <p>Loading Paxi Points...</p>
+        </div>
+    </div>
+    
+    <input type="hidden" name="paxi_point_id" id="paxi_point_id">
+    <input type="hidden" name="paxi_point_name" id="paxi_point_name">
+    <input type="hidden" name="paxi_point_address" id="paxi_point_address">
+</div>
+
+<!-- JavaScript for Paxi Integration -->
+<script>
+let selectedPaxiPoint = null;
+let paxiPoints = [];
+const subtotal = <?php echo $subtotal; ?>;
+
+// Update shipping method
+function updateShippingMethod(method) {
+    const paxiSelection = document.getElementById('paxi-point-selection');
+    const standardOption = document.getElementById('standard-delivery-option');
+    const paxiOption = document.getElementById('paxi-delivery-option');
+    
+    if (method === 'paxi') {
+        paxiSelection.classList.remove('hidden');
+        paxiOption.classList.add('border-black', 'bg-black/5');
+        standardOption.classList.remove('border-black', 'bg-black/5');
+        loadPaxiPoints();
+    } else {
+        paxiSelection.classList.add('hidden');
+        standardOption.classList.add('border-black', 'bg-black/5');
+        paxiOption.classList.remove('border-black', 'bg-black/5');
+        selectedPaxiPoint = null;
+    }
+    
+    updateShippingCosts();
+}
+
+// Load Paxi Points
+async function loadPaxiPoints() {
+    const city = document.getElementById('shipping_city').value || 'Pretoria';
+    const listContainer = document.getElementById('paxi-points-list');
+    
+    try {
+        const response = await fetch(`${window.SITE_URL}api/paxi_points.php?city=${encodeURIComponent(city)}`);
+        const data = await response.json();
+        
+        if (data.success && data.points.length > 0) {
+            paxiPoints = data.points;
+            renderPaxiPoints(data.points);
+        } else {
+            listContainer.innerHTML = '<p class="text-center py-4 text-gray-500">No Paxi Points found in your area.</p>';
+        }
+    } catch (error) {
+        console.error('Error loading Paxi Points:', error);
+        listContainer.innerHTML = '<p class="text-center py-4 text-red-500">Failed to load Paxi Points. Please try again.</p>';
+    }
+}
+
+// Render Paxi Points
+function renderPaxiPoints(points) {
+    const listContainer = document.getElementById('paxi-points-list');
+    
+    listContainer.innerHTML = points.map(point => `
+        <label class="flex items-start p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-black hover:bg-gray-50 transition-colors paxi-point-item" data-point-id="${point.id}">
+            <input type="radio" name="paxi_point" value="${point.id}" class="mt-1 mr-3" onchange="selectPaxiPoint('${point.id}')">
+            <div class="flex-grow">
+                <p class="font-semibold text-gray-900">${point.name}</p>
+                <p class="text-sm text-gray-600 mt-1">${point.address}</p>
+                <p class="text-sm text-gray-600">${point.city}, ${point.postal_code}</p>
+                <div class="flex items-center gap-4 mt-2 text-xs text-gray-500">
+                    <span>📍 ${point.distance}</span>
+                    <span>🕒 ${point.hours}</span>
+                </div>
+            </div>
+        </label>
+    `).join('');
+}
+
+// Select Paxi Point
+function selectPaxiPoint(pointId) {
+    selectedPaxiPoint = paxiPoints.find(p => p.id === pointId);
+    
+    if (selectedPaxiPoint) {
+        document.getElementById('paxi_point_id').value = selectedPaxiPoint.id;
+        document.getElementById('paxi_point_name').value = selectedPaxiPoint.name;
+        document.getElementById('paxi_point_address').value = selectedPaxiPoint.address;
+        
+        // Highlight selected point
+        document.querySelectorAll('.paxi-point-item').forEach(item => {
+            item.classList.remove('border-black', 'bg-black/5');
+        });
+        document.querySelector(`[data-point-id="${pointId}"]`).classList.add('border-black', 'bg-black/5');
+    }
+}
+
+// Update shipping costs based on cart total
+function updateShippingCosts() {
+    const standardCost = document.getElementById('standard-cost');
+    const paxiCost = document.getElementById('paxi-cost');
+    const standardFree = document.getElementById('standard-free-notice');
+    const paxiFree = document.getElementById('paxi-free-notice');
+    
+    // Calculate costs
+    let stdCost = 100;
+    let pxCost = 65;
+    
+    if (subtotal >= 500) {
+        stdCost = 0;
+        pxCost = 0;
+    } else if (subtotal >= 300) {
+        pxCost = 45;
+    }
+    
+    // Update display
+    standardCost.textContent = stdCost > 0 ? `R${stdCost.toFixed(2)}` : '';
+    paxiCost.textContent = pxCost > 0 ? `R${pxCost.toFixed(2)}` : '';
+    
+    standardFree.style.display = stdCost === 0 ? 'block' : 'none';
+    paxiFree.style.display = pxCost === 0 ? 'block' : 'none';
+}
+
+// Search Paxi Points
+document.getElementById('paxi-search').addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    const filtered = paxiPoints.filter(point => 
+        point.name.toLowerCase().includes(searchTerm) ||
+        point.address.toLowerCase().includes(searchTerm) ||
+        point.city.toLowerCase().includes(searchTerm)
+    );
+    renderPaxiPoints(filtered);
+});
+
+// Initialize costs on page load
+updateShippingCosts();
+
+// Update Paxi points when city changes
+document.getElementById('shipping_city').addEventListener('change', function() {
+    if (document.querySelector('input[name="shipping_method"]:checked').value === 'paxi') {
+        loadPaxiPoints();
+    }
+});
+</script>
+
+<style>
+.paxi-point-item {
+    transition: all 0.2s ease;
+}
+</style>

@@ -454,4 +454,4 @@ function clean_old_analytics() {
 
     $conn->close();
 }
-?>
+// No closing PHP tag - prevents accidental whitespace output

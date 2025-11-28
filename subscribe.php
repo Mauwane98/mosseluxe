@@ -1,12 +1,20 @@
 <?php
+// Prevent any output before JSON
+ob_start();
+
 require_once 'includes/bootstrap.php'; // This includes db_connect.php, config.php, and csrf.php
+
+// Clear any accidental output
+ob_end_clean();
 
 header('Content-Type: application/json'); // Change to JSON response for AJAX form
 
 $response = ['success' => false, 'message' => 'Invalid request.'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (!validate_csrf_token()) {
+    // Validate CSRF token
+    $csrf_token = $_POST['csrf_token'] ?? '';
+    if (!verify_csrf_token($csrf_token)) {
         $response = ['success' => false, 'message' => 'Invalid security token.'];
         echo json_encode($response);
         exit;

@@ -26,4 +26,4 @@ function generate_csrf_token_input() {
     $token = generate_csrf_token();
     return '<input type="hidden" name="csrf_token" value="' . htmlspecialchars($token) . '">';
 }
-?>
+// No closing PHP tag - prevents accidental whitespace output

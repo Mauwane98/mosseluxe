@@ -1,5 +1,9 @@
 <?php
-
+// Prevent direct access to database connection file
+if (basename($_SERVER['SCRIPT_FILENAME']) == basename(__FILE__)) {
+    http_response_code(403);
+    die("Access denied");
+}
 
 /**
  * Establishes and returns a database connection.
@@ -31,4 +35,4 @@ function get_db_connection() {
 
     return $conn;
 }
-?>
+// No closing PHP tag - prevents accidental whitespace output

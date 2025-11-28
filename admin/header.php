@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // This is the main bootstrap for the admin area
 require_once 'bootstrap.php';
 $current_page = basename($_SERVER['PHP_SELF']); // e.g., 'dashboard.php'
@@ -25,7 +25,15 @@ $current_page = basename($_SERVER['PHP_SELF']); // e.g., 'dashboard.php'
         window.csrfToken = "<?php echo generate_csrf_token(); ?>";
         // Make SITE_URL available globally for AJAX requests
         window.SITE_URL = "<?php echo SITE_URL; ?>";
+    </script>
 
+    <!-- Scroll Position Retention for Admin -->
+    <script src="<?php echo SITE_URL; ?>assets/js/scroll-retention.js" defer></script>
+
+    <!-- Admin Modal System -->
+    <script src="<?php echo SITE_URL; ?>assets/js/admin-modals.js" defer></script>
+
+    <script>
         // Basic toast notification function for admin panel
         function showAdminToast(message, type = 'info') {
             const toastContainer = document.getElementById('admin-toast-container') || document.createElement('div');
@@ -204,7 +212,7 @@ $current_page = basename($_SERVER['PHP_SELF']); // e.g., 'dashboard.php'
             <div class="p-6 text-center border-b border-black/10 bg-white">
                 <a href="../index.php" target="_blank" class="block group">
                     <img src="../assets/images/logo-dark.png" alt="Mossé Luxe" class="h-20 w-auto mx-auto mb-3 transition-transform group-hover:scale-105">
-                    <h2 class="text-lg font-black uppercase tracking-widest text-black/90">Admin Panel</h2>
+        <h2 class="text-lg font-black uppercase tracking-widest text-black/90">Mossé Luxe Admin</h2>
                 </a>
             </div>
 
@@ -212,7 +220,7 @@ $current_page = basename($_SERVER['PHP_SELF']); // e.g., 'dashboard.php'
             <nav class="flex-grow px-4 py-6 space-y-8 overflow-y-auto">
                 <!-- Dashboard -->
                 <div>
-                    <a href="dashboard.php" class="sidebar-link nav-tooltip flex items-center px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 <?php echo ($current_page === 'dashboard.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-lg' : 'hover:bg-white/10'; ?>" data-tooltip="View dashboard overview and statistics">
+                    <a href="dashboard.php" class="sidebar-link nav-tooltip flex items-center px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 <?php echo ($current_page === 'dashboard.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-lg' : 'hover:bg-white/10'; ?>" data-tooltip="View dashboard overview and statistics">
                         <i class="fas fa-tachometer-alt w-5 h-5 mr-3"></i>
                         <span>Dashboard</span>
                     </a>
@@ -225,11 +233,11 @@ $current_page = basename($_SERVER['PHP_SELF']); // e.g., 'dashboard.php'
                         Catalog
                     </h3>
                     <div class="space-y-1">
-                        <a href="products.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'products.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage product inventory and details">
+                        <a href="products.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'products.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage product inventory and details">
                             <i class="fas fa-cube w-4 h-4 mr-3"></i>
                             <span>Products</span>
                         </a>
-                        <a href="categories.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'categories.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Organize products into categories">
+                        <a href="categories.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'categories.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Organize products into categories">
                             <i class="fas fa-tags w-4 h-4 mr-3"></i>
                             <span>Categories</span>
                         </a>
@@ -243,7 +251,7 @@ $current_page = basename($_SERVER['PHP_SELF']); // e.g., 'dashboard.php'
                         Orders
                     </h3>
                     <div class="space-y-1">
-                        <a href="orders.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'orders.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="View and manage customer orders">
+                        <a href="orders.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'orders.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="View and manage customer orders">
                             <i class="fas fa-list w-4 h-4 mr-3"></i>
                             <span>All Orders</span>
                         </a>
@@ -257,15 +265,15 @@ $current_page = basename($_SERVER['PHP_SELF']); // e.g., 'dashboard.php'
                         Users
                     </h3>
                     <div class="space-y-1">
-                        <a href="users.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'users.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage customer accounts and profiles">
+                        <a href="users.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'users.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage customer accounts and profiles">
                             <i class="fas fa-user-friends w-4 h-4 mr-3"></i>
                             <span>Customers</span>
                         </a>
-                        <a href="manage_reviews.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'manage_reviews.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Moderate and manage product reviews">
+                        <a href="manage_reviews.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'manage_reviews.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Moderate and manage product reviews">
                             <i class="fas fa-star w-4 h-4 mr-3"></i>
                             <span>Reviews</span>
                         </a>
-                        <a href="manage_subscriptions.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'manage_subscriptions.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage newsletter subscriptions">
+                        <a href="manage_subscriptions.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'manage_subscriptions.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage newsletter subscriptions">
                             <i class="fas fa-envelope w-4 h-4 mr-3"></i>
                             <span>Subscriptions</span>
                         </a>
@@ -279,25 +287,37 @@ $current_page = basename($_SERVER['PHP_SELF']); // e.g., 'dashboard.php'
                         Marketing
                     </h3>
                     <div class="space-y-1">
-                        <a href="manage_discounts.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'manage_discounts.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Create and manage discount codes">
+                        <a href="manage_discounts.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'manage_discounts.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Create and manage discount codes">
                             <i class="fas fa-percent w-4 h-4 mr-3"></i>
                             <span>Discounts</span>
                         </a>
-                        <a href="launching_soon.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'launching_soon.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage upcoming product launches">
+                        <a href="launching_soon.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'launching_soon.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage upcoming product launches">
                             <i class="fas fa-rocket w-4 h-4 mr-3"></i>
                             <span>Launching Soon</span>
                         </a>
-                        <a href="announcement.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'announcement.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage website announcement bar">
+                        <a href="announcement.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'announcement.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage website announcement bar">
                             <i class="fas fa-bullhorn w-4 h-4 mr-3"></i>
                             <span>Announcement Bar</span>
                         </a>
-                        <a href="whatsapp.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'whatsapp.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage WhatsApp customer communication and support">
+                        <a href="whatsapp.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'whatsapp.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage WhatsApp customer communication and support">
                             <i class="fab fa-whatsapp w-4 h-4 mr-3"></i>
                             <span>WhatsApp</span>
                         </a>
-                        <a href="new_arrivals.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'new_arrivals.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage homepage new arrivals section">
+                        <a href="new_arrivals.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'new_arrivals.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage New Arrivals">
                             <i class="fas fa-star w-4 h-4 mr-3"></i>
                             <span>New Arrivals</span>
+                        </a>
+                        <a href="flash_sales.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'flash_sales.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Create and manage flash sales with countdown timers">
+                            <i class="fas fa-bolt w-4 h-4 mr-3"></i>
+                            <span>⚡ Flash Sales</span>
+                        </a>
+                        <a href="abandoned_carts.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'abandoned_carts.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="View and recover abandoned shopping carts">
+                            <i class="fas fa-shopping-basket w-4 h-4 mr-3"></i>
+                            <span>🛒 Abandoned Carts</span>
+                        </a>
+                        <a href="stock_notifications.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'stock_notifications.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage back-in-stock notification requests">
+                            <i class="fas fa-bell w-4 h-4 mr-3"></i>
+                            <span>🔔 Stock Notifications</span>
                         </a>
                     </div>
                 </div>
@@ -309,23 +329,23 @@ $current_page = basename($_SERVER['PHP_SELF']); // e.g., 'dashboard.php'
                         Content
                     </h3>
                     <div class="space-y-1">
-                        <a href="manage_homepage.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'manage_homepage.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Customize homepage content and layout">
+                        <a href="manage_homepage.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'manage_homepage.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Customize homepage content and layout">
                             <i class="fas fa-home w-4 h-4 mr-3"></i>
                             <span>Homepage</span>
                         </a>
-                        <a href="manage_homepage.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'manage_homepage.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage hero carousel slides">
+                        <a href="manage_homepage.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'manage_homepage.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage hero carousel slides">
                             <i class="fas fa-images w-4 h-4 mr-3"></i>
                             <span>Hero Carousel</span>
                         </a>
-                        <a href="pages.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'pages.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Create and edit static pages">
+                        <a href="pages.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'pages.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Create and edit static pages">
                             <i class="fas fa-file-alt w-4 h-4 mr-3"></i>
                             <span>Pages</span>
                         </a>
-                        <a href="shop_settings.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'shop_settings.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage shop page content and titles">
+                        <a href="shop_settings.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'shop_settings.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage shop page content and titles">
                             <i class="fas fa-shopping-bag w-4 h-4 mr-3"></i>
                             <span>Shop Settings</span>
                         </a>
-                        <a href="messages.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'messages.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="View and respond to customer messages">
+                        <a href="messages.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'messages.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="View and respond to customer messages">
                             <i class="fas fa-inbox w-4 h-4 mr-3"></i>
                             <span>Messages</span>
                         </a>
@@ -339,7 +359,7 @@ $current_page = basename($_SERVER['PHP_SELF']); // e.g., 'dashboard.php'
                         Reports
                     </h3>
                     <div class="space-y-1">
-                        <a href="sales_report.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'sales_report.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="View detailed sales analytics and reports">
+                        <a href="sales_report.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'sales_report.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="View detailed sales analytics and reports">
                             <i class="fas fa-chart-line w-4 h-4 mr-3"></i>
                             <span>Sales Report</span>
                         </a>
@@ -353,15 +373,15 @@ $current_page = basename($_SERVER['PHP_SELF']); // e.g., 'dashboard.php'
                         Admin Settings
                     </h3>
                     <div class="space-y-1">
-                        <a href="profile.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'profile.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage your admin profile">
+                        <a href="profile.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'profile.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Manage your admin profile">
                             <i class="fas fa-user-cog w-4 h-4 mr-3"></i>
                             <span>My Profile</span>
                         </a>
-                        <a href="manage_admins.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'manage_admins.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Create and manage admin logins and roles">
+                        <a href="manage_admins.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'manage_admins.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Create and manage admin logins and roles">
                             <i class="fas fa-user-shield w-4 h-4 mr-3"></i>
                             <span>Admins</span>
                         </a>
-                        <a href="settings.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'settings.php') ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Configure system settings and preferences">
+                        <a href="settings.php" class="sidebar-link nav-tooltip flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 <?php echo ($current_page === 'settings.php') ? 'bg-gradient-to-r bg-gradient-to-r from-gold-500 to-gold-600 text-black shadow-md' : 'hover:bg-white/10'; ?>" data-tooltip="Configure system settings and preferences">
                             <i class="fas fa-sliders-h w-4 h-4 mr-3"></i>
                             <span>General Settings</span>
                         </a>
@@ -372,12 +392,12 @@ $current_page = basename($_SERVER['PHP_SELF']); // e.g., 'dashboard.php'
             <!-- User Info & Logout -->
             <div class="p-4 border-t border-black/10 bg-white">
                 <div class="flex items-center mb-3 px-2">
-                    <div class="w-8 h-8 bg-gold-500 rounded-full flex items-center justify-center mr-3">
+                    <div class="w-8 h-8 bg-gradient-to-r from-gold-500 to-gold-600 rounded-full flex items-center justify-center mr-3">
                         <i class="fas fa-user text-black text-sm"></i>
                     </div>
                     <div class="flex-1 min-w-0">
                         <p class="text-sm font-medium text-black truncate"><?php echo htmlspecialchars($_SESSION['admin_name'] ?? 'Admin'); ?></p>
-                        <p class="text-xs text-gray-600">Administrator</p>
+                        <p class="text-xs text-gold-400">Administrator</p>
                     </div>
                 </div>
                 <div class="space-y-1">
@@ -399,14 +419,14 @@ $current_page = basename($_SERVER['PHP_SELF']); // e.g., 'dashboard.php'
             <header class="bg-white shadow-sm p-4 flex justify-between items-center sticky top-0 z-20">
                 <div class="flex items-center">
                     <!-- Mobile Menu Toggle -->
-                    <button id="sidebar-toggle" class="lg:hidden text-gray-600 mr-4">
+                    <button id="sidebar-toggle" class="lg:hidden text-gold-400 mr-4">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                     <h1 class="text-xl font-bold"><?php echo isset($pageTitle) ? $pageTitle : 'Dashboard'; ?></h1>
                 </div>
                 <div class="flex items-center space-x-4">
                     <!-- Dark Mode Toggle -->
-                    <button id="dark-mode-toggle" class="dark-mode-toggle text-gray-600 hover:text-gray-800 transition-colors" aria-label="Toggle dark mode">
+                    <button id="dark-mode-toggle" class="dark-mode-toggle text-gold-400 hover:text-gray-800 transition-colors" aria-label="Toggle dark mode">
                         <i class="fas fa-moon text-xl"></i>
                     </button>
                     <span class="text-sm">Welcome, <?php echo htmlspecialchars($_SESSION['admin_name'] ?? 'Admin'); ?>!</span>

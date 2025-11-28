@@ -1,0 +1,29 @@
+⚡ PERFORMANCE TEST RESULTS (Lighthouse)
+============================================================
+
+📱 MOBILE PERFORMANCE:
+------------------------------
+Homepage: Failed to load
+
+Shop Page: Failed to load
+
+Cart Page: Failed to load
+
+Product Details: Failed to load
+
+💻 DESKTOP PERFORMANCE:
+------------------------------
+Homepage: Failed to load
+
+Shop Page: Failed to load
+
+Cart Page: Failed to load
+
+Product Details: Failed to load
+
+AVERAGES:
+  Mobile Performance: NaN%
+  Mobile SEO: NaN%
+  Mobile Accessibility: NaN%
+
+GRADES:

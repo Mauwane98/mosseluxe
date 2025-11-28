@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal System Demo - Mossé Luxe</title>
+    <link rel="stylesheet" href="../assets/css/tailwind_output.css">
+    <link rel="stylesheet" href="../assets/css/modals.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .demo-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-bottom: 24px;
+        }
+        .demo-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+        .demo-subtitle {
+            color: #6b7280;
+            margin-bottom: 32px;
+        }
+        .demo-section {
+            margin-bottom: 32px;
+        }
+        .demo-section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 16px;
+        }
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .demo-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            font-size: 14px;
+        }
+        .demo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .btn-primary {
+            background: #000;
+            color: white;
+        }
+        .btn-success {
+            background: #16a34a;
+            color: white;
+        }
+        .btn-error {
+            background: #dc2626;
+            color: white;
+        }
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+        .btn-info {
+            background: #2563eb;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-card">
+            <h1 class="demo-title">🎨 Modal System Demo</h1>
+            <p class="demo-subtitle">Modern, beautiful confirmation modals and notifications for Mossé Luxe</p>
+
+            <!-- Alert Modals -->
+            <div class="demo-section">
+                <h2 class="demo-section-title">Alert Modals</h2>
+                <div class="demo-grid">
+                    <button class="demo-btn btn-success" onclick="testSuccessAlert()">
+                        ✓ Success Alert
+                    </button>
+                    <button class="demo-btn btn-error" onclick="testErrorAlert()">
+                        ✗ Error Alert
+                    </button>
+                    <button class="demo-btn btn-warning" onclick="testWarningAlert()">
+                        ⚠ Warning Alert
+                    </button>
+                    <button class="demo-btn btn-info" onclick="testInfoAlert()">
+                        ℹ Info Alert
+                    </button>
+                </div>
+            </div>
+
+            <!-- Confirm Modals -->
+            <div class="demo-section">
+                <h2 class="demo-section-title">Confirm Modals</h2>
+                <div class="demo-grid">
+                    <button class="demo-btn btn-primary" onclick="testConfirm()">
+                        Confirm Action
+                    </button>
+                    <button class="demo-btn btn-error" onclick="testDangerConfirm()">
+                        Delete Confirm
+                    </button>
+                    <button class="demo-btn btn-success" onclick="testCustomConfirm()">
+                        Custom Confirm
+                    </button>
+                </div>
+            </div>
+
+            <!-- Prompt Modal -->
+            <div class="demo-section">
+                <h2 class="demo-section-title">Prompt Modal</h2>
+                <div class="demo-grid">
+                    <button class="demo-btn btn-info" onclick="testPrompt()">
+                        Input Prompt
+                    </button>
+                </div>
+            </div>
+
+            <!-- Toast Notifications -->
+            <div class="demo-section">
+                <h2 class="demo-section-title">Toast Notifications</h2>
+                <div class="demo-grid">
+                    <button class="demo-btn btn-success" onclick="testSuccessToast()">
+                        ✓ Success Toast
+                    </button>
+                    <button class="demo-btn btn-error" onclick="testErrorToast()">
+                        ✗ Error Toast
+                    </button>
+                    <button class="demo-btn btn-warning" onclick="testWarningToast()">
+                        ⚠ Warning Toast
+                    </button>
+                    <button class="demo-btn btn-info" onclick="testInfoToast()">
+                        ℹ Info Toast
+                    </button>
+                </div>
+            </div>
+
+            <!-- Real-World Examples -->
+            <div class="demo-section">
+                <h2 class="demo-section-title">Real-World Examples</h2>
+                <div class="demo-grid">
+                    <button class="demo-btn btn-success" onclick="testOrderSuccess()">
+                        Order Success
+                    </button>
+                    <button class="demo-btn btn-error" onclick="testPaymentFailed()">
+                        Payment Failed
+                    </button>
+                    <button class="demo-btn btn-warning" onclick="testValidationError()">
+                        Validation Error
+                    </button>
+                    <button class="demo-btn btn-primary" onclick="testLogout()">
+                        Logout Confirm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/modals.js"></script>
+    <script>
+        // Alert Tests
+        function testSuccessAlert() {
+            Modal.alert('Your order has been placed successfully!', 'Success', 'success');
+        }
+
+        function testErrorAlert() {
+            Modal.alert('An error occurred while processing your request.', 'Error', 'error');
+        }
+
+        function testWarningAlert() {
+            Modal.alert('Please fill in all required fields before continuing.', 'Warning', 'warning');
+        }
+
+        function testInfoAlert() {
+            Modal.alert('Your session will expire in 5 minutes.', 'Information', 'info');
+        }
+
+        // Confirm Tests
+        async function testConfirm() {
+            const result = await Modal.confirm(
+                'Are you sure you want to proceed with this action?',
+                'Confirm Action'
+            );
+            Modal.toast(result ? 'Action confirmed!' : 'Action cancelled', '', result ? 'success' : 'info', 2000);
+        }
+
+        async function testDangerConfirm() {
+            const result = await Modal.confirm(
+                'This action cannot be undone. Are you sure you want to delete this item?',
+                'Delete Item',
+                {
+                    confirmText: 'Delete',
+                    cancelText: 'Cancel',
+                    type: 'error',
+                    confirmClass: 'modal-btn-danger'
+                }
+            );
+            Modal.toast(result ? 'Item deleted!' : 'Deletion cancelled', '', result ? 'success' : 'info', 2000);
+        }
+
+        async function testCustomConfirm() {
+            const result = await Modal.confirm(
+                'Do you want to save your changes before leaving?',
+                'Unsaved Changes',
+                {
+                    confirmText: 'Save Changes',
+                    cancelText: 'Discard',
+                    type: 'warning',
+                    confirmClass: 'modal-btn-success'
+                }
+            );
+            Modal.toast(result ? 'Changes saved!' : 'Changes discarded', '', result ? 'success' : 'warning', 2000);
+        }
+
+        // Prompt Test
+        async function testPrompt() {
+            const name = await Modal.prompt(
+                'Please enter your name:',
+                'User Information',
+                'John Doe'
+            );
+            if (name !== null) {
+                Modal.toast(`Hello, ${name}!`, 'Welcome', 'success', 3000);
+            }
+        }
+
+        // Toast Tests
+        function testSuccessToast() {
+            Modal.toast('Item added to cart successfully!', 'Success', 'success');
+        }
+
+        function testErrorToast() {
+            Modal.toast('Failed to connect to server. Please try again.', 'Error', 'error');
+        }
+
+        function testWarningToast() {
+            Modal.toast('Your cart will expire in 10 minutes.', 'Warning', 'warning');
+        }
+
+        function testInfoToast() {
+            Modal.toast('New products have been added to the store.', 'Info', 'info');
+        }
+
+        // Real-World Examples
+        function testOrderSuccess() {
+            Modal.alert(
+                'Your order #MSL-2025-00015 has been placed successfully! You will receive a confirmation email shortly.',
+                'Order Confirmed',
+                'success'
+            );
+        }
+
+        function testPaymentFailed() {
+            Modal.alert(
+                'Payment failed: Insufficient funds. Please try a different payment method or contact your bank.',
+                'Payment Error',
+                'error'
+            );
+        }
+
+        function testValidationError() {
+            Modal.alert(
+                'Please fill in all required fields correctly:<br><br>• Email address is invalid<br>• Phone number must be 10 digits<br>• Zip code is required',
+                'Validation Error',
+                'warning'
+            );
+        }
+
+        async function testLogout() {
+            const result = await Modal.confirm(
+                'Are you sure you want to log out?',
+                'Confirm Logout',
+                {
+                    confirmText: 'Logout',
+                    cancelText: 'Stay',
+                    type: 'warning'
+                }
+            );
+            if (result) {
+                Modal.toast('Logging out...', 'Goodbye', 'info', 2000);
+            }
+        }
+    </script>
+</body>
+</html>

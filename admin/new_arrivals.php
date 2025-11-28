@@ -12,24 +12,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Handle settings update
-    if (isset($_POST['update_settings'])) {
-        $new_arrivals_message = trim($_POST['new_arrivals_message']);
-        $display_count = (int)$_POST['display_count'];
+    if (isset($_POST['action']) && $_POST['action'] === 'update_settings') {
+        $new_arrivals_title = trim($_POST['new_arrivals_title'] ?? 'New Arrivals');
+        $new_arrivals_enabled = $_POST['new_arrivals_enabled'] ?? '1';
+        $new_arrivals_limit = (int)($_POST['new_arrivals_limit'] ?? 8);
+        $new_arrivals_message = trim($_POST['new_arrivals_message'] ?? '');
+        $display_count = (int)($_POST['display_count'] ?? 4);
 
-        $sql = "INSERT INTO settings (setting_key, setting_value) VALUES (?, ?), (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)";
-        $stmt = $conn->prepare($sql);
-        
-        $key1 = 'new_arrivals_message';
-        $key2 = 'new_arrivals_display_count';
+        // Update all settings
+        $settings_to_update = [
+            'new_arrivals_title' => $new_arrivals_title,
+            'new_arrivals_enabled' => $new_arrivals_enabled,
+            'new_arrivals_limit' => $new_arrivals_limit,
+            'new_arrivals_message' => $new_arrivals_message,
+            'new_arrivals_display_count' => $display_count
+        ];
 
-        $stmt->bind_param('ssss', $key1, $new_arrivals_message, $key2, $display_count);
+        $success = true;
+        foreach ($settings_to_update as $key => $value) {
+            $sql = "INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('ss', $key, $value);
+            if (!$stmt->execute()) {
+                $success = false;
+            }
+            $stmt->close();
+        }
 
-        if ($stmt->execute()) {
+        if ($success) {
             $_SESSION['toast_message'] = ['message' => 'Settings updated successfully!', 'type' => 'success'];
         } else {
             $_SESSION['toast_message'] = ['message' => 'Failed to update settings.', 'type' => 'error'];
         }
-        $stmt->close();
     }
 
     // Handle adding product to new arrivals
@@ -116,7 +130,39 @@ $featured_ids = array_column($featured_new_arrivals, 'id');
         
         <form action="new_arrivals.php" method="post" class="space-y-6">
             <?php echo generate_csrf_token_input(); ?>
-
+            <input type="hidden" name="action" value="update_settings">
+            
+            <div>
+                <label for="new_arrivals_title" class="block text-sm font-medium text-gray-700 mb-2">
+                    Section Title
+                </label>
+                <input type="text" name="new_arrivals_title" id="new_arrivals_title" value="<?php echo htmlspecialchars($new_arrivals_settings['new_arrivals_title'] ?? 'New Arrivals'); ?>" placeholder="New Arrivals" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm">
+                <p class="mt-1 text-sm text-gray-500">This title appears on the homepage above the new arrivals products</p>
+            </div>
+            
+            <div>
+                <label for="new_arrivals_enabled" class="block text-sm font-medium text-gray-700 mb-2">
+                    Enable New Arrivals Section
+                </label>
+                <select name="new_arrivals_enabled" id="new_arrivals_enabled" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm">
+                    <option value="1" <?php echo (($new_arrivals_settings['new_arrivals_enabled'] ?? '1') === '1') ? 'selected' : ''; ?>>Enabled</option>
+                    <option value="0" <?php echo (($new_arrivals_settings['new_arrivals_enabled'] ?? '1') === '0') ? 'selected' : ''; ?>>Disabled</option>
+                </select>
+            </div>
+            
+            <div>
+                <label for="new_arrivals_limit" class="block text-sm font-medium text-gray-700 mb-2">
+                    Number of Products to Display
+                </label>
+                <input type="number" name="new_arrivals_limit" id="new_arrivals_limit" value="<?php echo htmlspecialchars($new_arrivals_settings['new_arrivals_limit'] ?? '8'); ?>" min="1" max="20" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm">
+            </div>
+            
+            <div>
+                <label for="new_arrivals_message" class="block text-sm font-medium text-gray-700 mb-2">Custom Message (when no products available)</label>
+                <textarea id="new_arrivals_message" name="new_arrivals_message" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" placeholder="Enter a custom message..."><?php echo htmlspecialchars($new_arrivals_settings['new_arrivals_message'] ?? 'New arrivals will be available soon.'); ?></textarea>
+                <p class="text-sm text-gray-500 mt-1">This message appears when no products are set as new arrivals.</p>
+            </div>
+            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Display Count -->
                 <div>
@@ -132,16 +178,9 @@ $featured_ids = array_column($featured_new_arrivals, 'id');
                 </div>
             </div>
 
-            <!-- Custom Message -->
-            <div>
-                <label for="new_arrivals_message" class="block text-sm font-medium text-gray-700 mb-2">Custom Message (when no products available)</label>
-                <textarea id="new_arrivals_message" name="new_arrivals_message" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black" placeholder="Enter a custom message..."><?php echo htmlspecialchars($new_arrivals_settings['new_arrivals_message'] ?? 'New arrivals will be available soon.'); ?></textarea>
-                <p class="text-sm text-gray-500 mt-1">This message appears when no products are set as new arrivals.</p>
-            </div>
-
             <div class="flex justify-end">
-                <button type="submit" name="update_settings" class="bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition-colors">
-                    Update Settings
+                <button type="submit" class="bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition-colors">
+                    Save Settings
                 </button>
             </div>
         </form>
@@ -164,10 +203,10 @@ $featured_ids = array_column($featured_new_arrivals, 'id');
                         <h4 class="text-sm font-medium text-gray-900 truncate flex-grow"><?php echo htmlspecialchars($product['name']); ?></h4>
                         <p class="text-sm text-gray-600 mt-1">
                             <?php if ($product['sale_price'] > 0): ?>
-                                <span class="text-red-600">R<?php echo number_format($product['sale_price'], 2); ?></span>
-                                <span class="line-through text-gray-400">R<?php echo number_format($product['price'], 2); ?></span>
+                                <span class="text-red-600">R<?php echo htmlspecialchars(number_format($product['sale_price'], 2)); ?></span>
+                                <span class="line-through text-gray-400">R<?php echo htmlspecialchars(number_format($product['price'], 2)); ?></span>
                             <?php else: ?>
-                                R<?php echo number_format($product['price'], 2); ?>
+                                R<?php echo htmlspecialchars(number_format($product['price'], 2)); ?>
                             <?php endif; ?>
                         </p>
                         <div class="flex items-center justify-between mt-3">

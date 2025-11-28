@@ -1,3 +1,9 @@
+<?php
+// Prevent caching of the header
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,11 +13,11 @@
     <meta name="keywords" content="luxury streetwear, leather goods, fashion accessories, streetwear fashion, luxury apparel, Mossé Luxe">
     <meta name="author" content="Mossé Luxe">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="<?php echo SITE_URL . $_SERVER['REQUEST_URI']; ?>">
+    <link rel="canonical" href="<?php echo rtrim(SITE_URL, '/') . ($_SERVER['REQUEST_URI'] ?? '/'); ?>">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="<?php echo SITE_URL . $_SERVER['REQUEST_URI']; ?>">
+    <meta property="og:url" content="<?php echo rtrim(SITE_URL, '/') . ($_SERVER['REQUEST_URI'] ?? '/'); ?>">
     <meta property="og:title" content="<?php echo isset($pageTitle) ? $pageTitle : 'Mossé Luxe - Luxury Streetwear'; ?>">
     <meta property="og:description" content="Luxury streetwear and fashion accessories crafted with precision and heritage. Discover our curated collection.">
     <meta property="og:image" content="<?php echo SITE_URL; ?>assets/images/logo.png">
@@ -19,17 +25,13 @@
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="<?php echo SITE_URL . $_SERVER['REQUEST_URI']; ?>">
+    <meta property="twitter:url" content="<?php echo $current_full_url; ?>">
     <meta property="twitter:title" content="<?php echo isset($pageTitle) ? $pageTitle : 'Mossé Luxe - Luxury Streetwear'; ?>">
-tings    <meta property="twitter:description" content="Luxury streetwear and fashion accessories crafted with precision and heritage.">
+    <meta property="twitter:description" content="Luxury streetwear and fashion accessories crafted with precision and heritage.">
     <meta property="twitter:image" content="<?php echo SITE_URL; ?>assets/images/logo.png">
 
     <title><?php echo isset($pageTitle) ? $pageTitle : 'Mossé Luxe - Luxury Streetwear'; ?></title>
     
-    <!-- Google Fonts - Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -38,12 +40,23 @@ tings    <meta property="twitter:description" content="Luxury streetwear and fas
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>assets/css/tailwind_output.css">
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>assets/css/custom.css">
+    <!-- Accessibility Stylesheet -->
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>assets/css/accessibility.css">
+    <!-- Interactive Features Stylesheet -->
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>assets/css/interactive-features.css">
     <script>
         // Make SITE_URL available globally for AJAX requests
         window.SITE_URL = "<?php echo SITE_URL; ?>";
         // Make CSRF token available globally for AJAX requests
-        window.csrfToken = "<?php echo generate_csrf_token(); ?>";
+        // Token is already set in bootstrap.php session regeneration
+        window.csrfToken = "<?php echo $_SESSION['csrf_token'] ?? ''; ?>";
+        // WhatsApp Number
+        window.whatsappNumber = "<?php echo (isset($whatsapp_number) && $whatsapp_number) ? ltrim($whatsapp_number, '+') : '27676162809'; ?>";
     </script>
+
+    <!-- Scroll Position Retention -->
+    <script src="<?php echo SITE_URL; ?>assets/js/scroll-retention.js" defer></script>
+
 
     <!-- Structured Data / JSON-LD -->
     <script type="application/ld+json">
@@ -67,7 +80,7 @@ tings    <meta property="twitter:description" content="Luxury streetwear and fas
       "sameAs": [
         "https://instagram.com/mosseluxe",
         "https://twitter.com/mosseluxe",
-        "https://facebook.com/mosseluxe"
+        "https://www.facebook.com/mosseluxe"
       ]
     }
     </script>
@@ -88,12 +101,12 @@ tings    <meta property="twitter:description" content="Luxury streetwear and fas
         </div>
         <!-- Mobile Nav Links -->
         <nav class="flex flex-col space-y-5">
-            <a href="<?php echo SITE_URL; ?>" class="text-2xl font-bold uppercase tracking-wider">Home</a>
-            <a href="<?php echo SITE_URL; ?>shop.php" class="text-2xl font-bold uppercase tracking-wider">Shop</a>
-            <a href="<?php echo SITE_URL; ?>about.php" class="text-2xl font-bold uppercase tracking-wider">About</a>
-            <a href="<?php echo SITE_URL; ?>contact.php" class="text-2xl font-bold uppercase tracking-wider">Contact</a>
-            <a href="<?php echo SITE_URL; ?>my_account.php" class="text-2xl font-bold uppercase tracking-wider">Account</a>
-            <a href="<?php echo SITE_URL; ?>wishlist.php" class="text-2xl font-bold uppercase tracking-wider">Wishlist</a>
+            <a href="<?php echo SITE_URL; ?>" class="nav-link text-2xl font-bold uppercase tracking-wider">Home</a>
+            <a href="<?php echo SITE_URL; ?>shop" class="nav-link text-2xl font-bold uppercase tracking-wider">Shop</a>
+            <a href="<?php echo SITE_URL; ?>about" class="nav-link text-2xl font-bold uppercase tracking-wider">About</a>
+            <a href="<?php echo SITE_URL; ?>contact" class="nav-link text-2xl font-bold uppercase tracking-wider">Contact</a>
+            <a href="<?php echo SITE_URL; ?>my_account" class="nav-link text-2xl font-bold uppercase tracking-wider">Account</a>
+            <a href="<?php echo SITE_URL; ?>wishlist" class="nav-link text-2xl font-bold uppercase tracking-wider">Wishlist</a>
         </nav>
     </div>
 
@@ -104,7 +117,10 @@ tings    <meta property="twitter:description" content="Luxury streetwear and fas
         </button>
         <div class="w-full max-w-2xl mt-24">
             <form action="<?php echo SITE_URL; ?>search" method="GET" class="w-full">
-                <input type="search" name="q" placeholder="Search for products..." class="w-full p-4 text-lg bg-white border border-black rounded-md text-black placeholder-black/50 focus:outline-none focus:ring-2 focus:ring-black">
+                <input type="search" name="q" placeholder="Search for products..." aria-label="Search for products" class="w-full p-4 text-lg bg-white border border-black rounded-md text-black placeholder-black/50 focus:outline-none focus:ring-2 focus:ring-black">
+                <button type="submit" aria-label="Submit search" class="absolute right-4 top-1/2 -translate-y-1/2 text-black hover:text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </button>
             </form>
         </div>
     </div>
@@ -129,8 +145,6 @@ tings    <meta property="twitter:description" content="Luxury streetwear and fas
     $order_message = $whatsapp_settings['whatsapp_order_message'] ?? 'Hi! I need help with my order. Can you assist me with shipping details or order tracking?';
     $size_message = $whatsapp_settings['whatsapp_size_message'] ?? 'Hi! I\'m not sure about the sizing for your leather goods. Can you help me find the perfect fit and share your size guide?';
 
-    // Only show WhatsApp tab if enabled
-    if ($whatsapp_enabled):
     ?>
 
     <!-- Combined Cart & WhatsApp Sidebar -->
@@ -141,9 +155,11 @@ tings    <meta property="twitter:description" content="Luxury streetwear and fas
             <button id="cart-tab" class="flex-1 py-4 px-6 text-center font-semibold uppercase tracking-wider border-b-2 border-black text-black transition-colors active-tab">
                 <i class="fas fa-shopping-cart mr-2"></i>My Cart
             </button>
+            <?php if ($whatsapp_enabled): ?>
             <button id="whatsapp-tab" class="flex-1 py-4 px-6 text-center font-semibold uppercase tracking-wider text-black/60 hover:text-black transition-colors">
                 <i class="fab fa-whatsapp mr-2"></i>Chat
             </button>
+            <?php endif; ?>
             <button id="close-cart-btn" class="px-4 py-4 text-black/60 hover:text-black transition-colors" aria-label="Close sidebar">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -267,17 +283,19 @@ tings    <meta property="twitter:description" content="Luxury streetwear and fas
         // Tab switching functionality
         cartTab.addEventListener('click', function() {
             cartTab.classList.add('active-tab');
-            whatsappTab.classList.remove('active-tab');
+            if (whatsappTab) whatsappTab.classList.remove('active-tab');
             cartContent.classList.add('active');
-            whatsappContent.classList.remove('active');
+            if (whatsappContent) whatsappContent.classList.remove('active');
         });
 
-        whatsappTab.addEventListener('click', function() {
-            whatsappTab.classList.add('active-tab');
-            cartTab.classList.remove('active-tab');
-            whatsappContent.classList.add('active');
-            cartContent.classList.remove('active');
-        });
+        if (whatsappTab) {
+            whatsappTab.addEventListener('click', function() {
+                whatsappTab.classList.add('active-tab');
+                cartTab.classList.remove('active-tab');
+                whatsappContent.classList.add('active');
+                cartContent.classList.remove('active');
+            });
+        }
 
         // Enhanced sidebar control functions
         window.toggleCart = function() {
@@ -335,7 +353,7 @@ tings    <meta property="twitter:description" content="Luxury streetwear and fas
         };
 
         window.openWhatsAppFromSidebar = function(action) {
-            toggleCart(); // Close sidebar
+            window.toggleCart(); // Close sidebar
             // The specific functions will be called by the buttons
         };
 
@@ -347,9 +365,24 @@ tings    <meta property="twitter:description" content="Luxury streetwear and fas
             });
         });
     });
-    </script>
 
-    <?php endif; // End WhatsApp enabled check ?>
+    // Make toggleCart globally available for the cart button
+    window.toggleCart = function() {
+        const sidebar = document.getElementById('cart-sidebar');
+        if (sidebar) {
+            if (sidebar.classList.contains('translate-x-full')) {
+                // Open sidebar
+                sidebar.classList.remove('translate-x-full');
+                // Switch to cart tab when opening
+                const cartTab = document.getElementById('cart-tab');
+                if (cartTab) cartTab.click();
+            } else {
+                // Close sidebar
+                sidebar.classList.add('translate-x-full');
+            }
+        }
+    };
+    </script>
 
     <!-- Fixed Header Container -->
     <div id="fixed-header-container" class="fixed top-0 left-0 w-full z-[60] flex flex-col">
@@ -387,10 +420,11 @@ tings    <meta property="twitter:description" content="Luxury streetwear and fas
         
                         <!-- Desktop Nav (Left) -->
                         <div class="hidden md:flex items-center gap-8">
-                                        <a href="<?php echo SITE_URL; ?>" class="text-sm font-semibold uppercase tracking-wider hover:text-gray-700 transition-colors">Home</a>
-                                        <a href="<?php echo SITE_URL; ?>shop.php" class="text-sm font-semibold uppercase tracking-wider hover:text-gray-700 transition-colors">Shop</a>
-                                        <a href="<?php echo SITE_URL; ?>about.php" class="text-sm font-semibold uppercase tracking-wider hover:text-gray-700 transition-colors">About</a>
-                                        <a href="<?php echo SITE_URL; ?>contact.php" class="text-sm font-semibold uppercase tracking-wider hover:text-gray-700 transition-colors">Contact</a>                        </div>
+                                        <a href="<?php echo SITE_URL; ?>" class="nav-link text-sm font-semibold uppercase tracking-wider hover:text-gray-700 transition-colors">Home</a>
+                                        <a href="<?php echo SITE_URL; ?>shop" class="nav-link text-sm font-semibold uppercase tracking-wider hover:text-gray-700 transition-colors">Shop</a>
+                                        <a href="<?php echo SITE_URL; ?>about" class="nav-link text-sm font-semibold uppercase tracking-wider hover:text-gray-700 transition-colors">About</a>
+                                        <a href="<?php echo SITE_URL; ?>contact" class="nav-link text-sm font-semibold uppercase tracking-wider hover:text-gray-700 transition-colors">Contact</a>
+                                                                </div>
         
                         <!-- Logo (Center) -->
                         <div class="absolute left-1/2 -translate-x-1/2">
@@ -412,7 +446,6 @@ tings    <meta property="twitter:description" content="Luxury streetwear and fas
                             </a>
                             <button id="open-cart-btn" class="relative" aria-label="Open cart">
                                 <svg class="w-6 h-6 hover:text-gray-700 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                                <!-- Cart count example -->
                                 <span id="cart-count" class="absolute -top-2 -right-2 bg-black text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
                             </button>
                         </div>

@@ -1,0 +1,192 @@
+{
+    "info": {
+        "name": "Mossé Luxe E-Commerce API",
+        "description": "API testing collection for Mossé Luxe e-commerce application"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost/mosseluxe"
+        }
+    ],
+    "item": [
+        {
+            "name": "Products API",
+            "item": [
+                {
+                    "name": "List All Products",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/products.php",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "products.php"]
+                        }
+                    },
+                    "tests": {
+                        "200 response": "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                        "Response has products": "pm.test(\"Response has products array\", function () { pm.response.json().success && pm.response.json().data; });"
+                    }
+                },
+                {
+                    "name": "Get Product by Slug",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/products.php/sample-product",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "products.php", "sample-product"]
+                        }
+                    },
+                    "tests": {
+                        "200 response": "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                        "Response has product data": "pm.test(\"Response has product data\", function () { pm.response.json().success && pm.response.json().data; });"
+                    }
+                },
+                {
+                    "name": "Products with Pagination",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/products.php?page=1&per_page=6",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "products.php"],
+                            "query": [
+                                { "key": "page", "value": "1" },
+                                { "key": "per_page", "value": "6" }
+                            ]
+                        }
+                    },
+                    "tests": {
+                        "200 response": "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                        "Has pagination data": "pm.test(\"Response has pagination\", function () { pm.response.json().pagination; });"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Cart API",
+            "item": [
+                {
+                    "name": "Get Cart",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            { "key": "Cookie", "value": "PHPSESSID={{session_id}}" }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/cart.php",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "cart.php"]
+                        }
+                    },
+                    "tests": {
+                        "200 response": "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                        "Response has cart data": "pm.test(\"Response has cart data\", function () { pm.response.json().success && pm.response.json().cart_data; });"
+                    }
+                },
+                {
+                    "name": "Get Cart Count",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            { "key": "Cookie", "value": "PHPSESSID={{session_id}}" }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/cart.php/count",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "cart.php", "count"]
+                        }
+                    },
+                    "tests": {
+                        "200 response": "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                        "Has cart count": "pm.test(\"Response has cart_count\", function () { pm.response.json().cart_count !== undefined; });"
+                    }
+                },
+                {
+                    "name": "Add Product to Cart",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            { "key": "Cookie", "value": "PHPSESSID={{session_id}}" },
+                            { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+                        ],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                { "key": "product_id", "value": "1", "description": "ID of product to add" },
+                                { "key": "quantity", "value": "1", "description": "Quantity to add" }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/cart.php/add",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "cart.php", "add"]
+                        }
+                    },
+                    "tests": {
+                        "200 response": "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                        "Success response": "pm.test(\"API call successful\", function () { pm.response.json().success; });"
+                    }
+                },
+                {
+                    "name": "Update Cart Item",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            { "key": "Cookie", "value": "PHPSESSID={{session_id}}" },
+                            { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+                        ],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                { "key": "product_id", "value": "1", "description": "ID of product to update" },
+                                { "key": "quantity", "value": "2", "description": "New quantity" }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/cart.php/update",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "cart.php", "update"]
+                        }
+                    },
+                    "tests": {
+                        "200 response": "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                        "Success response": "pm.test(\"Update successful\", function () { pm.response.json().success; });"
+                    }
+                },
+                {
+                    "name": "Remove Item from Cart",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            { "key": "Cookie", "value": "PHPSESSID={{session_id}}" },
+                            { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+                        ],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                { "key": "product_id", "value": "1", "description": "ID of product to remove" }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/cart.php/remove",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "cart.php", "remove"]
+                        }
+                    },
+                    "tests": {
+                        "200 response": "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                        "Success response": "pm.test(\"Removal successful\", function () { pm.response.json().success; });"
+                    }
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "noauth"
+    }
+}

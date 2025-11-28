@@ -170,9 +170,9 @@ include 'header.php';
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                     <?php
                                     if ($discount['type'] === 'percentage') {
-                                        echo $discount['value'] . '%';
+                                        echo htmlspecialchars($discount['value']) . '%';
                                     } else {
-                                        echo 'R ' . number_format($discount['value'], 2);
+                                        echo 'R ' . htmlspecialchars(number_format($discount['value'], 2));
                                     }
                                     ?>
                                 </td>

@@ -1,0 +1,118 @@
+═══════════════════════════════════════════════════════════════════════════════
+    CONTACT INFORMATION UPDATE SUMMARY
+═══════════════════════════════════════════════════════════════════════════════
+
+Update Date: November 24, 2025, 6:06 PM
+Status: ✅ COMPLETED SUCCESSFULLY
+
+═══════════════════════════════════════════════════════════════════════════════
+CHANGES MADE
+═══════════════════════════════════════════════════════════════════════════════
+
+LOCATION:
+---------
+OLD: 123 Edward Street, Brooklyn, Pretoria, South Africa, 0002
+NEW: Pretoria, South Africa
+
+EMAIL:
+------
+OLD: info@mosseluxe.com, orders@mosseluxe.com
+NEW: info@mosseluxe.co.za
+
+═══════════════════════════════════════════════════════════════════════════════
+FILES UPDATED
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ contact.php
+   - Updated location to "Pretoria, South Africa"
+   - Updated email to "info@mosseluxe.co.za"
+   - Removed "orders@mosseluxe.com"
+
+✅ includes/config.php
+   - Updated CONTACT_EMAIL constant to "info@mosseluxe.co.za"
+   - Updated SMTP_USERNAME to "info@mosseluxe.co.za"
+   - Updated SMTP_FROM_EMAIL to "info@mosseluxe.co.za"
+   - Location already set to "Pretoria, South Africa"
+
+✅ terms-of-service.php
+   - Updated email to "info@mosseluxe.co.za"
+
+✅ Database Settings
+   - Updated contact_email to "info@mosseluxe.co.za"
+   - Updated site_email to "info@mosseluxe.co.za"
+   - Created store_email with value "info@mosseluxe.co.za"
+
+═══════════════════════════════════════════════════════════════════════════════
+VERIFICATION
+═══════════════════════════════════════════════════════════════════════════════
+
+All instances of the old email and location have been updated:
+
+✓ Contact page displays correct location
+✓ Contact page displays correct email
+✓ Configuration file updated
+✓ Terms of service page updated
+✓ Database settings updated
+✓ SMTP configuration updated
+
+═══════════════════════════════════════════════════════════════════════════════
+CURRENT CONTACT INFORMATION
+═══════════════════════════════════════════════════════════════════════════════
+
+Location:  Pretoria, South Africa
+Email:     info@mosseluxe.co.za
+Phone:     +27 67 616 0928
+WhatsApp:  +27 67 616 2809
+
+═══════════════════════════════════════════════════════════════════════════════
+PAGES AFFECTED
+═══════════════════════════════════════════════════════════════════════════════
+
+The following pages now display the updated contact information:
+
+1. Contact Page (contact.php)
+   - Location section
+   - Email section
+
+2. Terms of Service (terms-of-service.php)
+   - Contact information section
+
+3. Email System
+   - All outgoing emails will use info@mosseluxe.co.za
+
+4. Configuration
+   - System-wide email constant updated
+
+═══════════════════════════════════════════════════════════════════════════════
+NEXT STEPS
+═══════════════════════════════════════════════════════════════════════════════
+
+RECOMMENDED ACTIONS:
+--------------------
+□ Test contact form to verify emails are sent from info@mosseluxe.co.za
+□ Update email signatures if needed
+□ Update business cards and marketing materials
+□ Verify email forwarding is set up for info@mosseluxe.co.za
+□ Test SMTP connection with new email address
+
+OPTIONAL:
+---------
+□ Update footer if it displays contact information
+□ Check other pages for any hardcoded contact info
+□ Update social media profiles with new email
+□ Update Google My Business listing
+
+═══════════════════════════════════════════════════════════════════════════════
+NOTES
+═══════════════════════════════════════════════════════════════════════════════
+
+- The old email addresses (info@mosseluxe.com, orders@mosseluxe.com) should be
+  set up to forward to info@mosseluxe.co.za to avoid missing any emails.
+
+- SMTP password needs to be configured in .env file for production email sending.
+
+- The location is now simplified to just "Pretoria, South Africa" as requested.
+
+═══════════════════════════════════════════════════════════════════════════════
+END OF SUMMARY
+═══════════════════════════════════════════════════════════════════════════════

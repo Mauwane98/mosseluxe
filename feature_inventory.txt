@@ -1,0 +1,228 @@
+# Mossé Luxe Ecommerce Feature Inventory
+
+## Frontend Features
+
+### Homepage (index.php)
+- **Feature:** Hero Carousel
+  - Location: index.php, homepage_sections table
+  - Status: Implemented
+  - Test Plan: Verify slides display with images, titles, subtitles, buttons; auto-rotation works; controls function
+
+- **Feature:** New Arrivals Section
+  - Location: index.php, new_arrivals table, products table
+  - Status: Implemented
+  - Test Plan: Display products from new_arrivals; handle empty state
+
+- **Feature:** Recently Viewed
+  - Location: index.php, Session/cookie tracking
+  - Status: Implemented
+  - Test Plan: View products, check session; verify display on return
+
+- **Feature:** Brand Statement Section
+  - Location: homepage_sections table
+  - Status: Implemented
+  - Test Plan: Editable content, button links correctly
+
+- **Feature:** Newsletter Signup
+  - Location: subscribe.php
+  - Status: Implemented
+  - Test Plan: Form validation, subscription persistence
+
+- **Feature:** Dynamic Homepage Sections
+  - Location: homepage_sections table
+  - Status: Implemented
+  - Test Plan: Admin manage sections, frontend display
+
+### Shop Page (shop.php)
+- **Feature:** Product Listing with Grid
+  - Location: shop.php, products table
+  - Status: Implemented
+  - Test Plan: Display products with pagination; handle empty
+
+- **Feature:** Category Filtering
+  - Location: shop.php, categories table
+  - Status: Implemented
+  - Test Plan: Filter by category, URL persistence
+
+- **Feature:** Sorting Options
+  - Location: shop.php
+  - Status: Implemented
+  - Test Plan: Sort by price, name, date; verify SQL
+
+- **Feature:** Pagination
+  - Location: shop.php
+  - Status: Implemented
+  - Test Plan: Navigate pages, correct limits
+
+- **Feature:** WhatsApp Inquiry per Product
+  - Location: shop.php, whatsapp_component.php
+  - Status: Implemented
+  - Test Plan: Click opens WhatsApp with product name
+
+### Product Details (product.php - inferred from shop links)
+- **Feature:** Product Detail Page
+  - Location: product.php (not fully read yet)
+  - Status: Partial
+  - Test Plan: Need to verify image gallery, variants, add to cart
+
+### Cart (cart.php, ajax_cart_handler.php)
+- **Feature:** Add to Cart
+  - Location: ajax_cart_handler.php, session/user_carts table
+  - Status: Implemented
+  - Test Plan: Add products, handle variants, update quantities
+
+- **Feature:** Cart Persistence
+  - Location: user_carts table, session
+  - Status: Implemented
+  - Test Plan: Save for logged users, merge on login
+
+- **Feature:** Update Cart Quantity
+  - Location: cart.php, ajax calls
+  - Status: Implemented
+  - Test Plan: Increase/decrease buttons, AJAX updates
+
+- **Feature:** Remove Cart Items
+  - Location: cart.php
+  - Status: Implemented
+  - Test Plan: Remove one/multiple, update totals
+
+- **Feature:** Cart Totals Calculation
+  - Location: cart.php
+  - Status: Implemented
+  - Test Plan: Subtotal, shipping, total; with discounts
+
+### Checkout (checkout.php, yoco_process.php)
+- **Feature:** Guest/Log User Checkout
+  - Location: checkout.php
+  - Status: Implemented
+  - Test Plan: Allow both user types
+
+- **Feature:** Shipping Info Form
+  - Location: checkout.php
+  - Status: Implemented
+  - Test Plan: Validation, required fields
+
+- **Feature:** Discount Codes
+  - Location: ajax_validate_discount.php, discount_codes table
+  - Status: Implemented
+  - Test Plan: Apply valid/invalid codes
+
+- **Feature:** Yoco Payment Integration
+  - Location: yoco_process.php
+  - Status: Implemented
+  - Test Plan: Create order, initiate payment
+
+- **Feature:** Order Creation
+  - Location: orders table, order_items table
+  - Status: Implemented
+  - Test Plan: Persist order and items
+
+### WhatsApp Integration (whatsapp_component.php)
+- **Feature:** Floating WhatsApp Button
+  - Location: whatsapp_component.php
+  - Status: Implemented
+  - Test Plan: Visible on pages, click opens WhatsApp
+
+- **Feature:** General Inquiry
+  - Location: whatsapp_component.php
+  - Status: Implemented
+  - Test Plan: Pre-filled message
+
+- **Feature:** Product Inquiry
+  - Location: shop.php, product buttons
+  - Status: Implemented
+  - Test Plan: Message includes product name
+
+### Search (search.php - not read, assume implemented)
+- **Feature:** Search Functionality
+  - Location: search.php
+  - Status: Unknown
+  - Test Plan: Need to test queries
+
+### Forms (contact.php, etc.)
+- **Feature:** Contact Form
+  - Location: contact.php, messages table
+  - Status: Unknown
+  - Test Plan: Need to verify submission
+
+- **Feature:** Registration/Login
+  - Location: register.php, login.php, auth_service.php
+  - Status: Unknown
+  - Test Plan: Need to test auth flow
+
+## Admin Panel Features
+
+### Dashboard (admin/dashboard.php)
+- **Feature:** Sales Stats
+  - Location: admin/dashboard.php
+  - Status: Implemented
+  - Test Plan: Calculate today/month totals
+
+- **Feature:** Orders Management
+  - Location: admin/orders.php
+  - Status: Implemented
+  - Test Plan: List, view, update status
+
+- **Feature:** User Management
+  - Location: admin/users.php
+  - Status: Implemented
+  - Test Plan: CRUD for users
+
+- **Feature:** Product Management
+  - Location: admin/products.php
+  - Status: Implemented
+  - Test Plan: Add/edit/delete products
+
+- **Feature:** Categories Management
+  - Location: admin/categories.php
+  - Status: Implemented
+  - Test Plan: CRUD categories
+
+- **Feature:** Homepage Content Management
+  - Location: admin/manage_homepage.php
+  - Status: Implemented
+  - Test Plan: Edit hero, sections, etc.
+
+- **Feature:** Sales Reports
+  - Location: admin/sales_report.php
+  - Status: Implemented
+  - Test Plan: Export CSV, date ranges
+
+- **Feature:** Messages/Contact Handling
+  - Location: admin/messages.php
+  - Status: Implemented
+  - Test Plan: View, mark read/unread
+
+- **Feature:** Announcements
+  - Location: admin/announcement.php
+  - Status: Implemented
+  - Test Plan: Manage announcements
+
+### External Integrations
+- **Feature:** Payfast Payments (payfast_notify.php, payfast_process.php)
+  - Status: Implemented (next to Yoco)
+  - Test Plan: Webhook handling
+
+- **Feature:** Yoco Payments
+  - Status: Yes
+
+- **Feature:** Email Notifications (notification_service.php)
+  - Status: Implemented
+  - Test Plan: Order confirm, admin alerts
+
+- **Feature:** Analytics (analytics_service.php)
+  - Status: Implemented
+  - Test Plan: Track events
+
+## Backend/Services
+- **Feature:** Authentication (auth_service.php)
+- **Feature:** Wishlist (wishlist_actions.php)
+- **Feature:** Reviews (submit_review.php)
+- **Feature:** Referral System (referral_service.php)
+
+## Database Tables (from code inspection)
+- products, categories, orders, order_items, user_carts, users, messages, hero_slides, homepage_sections, discount_codes, newsletter_subscriptions, password_resets, etc.
+
+## Notes
+- Many features appear implemented based on code structure
+- Need full testing to confirm functionality and identify fixes needed

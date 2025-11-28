@@ -4,11 +4,13 @@ require_once 'includes/bootstrap.php';
 $conn = get_db_connection();
 
 // Real SMTP credentials provided by user
+// SECURITY WARNING: Never hardcode passwords in files!
+// Use environment variables instead
 $smtp_updates = [
-    'smtp_host' => 'mail.mosseluxe.co.za',
-    'smtp_port' => '465',
-    'smtp_username' => 'info@mosseluxe.co.za',
-    'smtp_password' => 'Wszxderfc1'
+    'smtp_host' => getenv('SMTP_HOST') ?: 'mail.mosseluxe.co.za',
+    'smtp_port' => getenv('SMTP_PORT') ?: '465',
+    'smtp_username' => getenv('SMTP_USERNAME') ?: 'info@mosseluxe.co.za',
+    'smtp_password' => getenv('SMTP_PASSWORD') ?: '' // NEVER hardcode passwords!
 ];
 
 $updated = 0;

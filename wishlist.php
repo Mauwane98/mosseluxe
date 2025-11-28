@@ -14,7 +14,7 @@ $conn = get_db_connection();
 $user_id = $_SESSION['user_id'];
 $wishlist_items = [];
 
-$sql = "SELECT p.id, p.name, p.price, p.sale_price, p.image FROM wishlist w JOIN products p ON w.product_id = p.id WHERE w.user_id = ? ORDER BY w.created_at DESC";
+$sql = "SELECT p.id, p.name, p.price, p.sale_price, p.image FROM wishlists w JOIN products p ON w.product_id = p.id WHERE w.user_id = ? ORDER BY w.created_at DESC";
 if ($stmt = $conn->prepare($sql)) {
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
@@ -28,7 +28,6 @@ if ($stmt = $conn->prepare($sql)) {
 ?>
 
 <!-- Main Content -->
-<main>
     <div class="container mx-auto px-4 py-16 md:py-24">
         <!-- Page Header -->
         <div class="text-center mb-12">
@@ -117,7 +116,6 @@ if ($stmt = $conn->prepare($sql)) {
             </div>
         <?php endif; ?>
     </div>
-</main>
 
 <?php
 include 'includes/footer.php';

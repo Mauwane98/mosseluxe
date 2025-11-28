@@ -76,6 +76,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
     if ($stmt = $conn->prepare($insert_sql)) {
         $stmt->bind_param("iiis", $product_id, $user_id, $rating, $review_text);
         if ($stmt->execute()) {
+            $review_id = $conn->insert_id;
+
+            // Award loyalty points for leaving a review
+            process_review_loyalty_points($user_id, $review_id);
+
             $response = [
                 'success' => true,
                 'message' => 'Your review has been submitted successfully! It will be published after approval by our team.'

@@ -157,7 +157,6 @@ require_once 'includes/header.php';
 ?>
 
 <!-- Main Content -->
-<main>
     <div class="container mx-auto px-4 py-16 md:py-24">
         <!-- Page Header -->
         <div class="text-center mb-16">
@@ -223,7 +222,6 @@ require_once 'includes/header.php';
             </div>
         </div>
     </div>
-</main>
 
 <?php
 require_once 'includes/footer.php';

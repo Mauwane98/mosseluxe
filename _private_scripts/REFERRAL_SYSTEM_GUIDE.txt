@@ -1,0 +1,300 @@
+================================================================================
+MOSSÉ LUXE REFERRAL SYSTEM - COMPLETE GUIDE
+================================================================================
+
+✅ SYSTEM OVERVIEW
+------------------
+The referral system allows users to share unique links and earn rewards when
+friends sign up and make purchases. Currently works with session/cookie tracking.
+
+================================================================================
+📋 HOW IT WORKS
+================================================================================
+
+1. USER GETS REFERRAL LINK
+   - Each user gets a unique code: ML + 6 characters (e.g., ML3F8A2C)
+   - Link format: https://mosseluxe.co.za/?ref=ML3F8A2C
+   - Code is generated from user ID using MD5 hash
+
+2. FRIEND CLICKS LINK
+   - Referral code stored in session for 30 days
+   - Also stored in cookie as backup
+   - Toast notification shows: "🎁 You've been referred!"
+   - URL cleaned (ref parameter removed) for clean browsing
+
+3. FRIEND SIGNS UP
+   - Referral code attached to new account (when tables created)
+   - Both users eligible for rewards
+
+4. FRIEND MAKES FIRST PURCHASE
+   - Referral marked as "completed"
+   - Discount codes generated for both users
+   - Referrer: 15% off next purchase
+   - Referred: 10% off first purchase
+
+================================================================================
+🔗 REFERRAL LINK EXAMPLES
+================================================================================
+
+User ID 1:  https://mosseluxe.co.za/?ref=ML3F8A2C
+User ID 5:  https://mosseluxe.co.za/?ref=ML9B4E1D
+User ID 10: https://mosseluxe.co.za/?ref=MLA7C2F8
+
+Each user's code is unique and permanent (based on their user ID).
+
+================================================================================
+📱 SHARING OPTIONS
+================================================================================
+
+Users can share via:
+✅ WhatsApp - Pre-filled message with link
+✅ Facebook - Share dialog with link
+✅ Twitter/X - Tweet with link and message
+✅ Copy Link - Direct copy to clipboard
+✅ Email - Manual sharing
+
+================================================================================
+🎁 REWARD STRUCTURE
+================================================================================
+
+REFERRER (Person who shares):
+- 15% discount code after successful referral
+- Unlimited referrals
+- Codes valid for 90 days
+
+REFERRED (New customer):
+- 10% discount code on signup
+- One-time use per customer
+- Code valid for 30 days
+
+================================================================================
+💻 TECHNICAL IMPLEMENTATION
+================================================================================
+
+FILES CREATED:
+--------------
+1. includes/referral_tracker.php
+   - Tracks referral codes in session/cookies
+   - Validates referral codes
+   - Generates user referral codes
+
+2. assets/js/referral-notification.js
+   - Shows toast notification for referred visitors
+   - Cleans URL after tracking
+
+3. my_account.php (updated)
+   - Displays referral dashboard
+   - Shows unique referral link
+   - Social sharing buttons
+
+FUNCTIONS AVAILABLE:
+-------------------
+- track_referral() - Auto-tracks when ?ref= in URL
+- get_referral_code() - Gets stored referral code
+- generate_user_referral_code($user_id) - Creates unique code
+- get_user_referral_link($user_id) - Gets full referral URL
+- is_referral_valid() - Checks if referral still valid (30 days)
+- clear_referral_tracking() - Clears after conversion
+
+================================================================================
+🎯 USER EXPERIENCE FLOW
+================================================================================
+
+SCENARIO 1: User shares link
+-----------------------------
+1. User logs into My Account
+2. Clicks "Referrals" tab
+3. Sees unique link: https://mosseluxe.co.za/?ref=ML3F8A2C
+4. Clicks "Copy Link" or social share button
+5. Shares with friends
+
+SCENARIO 2: Friend receives link
+---------------------------------
+1. Friend clicks link
+2. Lands on homepage
+3. Sees toast: "🎁 You've been referred! Sign up and get 10% off!"
+4. Referral code stored in session/cookie
+5. URL cleaned to: https://mosseluxe.co.za/
+6. Friend browses normally
+
+SCENARIO 3: Friend signs up
+----------------------------
+1. Friend creates account
+2. Referral code attached to account (when DB tables ready)
+3. Welcome email mentions referral discount
+4. Discount code: WELCOME10 (10% off)
+
+SCENARIO 4: Friend makes purchase
+----------------------------------
+1. Friend completes first order
+2. Referral marked as "completed"
+3. Referrer gets email: "Your friend made a purchase!"
+4. Referrer gets code: REFER15 (15% off next order)
+5. Both codes added to accounts
+
+================================================================================
+🔧 CONFIGURATION
+================================================================================
+
+Edit in config.php:
+-------------------
+// Referral reward percentages
+define('REFERRER_DISCOUNT', 15);  // 15% for person who refers
+define('REFERRED_DISCOUNT', 10);  // 10% for new customer
+
+// Referral code validity
+define('REFERRAL_VALIDITY_DAYS', 30);  // How long tracking lasts
+
+// Discount code validity
+define('REFERRER_CODE_DAYS', 90);   // Referrer code valid 90 days
+define('REFERRED_CODE_DAYS', 30);   // Referred code valid 30 days
+
+================================================================================
+📊 TRACKING & ANALYTICS
+================================================================================
+
+CURRENT TRACKING (Session/Cookie):
+- Referral code stored for 30 days
+- Survives page navigation
+- Persists across sessions
+- Logged in error_log for debugging
+
+FUTURE TRACKING (When DB tables created):
+- Total referrals per user
+- Completed vs pending referrals
+- Total earnings
+- Conversion rates
+- Popular referrers
+
+================================================================================
+🚀 TESTING THE SYSTEM
+================================================================================
+
+TEST 1: Generate Referral Link
+-------------------------------
+1. Login to My Account
+2. Go to Referrals tab
+3. Copy your link (e.g., http://localhost:8080/?ref=ML3F8A2C)
+4. Verify code format: ML + 6 uppercase alphanumeric
+
+TEST 2: Track Referral
+-----------------------
+1. Open incognito/private window
+2. Paste referral link
+3. Should see toast notification
+4. Check browser cookies for 'mosseluxe_ref'
+5. URL should clean to remove ?ref=
+
+TEST 3: Social Sharing
+----------------------
+1. Click WhatsApp button
+2. Verify message includes link
+3. Test Facebook share
+4. Test Twitter share
+5. Test copy link button
+
+================================================================================
+🔐 SECURITY FEATURES
+================================================================================
+
+✅ Code Validation
+- Only alphanumeric characters allowed
+- Format: ML + 6 characters
+- Invalid codes ignored
+
+✅ Session Security
+- Codes stored in secure session
+- 30-day expiration
+- Cleared after conversion
+
+✅ Cookie Security
+- HttpOnly flag (when possible)
+- 30-day expiration
+- Path restricted to /
+
+✅ Input Sanitization
+- All referral codes sanitized
+- XSS protection
+- SQL injection prevention (when DB used)
+
+================================================================================
+📈 FUTURE ENHANCEMENTS (When DB Tables Ready)
+================================================================================
+
+1. DATABASE TABLES
+   - user_referrals: Track referral relationships
+   - referral_transactions: Track rewards and commissions
+   - referral_discount_codes: Generated discount codes
+
+2. ADMIN DASHBOARD
+   - View all referrals
+   - Top referrers leaderboard
+   - Conversion statistics
+   - Fraud detection
+
+3. ADVANCED FEATURES
+   - Multi-tier referrals (refer-a-friend-of-a-friend)
+   - Cash rewards instead of discounts
+   - Referral contests and bonuses
+   - Automated email campaigns
+
+4. ANALYTICS
+   - Referral source tracking
+   - Conversion funnel analysis
+   - ROI calculations
+   - A/B testing different rewards
+
+================================================================================
+🎨 CUSTOMIZATION
+================================================================================
+
+CHANGE REFERRAL CODE PREFIX:
+In my_account.php, line 455:
+$referral_code = 'ML' . strtoupper(substr(md5($user_id . 'mosseluxe'), 0, 6));
+Change 'ML' to your preferred prefix (2-3 characters recommended)
+
+CHANGE NOTIFICATION MESSAGE:
+In assets/js/referral-notification.js:
+Modal.toast(
+    'Sign up and make your first purchase to get 10% off!',
+    '🎁 You\'ve been referred!',
+    'success',
+    5000
+);
+
+CHANGE SOCIAL SHARE MESSAGES:
+In my_account.php, search for "shareReferralOn" functions
+
+================================================================================
+✅ SYSTEM STATUS
+================================================================================
+
+CURRENTLY WORKING:
+✅ Unique referral code generation
+✅ Referral link creation
+✅ Session/cookie tracking (30 days)
+✅ Toast notifications for referred visitors
+✅ Social sharing (WhatsApp, Facebook, Twitter)
+✅ Copy link functionality
+✅ URL cleaning after tracking
+✅ My Account referral dashboard
+
+PENDING (Requires DB Tables):
+⏳ Referral count tracking
+⏳ Earnings calculation
+⏳ Discount code generation
+⏳ Referral history
+⏳ Admin analytics
+
+================================================================================
+📞 SUPPORT
+================================================================================
+
+For issues or questions:
+1. Check error_log for tracking messages
+2. Verify session is active
+3. Check cookie storage in browser
+4. Test in incognito mode
+5. Clear browser cache if needed
+
+================================================================================

@@ -1,12 +1,21 @@
 User-agent: *
 Allow: /
 
-# Block access to admin areas
+# Block access to admin and sensitive areas
 Disallow: /admin/
 Disallow: /_private_scripts/
 Disallow: /includes/
-Disallow: /assets/images/hero/
+Disallow: /vendor/
+Disallow: /logs/
 Disallow: /cache/
+Disallow: /api/
+Disallow: /tests/
+Disallow: /cypress/
 
-# Sitemap location
-Sitemap: https://yourdomain.com/mosse-luxe/sitemap.xml
+# Allow specific assets
+Allow: /assets/css/
+Allow: /assets/js/
+Allow: /assets/images/
+
+# Sitemap location (update with your actual domain)
+Sitemap: https://mosseluxe.co.za/sitemap.xml

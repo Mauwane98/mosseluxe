@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $is_read = 0; // Default to unread
 
             $sql_insert_message = "INSERT INTO messages (name, email, subject, message, received_at, is_read) VALUES (?, ?, ?, ?, ?, ?)";
-            
+
             if ($stmt_insert = $conn->prepare($sql_insert_message)) {
                 // Bind variables to the prepared statement
                 $stmt_insert->bind_param("sssssi", $param_name, $param_email, $param_subject, $param_message, $param_received_at, $param_is_read);
@@ -62,11 +62,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Now include the header, after all PHP logic is processed
 require_once 'includes/header.php';
-
 ?>
 
 <!-- Main Content -->
-<main>
     <!-- Contact Form & Details Section -->
     <section class="bg-white py-20 md:py-28">
         <div class="container mx-auto px-4 md:px-6">
@@ -104,45 +102,72 @@ require_once 'includes/header.php';
                             <label for="message" class="block text-sm font-medium text-black/80 mb-1">Message</label>
                             <textarea id="message" name="message" rows="5" required class="w-full p-3 bg-neutral-50 border border-black/20 rounded-md focus:outline-none focus:ring-2 focus:ring-black"><?php echo isset($_POST['message']) ? htmlspecialchars($_POST['message']) : ''; ?></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-black text-white py-4 px-6 font-bold uppercase rounded-md hover:bg-black/80 transition-colors tracking-wider">
-                            Send Message
-                        </button>
+                        <input type="submit" value="Send Message" class="w-full bg-black text-white py-4 px-6 font-bold uppercase rounded-md hover:bg-black/80 transition-colors tracking-wider cursor-pointer">
                     </form>
                 </div>
 
                 <!-- Contact Details -->
                 <div class="lg:col-span-5">
-                    <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tighter mb-6">Contact Details</h2>
-                    <div class="space-y-8">
-                        <div class="flex items-start gap-4">
-                            <div class="text-black/50 pt-1"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>
-                            <div>
-                                <h3 class="text-xl font-bold uppercase tracking-wider">Our Location</h3>
-                                <p class="text-black/70 text-lg mt-1"><?php echo CONTACT_ADDRESS; ?></p>
+                        <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tighter mb-6">Contact Details</h2>
+                        <div class="bg-neutral-50 p-8 rounded-lg">
+                            <div class="space-y-6">
+                                <!-- Location -->
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-lg font-bold uppercase tracking-wider mb-1">Our Location</h4>
+                                        <p class="text-black/70">Pretoria<br>South Africa</p>
+                                    </div>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-lg font-bold uppercase tracking-wider mb-1">Email Us</h4>
+                                        <p class="text-black/70">info@mosseluxe.co.za</p>
+                                    </div>
+                                </div>
+
+                                <!-- Phone -->
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-lg font-bold uppercase tracking-wider mb-1">Call Us</h4>
+                                        <p class="text-black/70">+27 67 616 0928<br>Monday - Friday: 9:00 AM - 5:00 PM</p>
+                                    </div>
+                                </div>
+
+                                <!-- Social Links -->
+                                <div class="mt-8">
+                                    <h4 class="text-lg font-bold uppercase tracking-wider mb-4">Follow Us</h4>
+                                    <div class="flex gap-4">
+                                        <a href="https://instagram.com/mosseluxe" class="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors">
+                                            <i class="fab fa-instagram"></i>
+                                        </a>
+                                        <a href="https://twitter.com/mosseluxe" class="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors">
+                                            <i class="fab fa-twitter"></i>
+                                        </a>
+                                        <a href="https://facebook.com/mosseluxe" class="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="flex items-start gap-4">
-                            <div class="text-black/50 pt-1"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></div>
-                            <div>
-                                <h3 class="text-xl font-bold uppercase tracking-wider">Email Us</h3>
-                                <p class="text-black/70 text-lg mt-1"><?php echo CONTACT_EMAIL; ?></p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <div class="text-black/50 pt-1"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg></div>
-                            <div>
-                                <h3 class="text-xl font-bold uppercase tracking-wider">Call Us</h3>
-                                <p class="text-black/70 text-lg mt-1"><?php echo CONTACT_PHONE; ?></p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <div class="text-black/50 pt-1"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
-                            <div>
-                                <h3 class="text-xl font-bold uppercase tracking-wider">Our Hours</h3>
-                                <p class="text-black/70 text-lg mt-1">Monday - Friday: 9:00 AM - 5:00 PM</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -188,5 +213,5 @@ require_once 'includes/header.php';
             </div>
         </div>
     </section>
-</main>
+
 <?php require_once 'includes/footer.php'; ?>

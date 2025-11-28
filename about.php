@@ -4,8 +4,6 @@ require_once 'includes/bootstrap.php';
 require_once 'includes/header.php';
 ?>
 
-<!-- Main Content -->
-<main>
     <!-- Section 2: The Inspiration -->
     <section class="bg-white py-20 md:py-28">
         <div class="container mx-auto px-4 md:px-6">
@@ -31,8 +29,8 @@ require_once 'includes/header.php';
         <div class="relative container mx-auto px-4 md:px-6 text-center max-w-4xl">
             <h2 class="text-sm font-bold uppercase tracking-widest text-white/60 mb-3">Our Name</h2>
             <p class="text-3xl md:text-5xl font-black leading-tight">
-                <span class="text-white/80">“Mossé”</span> to honor the man who started it all. 
-                <span class="text-white/80">“Luxe”</span> for a luxury defined by quality, not price.
+                <span class="text-white/80">"Mossé"</span> to honor the man who started it all.
+                <span class="text-white/80">"Luxe"</span> for a luxury defined by quality, not price.
             </p>
             <p class="mt-8 text-2xl font-bold uppercase tracking-wider">Luxury Inspired by Legacy</p>
         </div>
@@ -72,6 +70,7 @@ require_once 'includes/header.php';
             </a>
         </div>
     </section>
-</main>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php
+require_once 'includes/footer.php';
+?>

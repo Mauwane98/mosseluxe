@@ -1,0 +1,247 @@
+[
+  {
+    "page": "Homepage",
+    "url": "http://localhost/mosseluxe/",
+    "issues": [
+      {
+        "code": "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This button element does not have a name available to an accessibility API. Valid names are: title undefined, element content, aria-label undefined, aria-labelledby undefined.",
+        "context": "<button id=\"chat-close-btn\" class=\"text-white hover:text-green-200 transition-colors\">\n                <svg class=\"w-...</button>",
+        "selector": "#chat-close-btn",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      },
+      {
+        "code": "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This textinput element does not have a name available to an accessibility API. Valid names are: label element, title undefined, aria-label undefined, aria-labelledby undefined.",
+        "context": "<input type=\"text\" id=\"chat-message\" name=\"message\" placeholder=\"Type your message...\" class=\"flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent\" maxlength=\"500\">",
+        "selector": "#chat-message",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      },
+      {
+        "code": "WCAG2AA.Principle1.Guideline1_3.1_3_1.F68",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This form field should be labelled in some way. Use the label element (either with a \"for\" attribute or wrapped around the form field), or \"title\", \"aria-label\" or \"aria-labelledby\" attributes as appropriate.",
+        "context": "<input type=\"text\" id=\"chat-message\" name=\"message\" placeholder=\"Type your message...\" class=\"flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent\" maxlength=\"500\">",
+        "selector": "#chat-message",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      },
+      {
+        "code": "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This button element does not have a name available to an accessibility API. Valid names are: title undefined, element content, aria-label undefined, aria-labelledby undefined.",
+        "context": "<button type=\"submit\" class=\"bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors disabled:opacity-50\" id=\"chat-send-btn\">\n                    <svg class...</button>",
+        "selector": "#chat-send-btn",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      }
+    ],
+    "errorCount": 4,
+    "critical": 4,
+    "warnings": 0
+  },
+  {
+    "page": "Shop Page",
+    "url": "http://localhost/mosseluxe/shop.php",
+    "issues": [
+      {
+        "code": "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This button element does not have a name available to an accessibility API. Valid names are: title undefined, element content, aria-label undefined, aria-labelledby undefined.",
+        "context": "<button id=\"chat-close-btn\" class=\"text-white hover:text-green-200 transition-colors\">\n                <svg class=\"w-...</button>",
+        "selector": "#chat-close-btn",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      },
+      {
+        "code": "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This textinput element does not have a name available to an accessibility API. Valid names are: label element, title undefined, aria-label undefined, aria-labelledby undefined.",
+        "context": "<input type=\"text\" id=\"chat-message\" name=\"message\" placeholder=\"Type your message...\" class=\"flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent\" maxlength=\"500\">",
+        "selector": "#chat-message",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      },
+      {
+        "code": "WCAG2AA.Principle1.Guideline1_3.1_3_1.F68",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This form field should be labelled in some way. Use the label element (either with a \"for\" attribute or wrapped around the form field), or \"title\", \"aria-label\" or \"aria-labelledby\" attributes as appropriate.",
+        "context": "<input type=\"text\" id=\"chat-message\" name=\"message\" placeholder=\"Type your message...\" class=\"flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent\" maxlength=\"500\">",
+        "selector": "#chat-message",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      },
+      {
+        "code": "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This button element does not have a name available to an accessibility API. Valid names are: title undefined, element content, aria-label undefined, aria-labelledby undefined.",
+        "context": "<button type=\"submit\" class=\"bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors disabled:opacity-50\" id=\"chat-send-btn\">\n                    <svg class...</button>",
+        "selector": "#chat-send-btn",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      }
+    ],
+    "errorCount": 4,
+    "critical": 4,
+    "warnings": 0
+  },
+  {
+    "page": "Cart Page",
+    "url": "http://localhost/mosseluxe/cart.php",
+    "issues": [
+      {
+        "code": "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This button element does not have a name available to an accessibility API. Valid names are: title undefined, element content, aria-label undefined, aria-labelledby undefined.",
+        "context": "<button id=\"chat-close-btn\" class=\"text-white hover:text-green-200 transition-colors\">\n                <svg class=\"w-...</button>",
+        "selector": "#chat-close-btn",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      },
+      {
+        "code": "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This textinput element does not have a name available to an accessibility API. Valid names are: label element, title undefined, aria-label undefined, aria-labelledby undefined.",
+        "context": "<input type=\"text\" id=\"chat-message\" name=\"message\" placeholder=\"Type your message...\" class=\"flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent\" maxlength=\"500\">",
+        "selector": "#chat-message",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      },
+      {
+        "code": "WCAG2AA.Principle1.Guideline1_3.1_3_1.F68",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This form field should be labelled in some way. Use the label element (either with a \"for\" attribute or wrapped around the form field), or \"title\", \"aria-label\" or \"aria-labelledby\" attributes as appropriate.",
+        "context": "<input type=\"text\" id=\"chat-message\" name=\"message\" placeholder=\"Type your message...\" class=\"flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent\" maxlength=\"500\">",
+        "selector": "#chat-message",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      },
+      {
+        "code": "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This button element does not have a name available to an accessibility API. Valid names are: title undefined, element content, aria-label undefined, aria-labelledby undefined.",
+        "context": "<button type=\"submit\" class=\"bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors disabled:opacity-50\" id=\"chat-send-btn\">\n                    <svg class...</button>",
+        "selector": "#chat-send-btn",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      }
+    ],
+    "errorCount": 4,
+    "critical": 4,
+    "warnings": 0
+  },
+  {
+    "page": "About Page",
+    "url": "http://localhost/mosseluxe/about.php",
+    "issues": [
+      {
+        "code": "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This button element does not have a name available to an accessibility API. Valid names are: title undefined, element content, aria-label undefined, aria-labelledby undefined.",
+        "context": "<button id=\"chat-close-btn\" class=\"text-white hover:text-green-200 transition-colors\">\n                <svg class=\"w-...</button>",
+        "selector": "#chat-close-btn",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      },
+      {
+        "code": "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This textinput element does not have a name available to an accessibility API. Valid names are: label element, title undefined, aria-label undefined, aria-labelledby undefined.",
+        "context": "<input type=\"text\" id=\"chat-message\" name=\"message\" placeholder=\"Type your message...\" class=\"flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent\" maxlength=\"500\">",
+        "selector": "#chat-message",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      },
+      {
+        "code": "WCAG2AA.Principle1.Guideline1_3.1_3_1.F68",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This form field should be labelled in some way. Use the label element (either with a \"for\" attribute or wrapped around the form field), or \"title\", \"aria-label\" or \"aria-labelledby\" attributes as appropriate.",
+        "context": "<input type=\"text\" id=\"chat-message\" name=\"message\" placeholder=\"Type your message...\" class=\"flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent\" maxlength=\"500\">",
+        "selector": "#chat-message",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      },
+      {
+        "code": "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This button element does not have a name available to an accessibility API. Valid names are: title undefined, element content, aria-label undefined, aria-labelledby undefined.",
+        "context": "<button type=\"submit\" class=\"bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors disabled:opacity-50\" id=\"chat-send-btn\">\n                    <svg class...</button>",
+        "selector": "#chat-send-btn",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      }
+    ],
+    "errorCount": 4,
+    "critical": 4,
+    "warnings": 0
+  },
+  {
+    "page": "Contact Page",
+    "url": "http://localhost/mosseluxe/contact.php",
+    "issues": [
+      {
+        "code": "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This button element does not have a name available to an accessibility API. Valid names are: title undefined, element content, aria-label undefined, aria-labelledby undefined.",
+        "context": "<button id=\"chat-close-btn\" class=\"text-white hover:text-green-200 transition-colors\">\n                <svg class=\"w-...</button>",
+        "selector": "#chat-close-btn",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      },
+      {
+        "code": "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputText.Name",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This textinput element does not have a name available to an accessibility API. Valid names are: label element, title undefined, aria-label undefined, aria-labelledby undefined.",
+        "context": "<input type=\"text\" id=\"chat-message\" name=\"message\" placeholder=\"Type your message...\" class=\"flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent\" maxlength=\"500\">",
+        "selector": "#chat-message",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      },
+      {
+        "code": "WCAG2AA.Principle1.Guideline1_3.1_3_1.F68",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This form field should be labelled in some way. Use the label element (either with a \"for\" attribute or wrapped around the form field), or \"title\", \"aria-label\" or \"aria-labelledby\" attributes as appropriate.",
+        "context": "<input type=\"text\" id=\"chat-message\" name=\"message\" placeholder=\"Type your message...\" class=\"flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent\" maxlength=\"500\">",
+        "selector": "#chat-message",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      },
+      {
+        "code": "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Button.Name",
+        "type": "error",
+        "typeCode": 1,
+        "message": "This button element does not have a name available to an accessibility API. Valid names are: title undefined, element content, aria-label undefined, aria-labelledby undefined.",
+        "context": "<button type=\"submit\" class=\"bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors disabled:opacity-50\" id=\"chat-send-btn\">\n                    <svg class...</button>",
+        "selector": "#chat-send-btn",
+        "runner": "htmlcs",
+        "runnerExtras": {}
+      }
+    ],
+    "errorCount": 4,
+    "critical": 4,
+    "warnings": 0
+  }
+]

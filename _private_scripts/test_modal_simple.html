@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Test</title>
+    <link rel="stylesheet" href="../assets/css/modals.css">
+    <style>
+        body {
+            padding: 40px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        button {
+            padding: 12px 24px;
+            background: #000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #333;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 12px;
+            background: #f0f0f0;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Modal System Test</h1>
+    <p>Click the button below to test if modals are working:</p>
+    
+    <button onclick="testModal()">Test Modal</button>
+    <button onclick="testToast()">Test Toast</button>
+    
+    <div class="status" id="status">
+        Status: Ready
+    </div>
+
+    <script src="../assets/js/modals.js"></script>
+    <script>
+        function updateStatus(message) {
+            document.getElementById('status').textContent = 'Status: ' + message;
+        }
+
+        function testModal() {
+            updateStatus('Testing modal...');
+            
+            if (window.Modal) {
+                updateStatus('Modal object found! Opening modal...');
+                Modal.alert('This is a test modal!', 'Test Success', 'success').then(() => {
+                    updateStatus('Modal closed successfully!');
+                });
+            } else {
+                updateStatus('ERROR: Modal object not found!');
+                alert('Modal system not loaded!');
+            }
+        }
+
+        function testToast() {
+            if (window.Modal) {
+                Modal.toast('This is a test toast notification!', 'Test', 'info', 3000);
+                updateStatus('Toast shown!');
+            } else {
+                updateStatus('ERROR: Modal object not found!');
+            }
+        }
+
+        // Check on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            if (window.Modal) {
+                updateStatus('✓ Modal system loaded successfully!');
+            } else {
+                updateStatus('✗ Modal system NOT loaded!');
+            }
+        });
+    </script>
+</body>
+</html>

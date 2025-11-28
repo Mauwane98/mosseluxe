@@ -1,0 +1,36 @@
+RewriteEngine On
+
+# Redirect old typo URL to correct one
+Redirect 301 /mosse-luxe http://localhost/mosseluxe
+
+RewriteBase /mosseluxe/
+
+# Deny access to sensitive include files
+<Files "includes/config.php">
+    Order Deny,Allow
+    Deny from all
+</Files>
+<Files "includes/db_connect.php">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Deny access to .env file
+<Files ".env">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Product Detail Page Rewrite Rule
+RewriteRule ^product/([0-9]+)/?([^/]*)$ product-details.php?id=$1 [L,NC,QSA]
+
+# Redirect all requests to the /api/ path to our new router
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/(.*)$ api/index.php?_route=$1 [L,QSA]
+
+# Remove .php extension for SEO - temporarily disabled for scanner
+#RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)\.php\ HTTP/
+#RewriteRule ^(.*)\.php$ /$1 [R=301,L]
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^.]+)/?$ $1.php [L]

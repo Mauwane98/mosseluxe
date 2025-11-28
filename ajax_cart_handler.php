@@ -1,255 +1,152 @@
 <?php
 require_once __DIR__ . '/includes/bootstrap.php';
+require_once __DIR__ . '/includes/abandoned_cart_functions.php';
 
-header('Content-Type: application/json');
-
-// Ensure SHIPPING_COST is defined
-if (!defined('SHIPPING_COST')) {
-    require_once __DIR__ . '/includes/config.php'; // Load config if not already loaded
+// Set headers only when called via HTTP request
+if (isset($_SERVER['REQUEST_METHOD'])) {
+    header('Content-Type: application/json');
+    header('Cache-Control: no-cache, no-store, must-revalidate');
+    header('Pragma: no-cache');
+    header('Expires: 0');
 }
 
-// Helper function to calculate cart totals
-function get_cart_totals() {
-    $subtotal = 0;
-    foreach ($_SESSION['cart'] as $item) {
-        $subtotal += $item['price'] * $item['quantity'];
-    }
-    $shipping_cost = SHIPPING_COST; // Assuming SHIPPING_COST is defined in config.php
-    $total = $subtotal + $shipping_cost;
-    return ['subtotal' => $subtotal, 'total' => $total];
+// Error reporting is handled in bootstrap.php based on APP_ENV
+
+// Initialize cart if not exists
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
 }
 
-// Helper function to save user cart to database
-function save_user_cart($conn, $user_id, $cart_items) {
-    if (empty($cart_items)) return;
+$conn = get_db_connection();
 
-    // Clear existing cart items for this user
-    $stmt_clear = $conn->prepare("DELETE FROM user_carts WHERE user_id = ?");
-    $stmt_clear->bind_param("i", $user_id);
-    $stmt_clear->execute();
-    $stmt_clear->close();
-
-    // Insert current cart items
-    $stmt_insert = $conn->prepare("INSERT INTO user_carts (user_id, product_id, quantity) VALUES (?, ?, ?)");
-    foreach ($cart_items as $product_id => $item) {
-        $stmt_insert->bind_param("iii", $user_id, $product_id, $item['quantity']);
-        $stmt_insert->execute();
-    }
-    $stmt_insert->close();
+// Only process requests when called via HTTP, not when included in other scripts
+if (!isset($_SERVER['REQUEST_METHOD'])) {
+    // If no request method, just exit silently (for debugging scripts)
+    return;
 }
 
-// Helper function to load user cart from database
-function load_user_cart($conn, $user_id) {
-    $cart_items = [];
-    $stmt = $conn->prepare("
-        SELECT uc.product_id, uc.quantity, p.name, p.price, p.sale_price, p.image
-        FROM user_carts uc
-        JOIN products p ON uc.product_id = p.id
-        WHERE uc.user_id = ? AND p.status = 1
-        ORDER BY uc.updated_at DESC
-    ");
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    while ($row = $result->fetch_assoc()) {
-        $cart_items[$row['product_id']] = [
-            'name' => $row['name'],
-            'price' => $row['sale_price'] > 0 ? $row['sale_price'] : $row['price'],
-            'image' => $row['image'],
-            'quantity' => $row['quantity']
-        ];
-    }
-
-    $stmt->close();
-    return $cart_items;
-}
-
-// Helper function to merge guest cart with user cart
-function merge_guest_cart_with_user_cart($guest_cart, $user_cart) {
-    $merged_cart = $user_cart;
-
-    foreach ($guest_cart as $product_id => $guest_item) {
-        if (isset($merged_cart[$product_id])) {
-            // Add quantities if product already in user cart
-            $merged_cart[$product_id]['quantity'] += $guest_item['quantity'];
-        } else {
-            // Add new item from guest cart
-            $merged_cart[$product_id] = $guest_item;
-        }
-    }
-
-    return $merged_cart;
-}
-
-$response = ['success' => false, 'message' => 'Invalid request.'];
+$response = [
+    'success' => false,
+    'message' => 'Invalid request.',
+    'cart_count' => countCartItems($_SESSION['cart']),
+    'new_subtotal' => 0,
+    'new_total' => 0
+];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
-    $action = $_POST['action'];
-    $product_id = filter_var($_POST['product_id'] ?? 0, FILTER_VALIDATE_INT);
-    $quantity = filter_var($_POST['quantity'] ?? 0, FILTER_VALIDATE_INT);
+    $action = trim($_POST['action']);
+    $product_id = isset($_POST['product_id']) ? (int)filter_var($_POST['product_id'], FILTER_VALIDATE_INT) : 0;
+    $quantity = isset($_POST['quantity']) ? (int)filter_var($_POST['quantity'], FILTER_VALIDATE_INT) : 0;
     $csrf_token = $_POST['csrf_token'] ?? '';
 
-    // Initialize session cart if not exists
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = [];
-    }
-
-    // Ensure SHIPPING_COST is defined
-    if (!defined('SHIPPING_COST')) {
-        define('SHIPPING_COST', 100.00); // Default shipping cost
-    }
-
-    // CSRF validation for all state-changing actions
-    if ($action !== 'get_count' && !verify_csrf_token($csrf_token)) {
-        $response = ['success' => false, 'message' => 'Invalid security token.'];
+    if ($action !== 'get_count' && (!isset($csrf_token) || !verify_csrf_token($csrf_token))) {
+        error_log("CSRF Token Check Failed - Action: $action, Token: " . substr($csrf_token, 0, 10) . "...");
+        $response['message'] = 'Security token invalid. Please refresh the page and try again.';
         echo json_encode($response);
         exit;
     }
 
-    switch ($action) {
-        case 'add':
-            if ($product_id > 0 && $quantity > 0) {
-                $conn = get_db_connection();
-                $stmt = $conn->prepare("SELECT name, price, sale_price, image, stock FROM products WHERE id = ? AND status = 1");
-                $stmt->bind_param("i", $product_id);
-                $stmt->execute();
-                $result = $stmt->get_result();
-                $product = $result->fetch_assoc();
-                $stmt->close();
-
-                if ($product) {
-                    $current_quantity_in_cart = $_SESSION['cart'][$product_id]['quantity'] ?? 0;
-                    if (($current_quantity_in_cart + $quantity) > $product['stock']) {
-                        $response = ['success' => false, 'message' => 'Not enough stock available.'];
-                    } else {
-                        if (isset($_SESSION['cart'][$product_id])) {
-                            $_SESSION['cart'][$product_id]['quantity'] += $quantity;
-                        } else {
-                            $_SESSION['cart'][$product_id] = [
-                                'name' => $product['name'],
-                                'price' => $product['sale_price'] > 0 ? $product['sale_price'] : $product['price'],
-                                'image' => $product['image'],
-                                'quantity' => $quantity
-                            ];
-                        }
-
-                        // Save cart to database if user is logged in
-                        if (isset($_SESSION['user_id'])) {
-                            save_user_cart($conn, $_SESSION['user_id'], $_SESSION['cart']);
-                        }
-
-                        $totals = get_cart_totals();
-                        $response = [
-                            'success' => true,
-                            'message' => 'Product added to cart.',
-                            'cart_count' => array_sum(array_column($_SESSION['cart'], 'quantity')),
-                            'new_subtotal' => $totals['subtotal'],
-                            'new_total' => $totals['total']
-                        ];
-                    }
+    try {
+        switch ($action) {
+            case 'add':
+                $result = addToCart($conn, $product_id, $quantity);
+                if ($result['success']) {
+                    $response = array_merge($response, $result);
                 } else {
-                    $response = ['success' => false, 'message' => 'Product not found or not available.'];
+                    $response = $result;
                 }
-            } else {
-                $response = ['success' => false, 'message' => 'Invalid product ID or quantity.'];
-            }
-            break;
+                break;
 
-        case 'remove':
-            if ($product_id > 0) {
-                if (isset($_SESSION['cart'][$product_id])) {
-                    unset($_SESSION['cart'][$product_id]);
-
-                    // Save cart to database if user is logged in
-                    $conn = get_db_connection();
-                    if (isset($_SESSION['user_id'])) {
-                        save_user_cart($conn, $_SESSION['user_id'], $_SESSION['cart']);
-                    }
-
-                    $totals = get_cart_totals();
-                    $response = [
-                        'success' => true,
-                        'message' => 'Product removed from cart.',
-                        'cart_count' => array_sum(array_column($_SESSION['cart'], 'quantity')),
-                        'new_subtotal' => $totals['subtotal'],
-                        'new_total' => $totals['total'],
-                        'removed_product_id' => $product_id // Indicate which product was removed
-                    ];
+            case 'update':
+                $result = updateCartItem($conn, $product_id, $quantity);
+                if ($result['success']) {
+                    $response = array_merge($response, $result);
                 } else {
-                    $response = ['success' => false, 'message' => 'Product not in cart.'];
+                    $response = $result;
                 }
-            } else {
-                $response = ['success' => false, 'message' => 'Invalid product ID.'];
-            }
-            break;
+                break;
 
-        case 'update':
-            if ($product_id > 0 && $quantity >= 0) {
-                if (isset($_SESSION['cart'][$product_id])) {
-                    if ($quantity == 0) {
-                        unset($_SESSION['cart'][$product_id]);
-                        $totals = get_cart_totals();
-                        $response = [
-                            'success' => true,
-                            'message' => 'Product removed from cart.',
-                            'cart_count' => array_sum(array_column($_SESSION['cart'], 'quantity')),
-                            'new_subtotal' => $totals['subtotal'],
-                            'new_total' => $totals['total'],
-                            'removed_product_id' => $product_id // Indicate which product was removed
-                        ];
-                    } else {
-                        $conn = get_db_connection();
-                        $stmt = $conn->prepare("SELECT stock FROM products WHERE id = ? AND status = 1");
-                        $stmt->bind_param("i", $product_id);
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-                        $product = $result->fetch_assoc();
-                        $stmt->close();
-
-                        if ($product && $quantity <= $product['stock']) {
-                            $_SESSION['cart'][$product_id]['quantity'] = $quantity;
-
-                            // Save cart to database if user is logged in
-                            if (isset($_SESSION['user_id'])) {
-                                save_user_cart($conn, $_SESSION['user_id'], $_SESSION['cart']);
-                            }
-
-                            $totals = get_cart_totals();
-                            $response = [
-                                'success' => true,
-                                'message' => 'Cart updated.',
-                                'cart_count' => array_sum(array_column($_SESSION['cart'], 'quantity')),
-                                'new_subtotal' => $totals['subtotal'],
-                                'new_total' => $totals['total']
-                            ];
-                        } else {
-                            $response = ['success' => false, 'message' => 'Not enough stock available for this quantity.'];
-                        }
-                    }
+            case 'remove':
+                $result = removeFromCart($conn, $product_id);
+                if ($result['success']) {
+                    $response = array_merge($response, $result);
                 } else {
-                    $response = ['success' => false, 'message' => 'Product not in cart.'];
+                    $response = $result;
                 }
-            } else {
-                $response = ['success' => false, 'message' => 'Invalid product ID or quantity.'];
-            }
-            break;
+                break;
 
-        case 'get_count':
-            $total_quantity = 0;
-            if (isset($_SESSION['cart'])) {
-                foreach ($_SESSION['cart'] as $item) {
-                    $total_quantity += $item['quantity'];
+            case 'clear':
+                $result = clearCart($conn);
+                if ($result['success']) {
+                    $response = array_merge($response, $result);
+                } else {
+                    $response = $result;
                 }
-            }
-            $response = ['success' => true, 'cart_count' => $total_quantity];
-            break;
+                break;
 
-        default:
-            $response = ['success' => false, 'message' => 'Unknown action.'];
-            break;
+            case 'get_count':
+                $response = [
+                    'success' => true,
+                    'cart_count' => countCartItems($_SESSION['cart']),
+                    'message' => 'Cart count retrieved successfully.'
+                ];
+                break;
+
+            case 'get_cart':
+                $cart_data = getCartData($_SESSION['cart']);
+                $totals = calculateCartTotals($_SESSION['cart']);
+                $response = [
+                    'success' => true,
+                    'cart_data' => $cart_data,
+                    'totals' => $totals,
+                    'cart_count' => countCartItems($_SESSION['cart']),
+                    'message' => 'Cart data retrieved successfully.'
+                ];
+                break;
+
+            case 'apply_coupon':
+                $coupon_code = trim($_POST['coupon_code'] ?? '');
+                $result = applyCoupon($conn, $coupon_code);
+                $response = $result;
+                break;
+
+            case 'remove_coupon':
+                $result = removeCoupon();
+                $response = $result;
+                break;
+
+            default:
+                $response['message'] = 'Unknown action requested.';
+                break;
+        }
+    } catch (Exception $e) {
+        error_log('Cart AJAX Error: ' . $e->getMessage());
+        $response = [
+            'success' => false,
+            'message' => 'An error occurred processing your request. Please try again.',
+            'cart_count' => countCartItems($_SESSION['cart'])
+        ];
     }
 }
 
 echo json_encode($response);
-?>
+
+// Note: All cart helper functions (countCartItems, validateProduct, addToCart, etc.)
+// are defined in includes/cart_functions.php which is loaded via bootstrap.php
+
+// Sync user cart on login if needed
+if (isset($_SESSION['user_id'])) {
+    syncUserCartOnLogin($conn, $_SESSION['user_id']);
+}
+
+// Track abandoned cart after any cart operation
+if (!empty($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+    $email = $_SESSION['user_email'] ?? null;
+    saveAbandonedCart($conn, $_SESSION['cart'], $email);
+}
+
+if (basename(__FILE__) === basename($_SERVER['SCRIPT_NAME'])) {
+    // Only close if this is the main script being executed
+    $conn->close();
+}
+// No closing PHP tag - prevents accidental whitespace output

@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_category'])) {
                 if ($stmt = $conn->prepare($sql)) {
                     $stmt->bind_param("i", $id_to_delete);
                     if ($stmt->execute()) {
-                        $_SESSION['success_message'] = "Category deleted successfully!";
+                        $_SESSION['toast_message'] = ['message' => 'Category deleted successfully!', 'type' => 'success'];
                         header("Location: categories.php");
                         exit();
                     } else { // Fallback error if deletion fails for other reasons
@@ -214,10 +214,23 @@ function confirmDelete(id, name, type) {
     const message = `Are you sure you want to delete the ${type} "${name}"?`;
     document.getElementById('deleteMessage').textContent = message;
     document.getElementById('deleteId').value = id;
+    document.getElementById('deleteModal').classList.remove('hidden');
     document.getElementById('deleteModal').style.display = 'block';
 }
 
 function closeDeleteModal() {
+    document.getElementById('deleteModal').classList.add('hidden');
     document.getElementById('deleteModal').style.display = 'none';
 }
+
+// Prevent form from submitting multiple times
+document.getElementById('deleteForm')?.addEventListener('submit', function(e) {
+    const submitBtn = this.querySelector('button[type="submit"]');
+    if (submitBtn.disabled) {
+        e.preventDefault();
+        return false;
+    }
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Deleting...';
+});
 </script>

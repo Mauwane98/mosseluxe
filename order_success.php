@@ -1,88 +1,113 @@
 <?php
 $pageTitle = "Order Success - Mossé Luxe";
-require_once __DIR__ . '/includes/bootstrap.php';
-require_once 'includes/header.php';
+require_once 'includes/bootstrap.php';
+require_once 'includes/loyalty_functions.php';
 
-$order_id = filter_var($_GET['order_id'] ?? null, FILTER_SANITIZE_NUMBER_INT);
-$order_details = null;
-$order_items = [];
+$conn = get_db_connection();
+$order_id = $_GET['order_id'] ?? null;
+$points_earned = 0;
 
-if ($order_id) {
-    $conn = get_db_connection();
-
-    // Fetch order details
-    $stmt = $conn->prepare("SELECT id, total_price, status, created_at FROM orders WHERE id = ?");
-    $stmt->bind_param("i", $order_id);
+// Award loyalty points for this order
+if ($order_id && isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    
+    // Get order total
+    $stmt = $conn->prepare("SELECT total FROM orders WHERE id = ? AND user_id = ?");
+    $stmt->bind_param("ii", $order_id, $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
+    
     if ($result->num_rows > 0) {
-        $order_details = $result->fetch_assoc();
+        $order = $result->fetch_assoc();
+        $order_total = $order['total'];
+        
+        // Check if points already awarded
+        $stmt2 = $conn->prepare("SELECT id FROM loyalty_transactions WHERE reference_type = 'order' AND reference_id = ?");
+        $stmt2->bind_param("i", $order_id);
+        $stmt2->execute();
+        $check_result = $stmt2->get_result();
+        
+        if ($check_result->num_rows == 0) {
+            // Award points
+            awardPurchasePoints($conn, $user_id, $order_id, $order_total);
+            $points_earned = floor($order_total * POINTS_PER_RAND);
+        }
+        $stmt2->close();
     }
     $stmt->close();
-
-    // Fetch order items
-    $stmt_items = $conn->prepare("SELECT oi.quantity, oi.price, p.name, p.image FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ?");
-    $stmt_items->bind_param("i", $order_id);
-    $stmt_items->execute();
-    $result_items = $stmt_items->get_result();
-    while ($row = $result_items->fetch_assoc()) {
-        $order_items[] = $row;
-    }
-    $stmt_items->close();
-
-    $conn->close();
 }
+
+// Clear the cart after a successful order
+if (isset($_SESSION['cart'])) {
+    unset($_SESSION['cart']);
+}
+
+// If the user is logged in, also clear their cart from the database
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    $stmt = $conn->prepare("DELETE FROM user_carts WHERE user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $stmt->close();
+}
+
+require_once 'includes/header.php';
+
 ?>
 
 <main>
-    <div class="container mx-auto px-4 py-16 md:py-24 text-center">
-        <?php if ($order_details): ?>
-            <svg class="mx-auto h-16 w-16 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <h1 class="mt-4 text-4xl md:text-6xl font-black uppercase tracking-tighter text-green-600">Order Successful!</h1>
-            <p class="mt-4 text-lg text-black/70">Thank you for your purchase. Your order <?php echo htmlspecialchars(get_order_id_from_numeric_id($order_details['id'])); ?> has been placed successfully.</p>
-            <p class="text-lg text-black/70">A confirmation email has been sent to your inbox.</p>
+    <div class="container mx-auto px-4 py-16 md:py-24">
+        <div class="max-w-2xl mx-auto text-center">
+            <div class="mb-8">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-4">Order Confirmed!</h1>
+                <p class="text-lg text-black/70 mb-4">
+                    Thank you for your order. We've received your payment and are processing your items.
+                </p>
+                
+                <?php if ($points_earned > 0): ?>
+                    <div class="inline-block bg-gradient-to-r from-purple-100 to-blue-100 border-2 border-purple-300 rounded-lg px-6 py-3 mb-4">
+                        <p class="text-sm text-purple-800 mb-1">🎁 Loyalty Rewards</p>
+                        <p class="text-2xl font-bold text-purple-900">+<?php echo number_format($points_earned); ?> Points Earned!</p>
+                        <p class="text-sm text-purple-700">Check your <a href="loyalty.php" class="underline font-semibold">rewards dashboard</a></p>
+                    </div>
+                <?php endif; ?>
+            </div>
 
-            <div class="mt-12 bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
                 <h2 class="text-2xl font-bold mb-4">Order Summary</h2>
-                <div class="border-b border-gray-200 pb-4 mb-4">
-                    <?php foreach ($order_items as $item): ?>
-                        <div class="flex justify-between text-base text-gray-900 mb-2">
-                            <p><?php echo htmlspecialchars($item['name']); ?> (x<?php echo $item['quantity']; ?>)</p>
-                            <p>R <?php echo number_format($item['price'] * $item['quantity'], 2); ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-                <div class="flex justify-between text-base text-gray-900 mb-2">
-                    <p>Total Paid</p>
-                    <p>R <?php echo number_format($order_details['total_price'], 2); ?></p>
-                </div>
-                <div class="flex justify-between text-base text-gray-900">
-                    <p>Order Status</p>
-                    <p><?php echo htmlspecialchars($order_details['status']); ?></p>
+                <div class="space-y-2 text-left">
+                    <div class="flex justify-between">
+                        <span>Order Number:</span>
+                        <span class="font-semibold"><?php echo htmlspecialchars($order_id); ?></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Status:</span>
+                        <span class="font-semibold text-green-600">Payment Confirmed</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="mt-12 flex justify-center space-x-4">
-                <a href="my_account.php?view=orders" class="text-lg font-semibold text-black border-b-2 border-black hover:border-transparent transition-colors">
-                    View Your Orders
-                </a>
-                <a href="shop.php" class="text-lg font-semibold text-black border-b-2 border-black hover:border-transparent transition-colors">
-                    Continue Shopping
-                </a>
-            </div>
+            <div class="space-y-4">
+                <p class="text-black/70">
+                    We'll send you an email confirmation with tracking information once your order ships.
+                </p>
 
-        <?php else: ?>
-            <h1 class="mt-4 text-4xl md:text-6xl font-black uppercase tracking-tighter text-red-600">Order Not Found</h1>
-            <p class="mt-4 text-lg text-black/70">We could not find details for your order. Please check your account or contact support.</p>
-            <div class="mt-12">
-                <a href="shop.php" class="text-lg font-semibold text-black border-b-2 border-black hover:border-transparent transition-colors">
-                    Continue Shopping
-                </a>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="shop.php" class="bg-black text-white px-8 py-3 rounded-md font-semibold hover:bg-black/80 transition-colors">
+                        Continue Shopping
+                    </a>
+                    <a href="my_account.php" class="border border-black text-black px-8 py-3 rounded-md font-semibold hover:bg-gray-50 transition-colors">
+                        View My Orders
+                    </a>
+                </div>
             </div>
-        <?php endif; ?>
+        </div>
     </div>
 </main>
 
-<?php
-require_once 'includes/footer.php';
-?>
+<?php require_once 'includes/footer.php'; ?>

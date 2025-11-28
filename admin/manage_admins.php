@@ -70,9 +70,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_admin'])) {
 
         if (empty($delete_admin_error)) {
             // Check if this is the last admin
-            $sql_count = "SELECT COUNT(*) as admin_count FROM users WHERE role = 'admin'";
-            $result_count = $conn->query($sql_count);
+            $sql_count = "SELECT COUNT(*) as admin_count FROM users WHERE role = ?";
+            $stmt_count = $conn->prepare($sql_count);
+            $role_admin = 'admin';
+            $stmt_count->bind_param("s", $role_admin);
+            $stmt_count->execute();
+            $result_count = $stmt_count->get_result();
             $admin_count = $result_count->fetch_assoc()['admin_count'];
+            $stmt_count->close();
 
             if ($admin_count <= 1) {
                 $delete_admin_error = "Cannot delete the last remaining admin account.";
@@ -119,7 +124,7 @@ include 'header.php';
 
         <?php if(!empty($add_admin_error)): ?>
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-                <?php echo $add_admin_error; ?>
+                <?php echo htmlspecialchars($add_admin_error); ?>
             </div>
         <?php endif; ?>
 
@@ -158,7 +163,7 @@ include 'header.php';
 
         <?php if(!empty($delete_admin_error)): ?>
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-                <?php echo $delete_admin_error; ?>
+                <?php echo htmlspecialchars($delete_admin_error); ?>
             </div>
         <?php endif; ?>
 

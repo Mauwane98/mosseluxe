@@ -113,4 +113,11 @@ class ImageService {
 
         return $relative_path;
     }
+
+    public static function getImagePath($image_path) {
+        if (empty($image_path) || !file_exists(ABSPATH . '/' . $image_path)) {
+            return 'assets/images/product-placeholder.png';
+        }
+        return $image_path;
+    }
 }

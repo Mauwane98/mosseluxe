@@ -76,6 +76,21 @@ try {
         }
         $stmt_items->close();
 
+        // Clear the user's cart
+        $user_id_to_clear = $order_full['user_id'];
+        if ($user_id_to_clear) {
+            // Clear from database
+            $stmt_clear_cart = $conn->prepare("DELETE FROM user_carts WHERE user_id = ?");
+            $stmt_clear_cart->bind_param("i", $user_id_to_clear);
+            $stmt_clear_cart->execute();
+            $stmt_clear_cart->close();
+
+            // If the session user matches, clear the session cart too
+            if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $user_id_to_clear) {
+                unset($_SESSION['cart']);
+            }
+        }
+        
         // Send confirmation emails for successful payments
         require_once __DIR__ . '/includes/notification_service.php';
 

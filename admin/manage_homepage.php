@@ -1,5 +1,6 @@
 <?php
 require_once 'bootstrap.php';
+require_once '../includes/image_service.php';
 $conn = get_db_connection();
 
 // Get all pages for dropdown

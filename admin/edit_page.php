@@ -45,9 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $title = trim($_POST['title']);
     $subtitle = trim($_POST['subtitle']);
+    $meta_title = trim($_POST['meta_title']);
+    $meta_description = trim($_POST['meta_description']);
     $content = trim($_POST['content']);
 
-    // Only content is required, title and subtitle are optional
+    // Only content is required, others are optional
     if (empty($content)) {
         $_SESSION['toast_message'] = ['message' => 'Content cannot be empty.', 'type' => 'error'];
         header("Location: " . $_SERVER['REQUEST_URI']); // Redirect back to the same page
@@ -56,16 +58,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($is_editing) {
         // Update existing page
-        $sql = "UPDATE pages SET title = ?, subtitle = ?, content = ? WHERE id = ?";
+        $sql = "UPDATE pages SET title = ?, subtitle = ?, meta_title = ?, meta_description = ?, content = ?, updated_at = NOW() WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('sssi', $title, $subtitle, $content, $page_id);
+        $stmt->bind_param('sssssi', $title, $subtitle, $meta_title, $meta_description, $content, $page_id);
         $success_message = 'Page updated successfully!';
     } else {
         // Create new page
         $slug = generate_slug($title, $conn);
-        $sql = "INSERT INTO pages (title, slug, subtitle, content) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO pages (title, slug, subtitle, meta_title, meta_description, content) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ssss', $title, $slug, $subtitle, $content);
+        $stmt->bind_param('ssssss', $title, $slug, $subtitle, $meta_title, $meta_description, $content);
         $success_message = 'Page created successfully!';
     }
 
@@ -89,7 +91,7 @@ $page = [
 ];
 
 if ($is_editing) {
-    $stmt = $conn->prepare("SELECT id, title, subtitle, slug, content FROM pages WHERE id = ?");
+    $stmt = $conn->prepare("SELECT id, title, subtitle, slug, meta_title, meta_description, content FROM pages WHERE id = ?");
     $stmt->bind_param('i', $page_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -146,6 +148,25 @@ include 'header.php';
                        value="<?php echo htmlspecialchars($page['subtitle'] ?? ''); ?>"
                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                        placeholder="Optional subtitle that appears under the title">
+            </div>
+
+            <!-- Meta Title -->
+            <div class="md:col-span-2">
+                <label for="meta_title" class="block text-sm font-medium text-gray-700 mb-2">Meta Title <span class="text-gray-500 text-xs">(for SEO)</span></label>
+                <input type="text" id="meta_title" name="meta_title"
+                       value="<?php echo htmlspecialchars($page['meta_title'] ?? ''); ?>"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                       placeholder="Optional meta title for search engines">
+                <p class="text-xs text-gray-500 mt-1">If empty, page title will be used.</p>
+            </div>
+
+            <!-- Meta Description -->
+            <div class="md:col-span-2">
+                <label for="meta_description" class="block text-sm font-medium text-gray-700 mb-2">Meta Description <span class="text-gray-500 text-xs">(for SEO)</span></label>
+                <textarea id="meta_description" name="meta_description"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black h-20 resize-vertical"
+                          placeholder="Optional meta description for search engines"><?php echo htmlspecialchars($page['meta_description'] ?? ''); ?></textarea>
+                <p class="text-xs text-gray-500 mt-1">Brief description for search engine results, max 160 characters.</p>
             </div>
 
             <?php if ($is_editing): ?>

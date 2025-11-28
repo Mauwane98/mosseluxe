@@ -203,9 +203,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const selectedIds = Array.from(document.querySelectorAll('.product-checkbox:checked')).map(cb => cb.value);
             if (selectedIds.length === 0) return;
 
-            if (confirm(`Are you sure you want to publish ${selectedIds.length} selected products?`)) {
-                bulkUpdateStatus(selectedIds, 1);
-            }
+            window.showConfirm(
+                `Are you sure you want to publish ${selectedIds.length} selected products?`,
+                'Publish Products',
+                { confirmText: 'Publish', cancelText: 'Cancel', type: 'info' }
+            ).then(confirmed => {
+                if (confirmed) bulkUpdateStatus(selectedIds, 1);
+            });
         });
     }
 
@@ -216,9 +220,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const selectedIds = Array.from(document.querySelectorAll('.product-checkbox:checked')).map(cb => cb.value);
             if (selectedIds.length === 0) return;
 
-            if (confirm(`Are you sure you want to move ${selectedIds.length} selected products to draft?`)) {
-                bulkUpdateStatus(selectedIds, 0);
-            }
+            window.showConfirm(
+                `Are you sure you want to move ${selectedIds.length} selected products to draft?`,
+                'Move to Draft',
+                { confirmText: 'Move to Draft', cancelText: 'Cancel', type: 'warning' }
+            ).then(confirmed => {
+                if (confirmed) bulkUpdateStatus(selectedIds, 0);
+            });
         });
     }
 
@@ -229,9 +237,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const selectedIds = Array.from(document.querySelectorAll('.product-checkbox:checked')).map(cb => cb.value);
             if (selectedIds.length === 0) return;
 
-            if (confirm(`Are you sure you want to delete ${selectedIds.length} selected products? This action cannot be undone.`)) {
-                bulkDeleteProducts(selectedIds);
-            }
+            window.showConfirm(
+                `Are you sure you want to delete ${selectedIds.length} selected products? This action cannot be undone.`,
+                'Delete Products',
+                { confirmText: 'Delete', cancelText: 'Cancel', type: 'danger' }
+            ).then(confirmed => {
+                if (confirmed) bulkDeleteProducts(selectedIds);
+            });
         });
     }
 
@@ -387,9 +399,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            if (confirm(`Are you sure you want to change the status of ${selectedIds.length} selected orders to "${newStatus}"?`)) {
-                bulkUpdateOrderStatus(selectedIds, newStatus);
-            }
+            window.showConfirm(
+                `Are you sure you want to change the status of ${selectedIds.length} selected orders to "${newStatus}"?`,
+                'Update Order Status',
+                { confirmText: 'Update Status', cancelText: 'Cancel', type: 'info' }
+            ).then(confirmed => {
+                if (confirmed) bulkUpdateOrderStatus(selectedIds, newStatus);
+            });
         });
     }
 

@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/bootstrap.php';
+require_once __DIR__ . '/../includes/rate_limiter.php';
 $conn = get_db_connection();
 
 // If an admin is already logged in, redirect them to the dashboard
@@ -14,7 +15,13 @@ $csrf_token = generate_csrf_token();
 
 // Process login form when submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+    // Rate limiting check
+    $ip_address = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    $rate_check = RateLimiter::check('admin_login', $ip_address, 5, 900); // 5 attempts per 15 minutes
+    
+    if (!$rate_check['allowed']) {
+        $error = $rate_check['message'];
+    } elseif (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
         $error = 'Invalid security token. Please try again.';
     } else {
         $email = trim($_POST['email']);
@@ -40,7 +47,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $stmt->bind_result($id, $name, $email, $hashed_password, $role);
                         if ($stmt->fetch()) {
                             if (password_verify($password, $hashed_password)) {
-                                // Password is correct, so start a new session
+                                // Password is correct, reset rate limit
+                                RateLimiter::reset('admin_login', $ip_address);
+                                
+                                // Start a new session
                                 session_regenerate_id();
                                 
                                 // Store data in session variables
@@ -85,9 +95,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h1 class="text-2xl font-black uppercase tracking-tighter mt-4">Admin Login</h1>
             </div>
             <?php if(!empty($error)): ?>
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert"><?php echo $error; ?></div>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert"><?php echo htmlspecialchars($error); ?></div>
             <?php endif; ?>
-            <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
+            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
             <div class="mb-4"><label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label><input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" name="email" placeholder="Email"></div>
             <div class="mb-6"><label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label><input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" name="password" placeholder="******************"></div>
             <div class="flex items-center justify-between"><button class="bg-black hover:bg-black/80 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" type="submit">Sign In</button></div>

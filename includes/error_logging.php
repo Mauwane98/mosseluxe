@@ -14,7 +14,7 @@ if (APP_ENV === 'production') {
     ini_set('error_log', __DIR__ . '/../logs/php_errors.log');
 
     // Set error reporting level for production
-    error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
+    error_reporting(E_ALL);
 } else {
     // Development settings - show all errors
     ini_set('display_errors', '1');
@@ -181,4 +181,4 @@ foreach ($log_files as $log_file) {
     }
 }
 
-?>
+// No closing PHP tag - prevents accidental whitespace output

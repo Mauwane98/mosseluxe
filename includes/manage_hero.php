@@ -180,4 +180,4 @@ include 'header.php';
     </div>
 </div>
 
-<?php include 'footer.php'; ?>
+<?php include 'footer.php'; // No closing PHP tag - prevents accidental whitespace output

@@ -1,0 +1,47 @@
+MULTI-LAYER TESTING SYSTEM REPORT
+=====================================
+
+Overall Status: FAIL
+Date: 2025-11-21T06:56:27.293Z
+
+TEST COMPONENTS:
+----------------
+✅ Cypress → E2E Browser Automation
+✅ Percy → Visual Screenshot Comparison
+✅ Postman → API Testing Collection
+✅ Pa11y → Accessibility Checking
+✅ PageSpeed Insights → Performance Monitoring
+
+EXECUTED TESTS:
+---------------
+Accessibility (Pa11y): FAIL
+♿ ACCESSIBILITY TEST RESULTS
+==================================================
+
+Total Issues: 20
+Critical Issues: 20
+Warnings: 0
+
+Homepage:
+  Issues: 4
+  - error: This button element does not have a name available to an accessibility API. Valid names are: title undefined, element content, aria-label undefined, aria-labelledby undefined.
+
+Performance (PSI): FAIL
+⚡ PERFORMANCE TEST RESULTS (Lighthouse)
+============================================================
+
+📱 MOBILE PERFORMANCE:
+------------------------------
+Homepage: Failed to load
+
+Shop Page: Failed to load
+
+Cart Page: Failed to load
+
+NEXT STEPS:
+-----------
+1. Review detailed reports in test-results/ directory
+2. Fix any failing tests
+3. Import Postman collection for API testing
+4. Upload Percy snapshots to cloud for comparison
+5. Set up CI/CD pipeline with these tests

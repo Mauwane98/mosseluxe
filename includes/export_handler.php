@@ -545,4 +545,4 @@ class ExportHandler {
     }
 }
 
-?>
+// No closing PHP tag - prevents accidental whitespace output

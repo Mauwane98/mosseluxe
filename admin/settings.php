@@ -26,9 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $store_phone = trim($_POST['store_phone']);
     $store_address = trim($_POST['store_address']);
     $hero_buttons_enabled = isset($_POST['hero_buttons_enabled']) ? 1 : 0;
+    $footer_company_title = trim($_POST['footer_company_title']);
+    $footer_help_title = trim($_POST['footer_help_title']);
+    $footer_legal_title = trim($_POST['footer_legal_title']);
+    $footer_follow_title = trim($_POST['footer_follow_title']);
 
     // Input Validation
-    if (empty($store_name) || empty($store_phone) || empty($store_address) || !filter_var($store_email, FILTER_VALIDATE_EMAIL)) {
+    if (empty($store_name) || empty($store_phone) || empty($store_address) || !filter_var($store_email, FILTER_VALIDATE_EMAIL) ||
+        empty($footer_company_title) || empty($footer_help_title) || empty($footer_legal_title) || empty($footer_follow_title)) {
         $_SESSION['toast_message'] = ['message' => 'Please fill all required fields with valid data.', 'type' => 'error'];
         header('Location: settings.php');
         exit;
@@ -40,6 +45,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'store_phone' => $store_phone,
         'store_address' => $store_address,
         'hero_buttons_enabled' => $hero_buttons_enabled,
+        'footer_company_title' => $footer_company_title,
+        'footer_help_title' => $footer_help_title,
+        'footer_legal_title' => $footer_legal_title,
+        'footer_follow_title' => $footer_follow_title,
     ];
 
     foreach ($settings_to_update as $key => $value) {
@@ -111,6 +120,41 @@ include 'header.php';
                 <div class="ml-3">
                     <label for="hero_buttons_enabled" class="text-sm font-medium text-gray-700">Enable Hero Slider Buttons</label>
                     <p class="text-sm text-gray-500">Allow hero slide buttons to appear at the bottom of the hero carousel</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Settings -->
+        <div class="border-t pt-6">
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Footer Settings</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Footer Company Title -->
+                <div>
+                    <label for="footer_company_title" class="block text-sm font-medium text-gray-700 mb-2">Footer Company Title</label>
+                    <input type="text" id="footer_company_title" name="footer_company_title" value="<?php echo htmlspecialchars($settings['footer_company_title'] ?? 'Company'); ?>" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                </div>
+
+                <!-- Footer Help Title -->
+                <div>
+                    <label for="footer_help_title" class="block text-sm font-medium text-gray-700 mb-2">Footer Help Title</label>
+                    <input type="text" id="footer_help_title" name="footer_help_title" value="<?php echo htmlspecialchars($settings['footer_help_title'] ?? 'Help'); ?>" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                </div>
+
+                <!-- Footer Legal Title -->
+                <div>
+                    <label for="footer_legal_title" class="block text-sm font-medium text-gray-700 mb-2">Footer Legal Title</label>
+                    <input type="text" id="footer_legal_title" name="footer_legal_title" value="<?php echo htmlspecialchars($settings['footer_legal_title'] ?? 'Legal'); ?>" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                </div>
+
+                <!-- Footer Follow Title -->
+                <div>
+                    <label for="footer_follow_title" class="block text-sm font-medium text-gray-700 mb-2">Footer Follow Title</label>
+                    <input type="text" id="footer_follow_title" name="footer_follow_title" value="<?php echo htmlspecialchars($settings['footer_follow_title'] ?? 'Follow Us'); ?>" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
                 </div>
             </div>
         </div>

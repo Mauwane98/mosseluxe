@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Wishlist AJAX</title>
+</head>
+<body>
+    <h2>Wishlist AJAX Test</h2>
+    <button onclick="testAdd()">Test Add to Wishlist</button>
+    <button onclick="testCheck()">Test Check Wishlist</button>
+    <pre id="output"></pre>
+
+    <script>
+        const output = document.getElementById('output');
+        
+        async function testAdd() {
+            output.textContent = 'Testing ADD action...\n\n';
+            
+            try {
+                const formData = new FormData();
+                formData.append('action', 'add');
+                formData.append('product_id', '1');
+                formData.append('csrf_token', 'test');
+                
+                const response = await fetch('wishlist_actions.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                output.textContent += 'Status: ' + response.status + '\n';
+                output.textContent += 'Content-Type: ' + response.headers.get('content-type') + '\n\n';
+                
+                const text = await response.text();
+                output.textContent += 'Raw Response:\n' + text + '\n\n';
+                
+                try {
+                    const json = JSON.parse(text);
+                    output.textContent += 'Parsed JSON:\n' + JSON.stringify(json, null, 2);
+                } catch (e) {
+                    output.textContent += 'JSON Parse Error: ' + e.message + '\n';
+                    output.textContent += 'First 200 chars: ' + text.substring(0, 200);
+                }
+            } catch (error) {
+                output.textContent += 'Fetch Error: ' + error.message;
+            }
+        }
+        
+        async function testCheck() {
+            output.textContent = 'Testing CHECK action...\n\n';
+            
+            try {
+                const response = await fetch('wishlist_actions.php?action=check&product_id=1');
+                
+                output.textContent += 'Status: ' + response.status + '\n';
+                output.textContent += 'Content-Type: ' + response.headers.get('content-type') + '\n\n';
+                
+                const text = await response.text();
+                output.textContent += 'Raw Response:\n' + text + '\n\n';
+                
+                try {
+                    const json = JSON.parse(text);
+                    output.textContent += 'Parsed JSON:\n' + JSON.stringify(json, null, 2);
+                } catch (e) {
+                    output.textContent += 'JSON Parse Error: ' + e.message + '\n';
+                    output.textContent += 'First 200 chars: ' + text.substring(0, 200);
+                }
+            } catch (error) {
+                output.textContent += 'Fetch Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

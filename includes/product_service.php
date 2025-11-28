@@ -325,4 +325,4 @@ function search_products($query, $limit = 50) {
     $stmt->close();
     return $products;
 }
-?>
+// No closing PHP tag - prevents accidental whitespace output

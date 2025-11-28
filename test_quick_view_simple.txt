@@ -1,0 +1,48 @@
+================================================================================
+QUICK VIEW - SIMPLE TEST
+================================================================================
+
+STEP 1: Open shop page
+  http://localhost:8080/shop.php
+
+STEP 2: Open console (F12)
+
+STEP 3: Type this command and press Enter:
+  window.QuickViewInstance
+
+EXPECTED RESULT:
+  QuickView {modal: div#quick-view-modal, container: div#quick-view-container}
+
+IF YOU SEE "undefined":
+  → quick-view.js not loaded or not initialized
+  → Check Network tab for 404 errors
+
+STEP 4: Type this command:
+  window.QuickViewInstance.open(1)
+
+EXPECTED RESULT:
+  → Modal should appear immediately
+  → Console shows: "Opening quick view for product: 1"
+  → Console shows: "Modal should be visible now"
+
+IF MODAL APPEARS:
+  ✓ JavaScript is working
+  ✓ Problem is with button clicks
+  ✓ Need to fix event handlers
+
+IF MODAL DOESN'T APPEAR:
+  ✓ Check console for errors
+  ✓ Verify API endpoint exists
+  ✓ Check network tab
+
+STEP 5: Click eye icon on product card
+
+WHAT HAPPENS?
+  A) Nothing - no console messages
+  B) Page navigates to product page
+  C) Console shows messages but no modal
+  D) Modal appears!
+
+TELL ME WHICH ONE (A, B, C, or D)
+
+================================================================================

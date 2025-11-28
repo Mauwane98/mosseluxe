@@ -9,4 +9,4 @@ require_once __DIR__ . '/auth_service.php';
 
 // The checkAdmin method will handle verification and redirection if needed.
 Auth::checkAdmin();
-?>
+// No closing PHP tag - prevents accidental whitespace output

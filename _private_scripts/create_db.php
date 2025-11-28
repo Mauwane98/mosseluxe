@@ -10,8 +10,12 @@ try {
     $pdo = new PDO("mysql:host=$host", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Create database if it doesn't exist
-    $pdo->exec("CREATE DATABASE IF NOT EXISTS mosse_luxe_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci");
+    // Drop database if exists to avoid tablespace issues
+    $pdo->exec("DROP DATABASE IF EXISTS mosse_luxe_db");
+    echo "Database dropped.\n";
+
+    // Create database
+    $pdo->exec("CREATE DATABASE mosse_luxe_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci");
     echo "Database created successfully.\n";
 
     // Now connect to the database

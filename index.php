@@ -1,6 +1,21 @@
 <?php
 require_once 'includes/bootstrap.php';
 
+// Process referral link if present
+if (isset($_GET['ref'])) {
+    require_once 'includes/referral_service.php';
+    $referralService = new ReferralService();
+    $referral_processed = $referralService->processReferral($_GET['ref']);
+
+    if ($referral_processed) {
+        // Set a cookie to remember this referral for the session
+        setcookie('referral_link', '1', time() + 86400, '/'); // 24 hours
+        error_log("Referral link processed for code: " . $_GET['ref']);
+    } else {
+        error_log("Invalid referral code attempted: " . $_GET['ref']);
+    }
+}
+
 $pageTitle = "Mossé Luxe - Redefining Urban Luxury";
 
 $conn = get_db_connection();
@@ -273,7 +288,7 @@ include 'includes/header.php';
             <section class="py-24 md:py-32 bg-white">
                 <div class="container mx-auto px-4 md:px-6">
                     <h2 class="text-4xl md:text-5xl font-black text-center uppercase tracking-tighter mb-12 md:mb-16">
-                        Recently Viewed
+                        <?php echo htmlspecialchars($sections['recently_viewed']['title'] ?? 'Recently Viewed'); ?>
                     </h2>
 
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
@@ -385,14 +400,14 @@ include 'includes/header.php';
                             name="email"
                             placeholder="Enter your email" 
                             required 
+                            aria-label="Enter your email for the newsletter"
                             class="flex-grow p-3 bg-white border border-black/50 rounded-md text-black placeholder-black/50 focus:outline-none focus:ring-2 focus:ring-black"
                         >
-                        <button 
+                        <input 
                             type="submit" 
-                            class="bg-black text-white py-3 px-8 font-bold uppercase rounded-md hover:bg-black/80 transition-colors tracking-wider"
+                            value="<?php echo htmlspecialchars($newsletter['button_text']); ?>"
+                            class="bg-black text-white py-3 px-8 font-bold uppercase rounded-md hover:bg-black/80 transition-colors tracking-wider cursor-pointer"
                         >
-                            <?php echo htmlspecialchars($newsletter['button_text']); ?>
-                        </button>
                     </form>
                 </div>
             </section>
@@ -402,7 +417,7 @@ include 'includes/header.php';
             <?php foreach ($sections as $section_key => $section): ?>
                 <?php
                 // Skip sections already explicitly handled
-                if (in_array($section_key, ['hero_carousel', 'new_arrivals', 'brand_statement', 'newsletter'])) {
+                if (in_array($section_key, ['hero_carousel', 'new_arrivals', 'brand_statement', 'newsletter', 'recently_viewed'])) {
                     continue;
                 }
 
@@ -478,6 +493,51 @@ include 'includes/header.php';
 
         <!-- Cart Sidebar Overlay -->
         <div id="cart-sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40 transition-opacity duration-300" onclick="toggleCart()"></div>
+
+<script>
+/**
+ * Handles the quick add to cart functionality by calling the new REST API.
+ * This function replaces the old form submission logic.
+ *
+ * @param {number} productId The ID of the product to add.
+ */
+async function handleQuickAdd(productId) {
+    // You can add a loading indicator to the button here
+    
+    const csrfToken = document.querySelector('input[name="csrf_token"]').value;
+
+    try {
+        const baseUrl = window.SITE_URL || '/';
+        const apiUrl = baseUrl.endsWith('/') ? `${baseUrl}api/cart/items` : `${baseUrl}/api/cart/items`;
+        
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-Token': csrfToken // Sending CSRF token in a header is a good practice
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                quantity: 1
+            })
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+            // Use your existing functions to show success and update the UI
+            showToast(result.message, 'success');
+            updateCartCount(result.cart_count);
+        } else {
+            showToast(result.message || 'Could not add item to cart.', 'error');
+        }
+    } catch (error) {
+        console.error('Quick Add Error:', error);
+        showToast('An unexpected error occurred.', 'error');
+    }
+}
+</script>
 
 <?php
 require_once 'includes/footer.php';

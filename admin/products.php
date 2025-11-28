@@ -173,9 +173,9 @@ displayErrorMessage();
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900"><?php echo htmlspecialchars($product['name']); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                R<?php echo number_format($product['sale_price'] > 0 ? $product['sale_price'] : $product['price'], 2); ?>
+                                R<?php echo htmlspecialchars(number_format($product['sale_price'] > 0 ? $product['sale_price'] : $product['price'], 2)); ?>
                                 <?php if ($product['sale_price'] > 0): ?>
-                                    <span class="text-xs text-red-600 line-through">R<?php echo number_format($product['price'], 2); ?></span>
+                                    <span class="text-xs text-red-600 line-through">R<?php echo htmlspecialchars(number_format($product['price'], 2)); ?></span>
                                 <?php endif; ?>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
@@ -200,11 +200,14 @@ displayErrorMessage();
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <a href="edit_product.php?id=<?php echo $product['id']; ?>" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
-                                <form action="delete_product.php" method="post" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this product?');">
-                                    <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
-                                    <?php echo generate_csrf_token_input(); ?>
-                                    <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
-                                </form>
+                                <button data-action="delete"
+                                        data-item-type="product"
+                                        data-item-name="<?php echo htmlspecialchars($product['name']); ?>"
+                                        data-item-id="<?php echo $product['id']; ?>"
+                                        data-delete-url="delete_product.php"
+                                        class="text-red-600 hover:text-red-900">
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -136,9 +136,9 @@ function generate_organization_structured_data() {
             "contactType" => "customer service"
         ],
         "sameAs" => [
-            "https://www.facebook.com/mosseluxe",
-            "https://www.instagram.com/mosseluxe",
-            "https://www.twitter.com/mosseluxe"
+            FACEBOOK_URL,
+            INSTAGRAM_URL,
+            TWITTER_URL
         ]
     ];
 
@@ -465,4 +465,4 @@ function is_seo_friendly_url() {
 
     return false;
 }
-?>
+// No closing PHP tag - prevents accidental whitespace output

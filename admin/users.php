@@ -137,7 +137,14 @@ displayErrorMessage();
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><?php echo date('d M Y', strtotime($user['created_at'])); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <a href="edit_user.php?id=<?php echo $user['id']; ?>" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
-                                <button onclick="confirmDelete(<?php echo $user['id']; ?>, '<?php echo htmlspecialchars($user['name']); ?>', 'user')" class="text-red-600 hover:text-red-900">Delete</button>
+                                <button data-action="delete"
+                                        data-item-type="user"
+                                        data-item-name="<?php echo htmlspecialchars($user['name']); ?>"
+                                        data-item-id="<?php echo $user['id']; ?>"
+                                        data-delete-url="delete_user.php"
+                                        class="text-red-600 hover:text-red-900">
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -165,22 +172,6 @@ displayErrorMessage();
     <?php endif; ?>
 </div>
 
-<!-- Delete Confirmation Modal -->
-<div id="deleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
-    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-        <div class="mt-3">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Confirm Deletion</h3>
-            <p class="text-sm text-gray-500 mb-4" id="deleteMessage"></p>
-            <div class="flex justify-end space-x-4">
-                <button onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-colors">Cancel</button>
-                <form id="deleteForm" action="delete_user.php" method="POST" class="inline">
-                    <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
-                    <input type="hidden" name="id" id="deleteId">
-                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors">Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <?php include 'footer.php'; ?>

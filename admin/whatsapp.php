@@ -64,8 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // WhatsApp number from config - hardcoded for sidebar integration
 $whatsapp_number = '+27676162809';
 
-// TODO: Replace with actual WhatsApp Business API integration
-// For now, showing placeholder data structure for future API implementation
+// NOTE: WhatsApp Business API Integration Required
+// This page currently shows placeholder data. To enable full functionality:
+// 1. Sign up for WhatsApp Business API
+// 2. Implement the functions below with actual API calls
+// 3. Update the configuration with your API credentials
 $whatsapp_stats = [
     'total_conversations' => get_whatsapp_total_conversations(),
     'total_messages' => get_whatsapp_total_messages(),

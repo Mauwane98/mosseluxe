@@ -1,0 +1,51 @@
+<?php
+$uri = urldecode(
+    parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
+);
+
+// Strip subdirectory if present (e.g. /mosseluxe/)
+$scriptName = dirname($_SERVER['SCRIPT_NAME']);
+if ($scriptName !== '/' && strpos($uri, $scriptName) === 0) {
+    $uri = substr($uri, strlen($scriptName));
+}
+if ($uri === '') $uri = '/';
+
+// Serve static files directly (if this was run via PHP built-in server)
+// For Apache, .htaccess handles static files before reaching here
+if (php_sapi_name() === 'cli-server') {
+    if ($uri !== '/' && file_exists(__DIR__ . $uri)) {
+        return false;
+    }
+}
+
+// Handle /product/ID/SLUG
+if (preg_match('#^/product/([0-9]+)(?:/([^/]*))?$#', $uri, $matches)) {
+    $_GET['id'] = $matches[1];
+    include __DIR__ . '/product-details.php';
+    return;
+}
+
+// Handle /api/ROUTE
+if (preg_match('#^/api/(.*)$#', $uri, $matches)) {
+    $_GET['_route'] = $matches[1];
+    include __DIR__ . '/api/index.php';
+    return;
+}
+
+// Handle /slug -> /slug.php
+$slug_php = __DIR__ . $uri . '.php';
+if (file_exists($slug_php)) {
+    include $slug_php;
+    return;
+}
+
+// If it's just a slash, it's index.php
+if ($uri === '/') {
+    include __DIR__ . '/index.php';
+    return;
+}
+
+// 404
+http_response_code(404);
+include __DIR__ . '/404.php';
+?>

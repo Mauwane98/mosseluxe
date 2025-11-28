@@ -4,42 +4,50 @@ require_once __DIR__ . '/config.php';
 /**
  * Generates a unique, readable order ID
  * Format: MSL-YYYY-NNNNN (e.g., MSL-2024-00001)
+ * 
+ * Uses atomic counter table to prevent duplicates
  *
  * @return string The formatted order ID
+ * @throws Exception if unable to generate unique ID
  */
 function generate_order_id() {
-    // Get current year
-    $year = date('Y');
-
-    // Generate a 5-digit sequential number based on existing orders
     $conn = get_db_connection();
-
-    // Get the highest order number for this year
-    $stmt = $conn->prepare("
-        SELECT order_id FROM orders
-        WHERE order_id LIKE ?
-        ORDER BY CAST(SUBSTRING(order_id, 9) AS UNSIGNED) DESC
-        LIMIT 1
-    ");
-    $pattern = "MSL-{$year}-%";
-    $stmt->bind_param("s", $pattern);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    $next_number = 1;
-    if ($result->num_rows > 0) {
-        $last_order = $result->fetch_assoc()['order_id'];
-        // Extract the number part: MSL-2024-00001 -> 00001
-        $number_part = substr($last_order, -5);
-        $next_number = (int)$number_part + 1;
+    $year = date('Y');
+    
+    try {
+        // Ensure counter exists for current year
+        $stmt = $conn->prepare("INSERT IGNORE INTO order_counters (year, counter) VALUES (?, 0)");
+        $stmt->bind_param("i", $year);
+        $stmt->execute();
+        $stmt->close();
+        
+        // Atomically increment and get the next counter value
+        // This is thread-safe and prevents race conditions
+        $stmt = $conn->prepare("
+            UPDATE order_counters 
+            SET counter = LAST_INSERT_ID(counter + 1) 
+            WHERE year = ?
+        ");
+        $stmt->bind_param("i", $year);
+        $stmt->execute();
+        $stmt->close();
+        
+        // Get the incremented value
+        $result = $conn->query("SELECT LAST_INSERT_ID() as next_num");
+        $row = $result->fetch_assoc();
+        $next_number = $row['next_num'];
+        
+        // Format as 5-digit number with leading zeros
+        $formatted_number = str_pad($next_number, 5, '0', STR_PAD_LEFT);
+        
+        return "MSL-{$year}-{$formatted_number}";
+        
+    } catch (Exception $e) {
+        // Fallback to UUID-based order ID if counter fails
+        error_log("Order ID generation error: " . $e->getMessage());
+        $unique_id = strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 8));
+        return "MSL-{$year}-{$unique_id}";
     }
-
-    $stmt->close();
-
-    // Format as 5-digit number with leading zeros
-    $formatted_number = str_pad($next_number, 5, '0', STR_PAD_LEFT);
-
-    return "MSL-{$year}-{$formatted_number}";
 }
 
 /**
@@ -97,4 +105,4 @@ function get_order_id_from_numeric_id($numeric_id) {
     $stmt->close();
     return null;
 }
-?>
+// No closing PHP tag - prevents accidental whitespace output

@@ -1,20 +1,13 @@
 <?php
-require_once __DIR__ . '/includes/bootstrap.php'; // This includes db_connect.php, config.php, and csrf.php
-require_once __DIR__ . '/includes/notification_service.php'; // For email notifications
-require_once __DIR__ . '/includes/order_service.php'; // For order ID generation
+require_once __DIR__ . '/includes/bootstrap.php';
+require_once __DIR__ . '/includes/notification_service.php';
+require_once __DIR__ . '/includes/order_service.php';
 
-// Ensure SHIPPING_COST is defined
 if (!defined('SHIPPING_COST')) {
-    require_once __DIR__ . '/includes/config.php'; // Load config if not already loaded
+    require_once __DIR__ . '/includes/config.php';
 }
 
-$conn = get_db_connection();
-
-try {
-    // Get checkout data from AJAX POST request
-    $input = file_get_contents('php://input');
-    $data = json_decode($input, true);
-
+function create_order_for_yoco($conn, $data) {
     if (!$data) {
         throw new Exception('Invalid request data');
     }
@@ -28,7 +21,6 @@ try {
     $shipping_info = $data['shipping_info'] ?? [];
     $discount_data = $data['discount_data'] ?? null;
 
-    // Basic validation
     if (empty($cart_items) || $final_total <= 0) {
         throw new Exception('Invalid cart data or total');
     }
@@ -37,48 +29,68 @@ try {
         throw new Exception('Shipping information is required');
     }
 
-    // Start transaction
     $conn->begin_transaction();
-    $transaction_successful = true;
 
-    // Store shipping details in JSON format
     $shipping_address_json = json_encode($shipping_info);
+    
+    // Retry logic for order creation in case of duplicate order_id
+    $max_attempts = 3;
+    $attempt = 0;
+    $order_created = false;
+    $order_id = null;
+    $formatted_order_id = null;
 
-    // Generate proper order ID
-    $formatted_order_id = generate_order_id();
+    while ($attempt < $max_attempts && !$order_created) {
+        try {
+            $formatted_order_id = generate_order_id();
+            
+            // Check stock for all items
+            foreach ($cart_items as $product_id => $item) {
+                $stmt_stock = $conn->prepare("SELECT stock FROM products WHERE id = ? AND status = 1 FOR UPDATE");
+                $stmt_stock->bind_param("i", $product_id);
+                $stmt_stock->execute();
+                $result = $stmt_stock->get_result();
+                $product = $result->fetch_assoc();
+                $stmt_stock->close();
 
-    // Validate and reserve stock before creating order
-    $stock_validation_passed = true;
-    foreach ($cart_items as $product_id => $item) {
-        $stmt_stock = $conn->prepare("SELECT stock FROM products WHERE id = ? AND status = 1 FOR UPDATE");
-        $stmt_stock->bind_param("i", $product_id);
-        $stmt_stock->execute();
-        $result = $stmt_stock->get_result();
-        $product = $result->fetch_assoc();
-        $stmt_stock->close();
+                if (!$product || $product['stock'] < $item['quantity']) {
+                    throw new Exception("Insufficient stock for one or more products.");
+                }
+            }
 
-        if (!$product || $product['stock'] < $item['quantity']) {
-            $stock_validation_passed = false;
-            break;
+            // Insert order
+            $order_status = 'Pending';
+            $stmt = $conn->prepare("INSERT INTO orders (user_id, order_id, total_price, status, shipping_address_json) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("isdss", $user_id, $formatted_order_id, $final_total, $order_status, $shipping_address_json);
+
+            if ($stmt->execute()) {
+                $order_id = $conn->insert_id;
+                $order_created = true;
+            } else {
+                // Check if it's a duplicate key error
+                if ($stmt->errno == 1062) { // Duplicate entry error
+                    $attempt++;
+                    if ($attempt >= $max_attempts) {
+                        throw new Exception("Unable to generate unique order ID after multiple attempts");
+                    }
+                    usleep(50000); // Wait 50ms before retry
+                } else {
+                    throw new Exception("Failed to create order: " . $stmt->error);
+                }
+            }
+            $stmt->close();
+            
+        } catch (Exception $e) {
+            if (strpos($e->getMessage(), 'Insufficient stock') !== false) {
+                throw $e; // Re-throw stock errors immediately
+            }
+            $attempt++;
+            if ($attempt >= $max_attempts) {
+                throw new Exception("Failed to create order after multiple attempts: " . $e->getMessage());
+            }
         }
     }
 
-    if (!$stock_validation_passed) {
-        throw new Exception("Insufficient stock for one or more products. Please update your cart.");
-    }
-
-    // Create a pending order in the database
-    $order_status = 'Pending';
-    $stmt = $conn->prepare("INSERT INTO orders (order_id, total_price, status, shipping_address_json) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssdss", $formatted_order_id, $user_id, $final_total, $order_status, $shipping_address_json);
-
-    if (!$stmt->execute()) {
-        throw new Exception("Failed to create order");
-    }
-    $order_id = $conn->insert_id;
-    $stmt->close();
-
-    // Insert order items and decrement stock
     foreach ($cart_items as $product_id => $item) {
         $stmt_item = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
         $stmt_item->bind_param("iiid", $order_id, $product_id, $item['quantity'], $item['price']);
@@ -86,15 +98,8 @@ try {
             throw new Exception("Failed to create order items");
         }
         $stmt_item->close();
-
-        // Decrement stock
-        $stmt_update_stock = $conn->prepare("UPDATE products SET stock = stock - ? WHERE id = ?");
-        $stmt_update_stock->bind_param("ii", $item['quantity'], $product_id);
-        $stmt_update_stock->execute();
-        $stmt_update_stock->close();
     }
 
-    // Update discount usage if applicable
     if ($discount_data) {
         $stmt_discount = $conn->prepare("UPDATE discount_codes SET usage_count = usage_count + 1 WHERE id = ?");
         $stmt_discount->bind_param("i", $discount_data['id']);
@@ -104,11 +109,9 @@ try {
 
     $conn->commit();
 
-    // Return order data for Yoco payment
-    // Yoco expects amount in cents (multiply by 100 for ZAR)
     $amount_in_cents = intval($final_total * 100);
 
-    echo json_encode([
+    return [
         'success' => true,
         'numeric_order_id' => $order_id,
         'formatted_order_id' => $formatted_order_id,
@@ -122,17 +125,27 @@ try {
             'numeric_order_id' => $order_id,
             'customer_email' => $shipping_info['email']
         ]
-    ]);
+    ];
+}
 
-} catch (Exception $e) {
-    if ($conn->connect_errno === null) {
-        $conn->rollback();
+// Handle direct AJAX request to this file
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && basename(__FILE__) === basename($_SERVER['SCRIPT_NAME'])) {
+    header('Content-Type: application/json');
+    $conn = get_db_connection();
+    try {
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true);
+        $result = create_order_for_yoco($conn, $data);
+        echo json_encode($result);
+    } catch (Exception $e) {
+        if ($conn->connect_errno === null) {
+            $conn->rollback();
+        }
+        http_response_code(400);
+        echo json_encode([
+            'success' => false,
+            'error' => $e->getMessage()
+        ]);
     }
-
-    http_response_code(400);
-    echo json_encode([
-        'success' => false,
-        'error' => $e->getMessage()
-    ]);
 }
 ?>

@@ -1,0 +1,64 @@
+{
+  "project_scan": {
+    "frontend_templates": [
+      "includes/header.php (nav, cart sidebar, mobile menu)",
+      "shop.php (product listing with filters, pagination)",
+      "product.php (product detail, gallery, variants, 360° basic)",
+      "cart.php (cart items list, subtotal, WhatsApp inquiry)",
+      "includes/footer.php (links in columns, social, copyright)"
+    ],
+    "product_controllers": [
+      "ajax_cart_handler.php (add/update/remove/get cart)",
+      "shop.php (listing with filters)",
+      "product.php (detail with images/variants)"
+    ],
+    "cart_handlers": [
+      "ajax_cart_handler.php",
+      "cart.php"
+    ],
+    "admin_features": [
+      "admin/products.php (CRUD products with images)",
+      "admin/pages.php (CMS pages)",
+      "admin/settings.php (site settings)"
+    ],
+    "database_tables": [
+      "products (name, description, price, category, stock, image, status, is_featured, created_at)",
+      "product_images (id, image_path, media_type, is_primary, variant_color, variant_size, sort_order, is_360_view)",
+      "categories (id, name, created_at)",
+      "settings (setting_key, setting_value)",
+      "users (id, email, password, role, ...)",
+      "orders (id, user_id, total_price, status, ...) - but limited",
+      "order_items (order_id, product_id, quantity, price)",
+      "user_carts (user_id, product_id, quantity) - for persistence",
+      "pages (title, slug, content, status)",
+      "subscribers, discount_codes, etc."
+    ],
+    "js_modules": [
+      "assets/js/cart.js (sidebar cart functionality)",
+      "assets/js/main.js (general functions)",
+      "shop.php inline JS (quick add, quantity)",
+      "product.php inline JS (gallery, 360°, variants)",
+      "cart.php inline JS (cart updates)"
+    ],
+    "pages_templates": [
+      "about.php, contact.php, privacy-policy.php, terms-of-service.php, shipping-returns.php, faq.php",
+      "Static pages"
+    ],
+    "missing_assets": [
+      "API endpoints (current system uses AJAX to php files, not REST API)",
+      "Chat widget (current WhatsApp sidebar, need interactive chat)",
+      "360° viewer library (current basic prev/next)"
+    ]
+  },
+  "required_fixes_additions": [
+    "Add missing DB columns (sku, slug, subtitle, currency to products)",
+    "Create product_images table with ENUM type column",
+    "Add product_variants table",
+    "Add carts and cart_items tables for full DB cart",
+    "Add orders_or_inquiries table for inquiries",
+    "Convert AJAX endpoints to REST API endpoints (/api/products, etc.)",
+    "Implement full 360° viewer with JS library",
+    "Add chat widget functionality (store messages in DB)",
+    "Fix any broken links, placeholders"
+  ]
+}

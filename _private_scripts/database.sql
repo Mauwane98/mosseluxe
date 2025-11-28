@@ -160,11 +160,14 @@ CREATE TABLE `product_reviews` (
   `user_id` int(11) NOT NULL,
   `rating` tinyint(1) NOT NULL,
   `review_text` text DEFAULT NULL,
+  `review_photos` JSON DEFAULT NULL COMMENT 'JSON array of photo URLs',
+  `verified_purchase` tinyint(1) NOT NULL DEFAULT 0 COMMENT '1=Verified purchaser',
   `is_approved` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_product_review` (`user_id`,`product_id`),
-  KEY `product_id` (`product_id`)
+  KEY `product_id` (`product_id`),
+  KEY `verified_purchase` (`verified_purchase`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -261,6 +264,96 @@ CREATE TABLE `wishlist` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_product` (`user_id`,`product_id`),
   KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Table structure for table `price_alerts`
+--
+DROP TABLE IF EXISTS `price_alerts`;
+CREATE TABLE `price_alerts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `alert_price` decimal(10,2) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `last_notified_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_product_alert` (`user_id`,`product_id`),
+  KEY `product_id` (`product_id`),
+  KEY `is_active` (`is_active`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Table structure for table `back_in_stock_alerts`
+--
+DROP TABLE IF EXISTS `back_in_stock_alerts`;
+CREATE TABLE `back_in_stock_alerts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `size_variant` varchar(50) DEFAULT NULL,
+  `color_variant` varchar(50) DEFAULT NULL,
+  `is_notified` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `notified_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_product_variant` (`user_id`,`product_id`,`size_variant`(20),`color_variant`(20)),
+  KEY `product_id` (`product_id`),
+  KEY `is_notified` (`is_notified`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Table structure for table `loyalty_points`
+--
+DROP TABLE IF EXISTS `loyalty_points`;
+CREATE TABLE `loyalty_points` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `points` int(11) NOT NULL DEFAULT 0,
+  `total_earned` int(11) NOT NULL DEFAULT 0,
+  `total_spent` int(11) NOT NULL DEFAULT 0,
+  `tier` enum('bronze','silver','gold','platinum') NOT NULL DEFAULT 'bronze',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Table structure for table `loyalty_transactions`
+--
+DROP TABLE IF EXISTS `loyalty_transactions`;
+CREATE TABLE `loyalty_transactions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `transaction_type` enum('earned','spent','expired') NOT NULL,
+  `points` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `reference_id` varchar(100) DEFAULT NULL,
+  `expires_at` datetime DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `transaction_type` (`transaction_type`),
+  KEY `expires_at` (`expires_at`),
+  KEY `reference_id` (`reference_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Table structure for table `loyalty_settings`
+--
+DROP TABLE IF EXISTS `loyalty_settings`;
+CREATE TABLE `loyalty_settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `setting_key` varchar(100) NOT NULL,
+  `setting_value` text,
+  `description` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `setting_key` (`setting_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 COMMIT;

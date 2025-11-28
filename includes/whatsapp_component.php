@@ -553,4 +553,4 @@ function generate_whatsapp_general_url() {
 function is_whatsapp_enabled() {
     return get_setting('whatsapp_enabled', '0') === '1';
 }
-?>
+// No closing PHP tag - prevents accidental whitespace output

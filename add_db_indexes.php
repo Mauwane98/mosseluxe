@@ -61,21 +61,21 @@ foreach ($indexes as $index_sql) {
 
         if ($result->num_rows == 0) {
             if ($conn->query($index_sql)) {
-                echo "✓ Added index: $index_name\n";
+                echo "✓ Added index: " . htmlspecialchars($index_name) . "\n";
                 $added++;
             } else {
-                echo "✗ Failed to add index: $index_name - " . $conn->error . "\n";
+                echo "✗ Failed to add index: " . htmlspecialchars($index_name) . " - " . htmlspecialchars($conn->error) . "\n";
             }
         } else {
-            echo "⚠ Index already exists: $index_name\n";
+            echo "⚠ Index already exists: " . htmlspecialchars($index_name) . "\n";
             $skipped++;
         }
     }
 }
 
 echo "\nIndex Summary:\n";
-echo "- Added: $added\n";
-echo "- Already existed: $skipped\n";
+echo "- Added: " . htmlspecialchars($added) . "\n";
+echo "- Already existed: " . htmlspecialchars($skipped) . "\n";
 
 $conn->close();
 ?>

@@ -11,3 +11,54 @@
 .idea/
 .vscode/
 *.DS_Store
+
+# Development and build artifacts
+*.log
+*.sql
+backup_*.sql
+*.zip
+*.md
+test_*_results/
+!README.md
+
+# Database files
+*.db
+/*.db
+*.sqlite
+*.sqlite3
+
+# Error logs
+logs/
+php-error.log
+error_log
+
+# Temporary and debug files
+temp_*
+debug_*
+comprehensive_*_debug.*
+final_*_test.*
+*_final_test.*
+*_test_simple.*
+*_comprehensive.*
+test_cart_*
+debug_add_to_cart.*
+
+# Reports and scans
+*_report.*
+*_scan.*
+*_scan_results.*
+analysis_report.md
+audit_report.md
+
+# Node modules (in case)
+/node_modules/
+
+# OS generated files
+Thumbs.db
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini

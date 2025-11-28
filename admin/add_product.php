@@ -3,11 +3,7 @@
 require_once 'bootstrap.php';
 $conn = get_db_connection();
 
-// Ensure admin is logged in
-if (!isset($_SESSION["admin_loggedin"]) || $_SESSION["admin_loggedin"] !== true) {
-    header("location: login.php");
-    exit;
-}
+// Note: Authentication is handled by bootstrap.php
 
 require_once '../includes/image_service.php';
 

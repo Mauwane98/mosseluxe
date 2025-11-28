@@ -20,10 +20,6 @@ class NotificationService {
             $mail->Password   = SMTP_PASSWORD;
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->Port       = SMTP_PORT;
-            $mail->SMTPDebug  = 2; // Enable debug output
-            $mail->Debugoutput = function($str, $level) {
-                error_log("SMTP Debug: $str");
-            };
 
             $mail->SMTPOptions = array(
                 'ssl' => array(
@@ -166,8 +162,26 @@ class NotificationService {
             $mail->SMTPAuth   = true;
             $mail->Username   = SMTP_USERNAME;
             $mail->Password   = SMTP_PASSWORD;
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // or PHPMailer::ENCRYPTION_SMTPS
+            
+            // Use appropriate encryption based on port
+            if (SMTP_PORT == 465) {
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // SSL for port 465
+            } elseif (SMTP_PORT == 587) {
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS for port 587
+            } else {
+                $mail->SMTPSecure = (SMTP_SECURE === 'tls') ? PHPMailer::ENCRYPTION_STARTTLS : PHPMailer::ENCRYPTION_SMTPS;
+            }
             $mail->Port       = SMTP_PORT;
+            
+            // SSL options for compatibility
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                    'ciphers' => 'HIGH:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!SRP:!CAMELLIA'
+                )
+            );
 
             //Recipients
             $mail->setFrom(SMTP_FROM_EMAIL, SMTP_FROM_NAME);
@@ -266,8 +280,26 @@ class NotificationService {
             $mail->SMTPAuth   = true;
             $mail->Username   = SMTP_USERNAME;
             $mail->Password   = SMTP_PASSWORD;
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            
+            // Use appropriate encryption based on port
+            if (SMTP_PORT == 465) {
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // SSL for port 465
+            } elseif (SMTP_PORT == 587) {
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS for port 587
+            } else {
+                $mail->SMTPSecure = (SMTP_SECURE === 'tls') ? PHPMailer::ENCRYPTION_STARTTLS : PHPMailer::ENCRYPTION_SMTPS;
+            }
             $mail->Port       = SMTP_PORT;
+            
+            // SSL options for compatibility
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                    'ciphers' => 'HIGH:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!SRP:!CAMELLIA'
+                )
+            );
 
             //Recipients - Send to admin email
             $mail->setFrom(SMTP_FROM_EMAIL, SMTP_FROM_NAME);
@@ -582,8 +614,26 @@ class NotificationService {
             $mail->SMTPAuth   = true;
             $mail->Username   = SMTP_USERNAME;
             $mail->Password   = SMTP_PASSWORD;
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            
+            // Use appropriate encryption based on port
+            if (SMTP_PORT == 465) {
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // SSL for port 465
+            } elseif (SMTP_PORT == 587) {
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // TLS for port 587
+            } else {
+                $mail->SMTPSecure = (SMTP_SECURE === 'tls') ? PHPMailer::ENCRYPTION_STARTTLS : PHPMailer::ENCRYPTION_SMTPS;
+            }
             $mail->Port       = SMTP_PORT;
+            
+            // SSL options for compatibility
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                    'ciphers' => 'HIGH:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!SRP:!CAMELLIA'
+                )
+            );
 
             //Recipients
             $mail->setFrom(SMTP_FROM_EMAIL, SMTP_FROM_NAME);

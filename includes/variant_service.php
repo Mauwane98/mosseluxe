@@ -294,4 +294,4 @@ function validate_variant_selection($product_id, $selected_variants = []) {
 
     return $errors;
 }
-?>
+// No closing PHP tag - prevents accidental whitespace output

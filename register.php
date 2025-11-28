@@ -82,7 +82,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
 
                 if ($stmt->execute()) {
-// Send welcome email to new user
+                    $new_user_id = $stmt->insert_id;
+
+                    // Process referral if this user came via referral link
+                    require_once __DIR__ . '/includes/referral_service.php';
+                    $referralService = new ReferralService();
+                    $referralProcessed = $referralService->linkReferralOnRegistration($new_user_id);
+
+                    if ($referralProcessed) {
+                        error_log("Referral linked successfully for new user " . $new_user_id);
+                    }
+
+                    // Send welcome email to new user
                     require_once __DIR__ . '/includes/notification_service.php';
                     $welcomeEmailSent = NotificationService::sendWelcomeEmail($name, $email);
 
@@ -113,7 +124,6 @@ require_once 'includes/header.php';
 ?>
 
 <!-- Main Content -->
-<main>
     <div class="container mx-auto px-4 py-16 md:py-24">
         <!-- Page Header -->
         <div class="text-center mb-16">
@@ -181,7 +191,6 @@ require_once 'includes/header.php';
             </div>
         </div>
     </div>
-</main>
 
 <?php
 require_once 'includes/footer.php';

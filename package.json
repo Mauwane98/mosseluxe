@@ -4,15 +4,38 @@
   "description": "This project is a rebuilt e-commerce website for the Mossé Luxe brand, designed with a modern luxury streetwear aesthetic.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build:css": "npx tailwindcss -i ./assets/css/tailwind.css -o ./assets/css/tailwind_output.css --minify"
+    "test": "node tests/run-full-suite.js",
+    "test:cypress": "npx cypress run --record=false --headless",
+    "test:accessibility": "node tests/accessibility-test.js",
+    "test:performance": "node tests/performance-test.js",
+    "test:full-suite": "concurrently --kill-others --success first \"npm run start-server\" \"wait-on http://localhost/mosseluxe && node tests/run-full-suite.js\"",
+    "cypress:open": "npx cypress open",
+    "build:css": "npx tailwindcss -i ./assets/css/tailwind.css -o ./assets/css/tailwind_output.css --minify",
+    "start-server": "php -S 127.0.0.1:8000 -t c:\\xamppp\\htdocs\\mosseluxe"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.0",
+    "@playwright/test": "^1.56.1",
     "autoprefixer": "^10.4.22",
+    "axe-core": "^4.11.0",
+    "axe-playwright": "^2.2.2",
+    "concurrently": "^9.2.1",
+    "cypress": "^15.6.0",
+    "dotenv": "^17.2.3",
+    "lighthouse": "^12.8.2",
+    "pa11y": "^9.0.1",
+    "playwright": "^1.56.1",
     "postcss": "^8.5.6",
-    "tailwindcss": "^3.0.0"
+    "tailwindcss": "^3.0.0",
+    "wait-on": "^9.0.3"
+  },
+  "dependencies": {
+    "photoswipe": "^5.4.4"
+  },
+  "directories": {
+    "test": "tests"
   }
 }

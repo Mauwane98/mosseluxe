@@ -1,0 +1,95 @@
+/**
+ * Desktop Scroll Fix
+ * Fixes scroll pad and scrolling issues
+ */
+
+/* Reset body and html scroll behavior */
+html {
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 100vh;
+}
+
+/* Fix for desktop scroll padding */
+@media (min-width: 768px) {
+    body {
+        padding-right: 0 !important;
+    }
+    
+    /* Ensure no horizontal scroll */
+    * {
+        max-width: 100%;
+    }
+    
+    /* Fix container overflow */
+    .container {
+        overflow-x: visible;
+    }
+}
+
+/* Smooth scrolling for all browsers */
+* {
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+    border: 2px solid #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+}
+
+/* Prevent layout shift when scrollbar appears/disappears */
+html {
+    overflow-y: scroll;
+}
+
+/* Fix for modals causing scroll issues */
+body.modal-open {
+    overflow: hidden;
+    padding-right: 0 !important;
+}
+
+/* Ensure main content doesn't cause horizontal scroll */
+main {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* Fix for images causing overflow */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Fix for wide elements */
+pre, code {
+    max-width: 100%;
+    overflow-x: auto;
+}
