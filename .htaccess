@@ -87,23 +87,71 @@
 # Disable directory browsing
 Options -Indexes
 
-# Protect sensitive files
+# Protect hidden files (including .env, .htaccess, .git)
 <FilesMatch "^\.">
-    Order allow,deny
-    Deny from all
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
 </FilesMatch>
 
-# Protect configuration files
-<FilesMatch "\.(env|ini|log|sh|sql|conf|config)$">
-    Order allow,deny
-    Deny from all
+# Protect configuration and sensitive files
+<FilesMatch "\.(env|ini|log|sh|sql|conf|config|bak|backup|old|orig|dist|example|lock|json|xml|yml|yaml)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Explicitly block .env file access (belt and suspenders)
+<Files ".env">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</Files>
+
+# Block composer files
+<FilesMatch "^composer\.(json|lock)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Block package files
+<FilesMatch "^package(-lock)?\.json$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
 </FilesMatch>
 
 # Protect specific directories
 RedirectMatch 403 ^/mosseluxe/logs/.*$
 RedirectMatch 403 ^/mosseluxe/_private_scripts/.*$
+RedirectMatch 403 ^/mosseluxe/_archive/.*$
+RedirectMatch 403 ^/mosseluxe/_dev_docs/.*$
+RedirectMatch 403 ^/mosseluxe/app/.*$
+RedirectMatch 403 ^/mosseluxe/views/.*$
 RedirectMatch 403 ^/mosseluxe/vendor/.*$
 RedirectMatch 403 ^/mosseluxe/node_modules/.*$
+RedirectMatch 403 ^/mosseluxe/includes/.*$
 
 # ============================================
 # URL REWRITING

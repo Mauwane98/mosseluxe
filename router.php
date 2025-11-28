@@ -60,11 +60,20 @@ try {
     die('Internal Server Error: Unable to process request URI');
 }
 
-// Handle /product/ID/SLUG
-if (preg_match('#^/product/([0-9]+)(?:/([^/]*))?$#', $uri, $matches)) {
+// Handle /product/ID/SLUG - Clean product URLs
+// Example: /product/123/classic-white-tee
+if (preg_match('#^/product/([0-9]+)(?:/([a-zA-Z0-9\-]*))?/?$#', $uri, $matches)) {
     try {
-        $_GET['id'] = $matches[1];
-        error_log("[" . date('Y-m-d H:i:s') . "] Loading product-details.php for ID: {$matches[1]}\n", 3, __DIR__ . '/logs/router_errors.log');
+        // Strict validation - only accept positive integers
+        $productId = filter_var($matches[1], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+        if ($productId === false) {
+            http_response_code(404);
+            include __DIR__ . '/404.php';
+            return;
+        }
+        
+        $_GET['id'] = $productId;
+        error_log("[" . date('Y-m-d H:i:s') . "] Loading product-details.php for ID: $productId\n", 3, __DIR__ . '/logs/router_errors.log');
         
         if (!file_exists(__DIR__ . '/product-details.php')) {
             error_log("[" . date('Y-m-d H:i:s') . "] ERROR: product-details.php not found\n", 3, __DIR__ . '/logs/router_errors.log');
@@ -81,7 +90,47 @@ if (preg_match('#^/product/([0-9]+)(?:/([^/]*))?$#', $uri, $matches)) {
     }
 }
 
-// API route handling moved above - this section is now removed
+// Handle /category/SLUG - Clean category URLs
+// Example: /category/t-shirts
+if (preg_match('#^/category/([a-zA-Z0-9\-]+)/?$#', $uri, $matches)) {
+    try {
+        $_GET['category'] = preg_replace('/[^a-zA-Z0-9\-]/', '', $matches[1]);
+        error_log("[" . date('Y-m-d H:i:s') . "] Loading shop.php for category: {$_GET['category']}\n", 3, __DIR__ . '/logs/router_errors.log');
+        
+        if (!file_exists(__DIR__ . '/shop.php')) {
+            http_response_code(500);
+            die('Internal Server Error: Shop page not found');
+        }
+        
+        include __DIR__ . '/shop.php';
+        return;
+    } catch (Exception $e) {
+        error_log("[" . date('Y-m-d H:i:s') . "] Error loading shop.php: " . $e->getMessage() . "\n", 3, __DIR__ . '/logs/router_errors.log');
+        http_response_code(500);
+        die('Internal Server Error: ' . $e->getMessage());
+    }
+}
+
+// Handle /search/QUERY - Clean search URLs
+// Example: /search/white+tee
+if (preg_match('#^/search(?:/(.*))?/?$#', $uri, $matches)) {
+    try {
+        $_GET['q'] = isset($matches[1]) ? urldecode($matches[1]) : '';
+        error_log("[" . date('Y-m-d H:i:s') . "] Loading search.php for query: {$_GET['q']}\n", 3, __DIR__ . '/logs/router_errors.log');
+        
+        if (!file_exists(__DIR__ . '/search.php')) {
+            http_response_code(500);
+            die('Internal Server Error: Search page not found');
+        }
+        
+        include __DIR__ . '/search.php';
+        return;
+    } catch (Exception $e) {
+        error_log("[" . date('Y-m-d H:i:s') . "] Error loading search.php: " . $e->getMessage() . "\n", 3, __DIR__ . '/logs/router_errors.log');
+        http_response_code(500);
+        die('Internal Server Error: ' . $e->getMessage());
+    }
+}
 
 // Handle /slug -> /slug.php
 try {

@@ -1,3 +1,15 @@
+/**
+ * Mossé Luxe - Comprehensive E2E Test Suite
+ * 
+ * Updated for new MVC architecture and clean URLs
+ * 
+ * URL Structure:
+ * - Products: /product/{id}/{slug}
+ * - Categories: /category/{slug}
+ * - Search: /search/{query}
+ * - Static pages: /{slug}
+ */
+
 describe('Mossé Luxe - Comprehensive Site Error Scanning', () => {
   beforeEach(() => {
     // Clear cookies and local storage before each test
@@ -125,6 +137,75 @@ describe('Mossé Luxe - Comprehensive Site Error Scanning', () => {
 
     cy.visit('/careers')
     cy.get('body').should('not.contain', 'Fatal error')
+  })
+
+  it('Clean URLs - Product pages with SEO-friendly URLs', () => {
+    // Test clean product URL format: /product/{id}/{slug}
+    cy.visit('/product/1/test-product', { failOnStatusCode: false })
+    
+    // Should either show product or 404, not a server error
+    cy.get('body').should('not.contain', 'Fatal error')
+    cy.get('body').should('not.contain', 'Warning')
+    cy.get('body').should('not.contain', 'Parse error')
+    
+    // Test SQL injection protection
+    cy.request({
+      url: "/product/1'OR'1'='1/test",
+      failOnStatusCode: false
+    }).then((response) => {
+      // Should return 404, not expose SQL error
+      expect(response.status).to.be.oneOf([400, 404])
+    })
+  })
+
+  it('Clean URLs - Category pages', () => {
+    // Test clean category URL format: /category/{slug}
+    cy.visit('/category/t-shirts', { failOnStatusCode: false })
+    
+    // Should load shop page with category filter
+    cy.get('body').should('not.contain', 'Fatal error')
+  })
+
+  it('Clean URLs - Search pages', () => {
+    // Test clean search URL format: /search/{query}
+    cy.visit('/search/white', { failOnStatusCode: false })
+    
+    // Should load search results
+    cy.get('body').should('not.contain', 'Fatal error')
+  })
+
+  it('Security - Sensitive files blocked', () => {
+    // .env should be blocked
+    cy.request({
+      url: '/.env',
+      failOnStatusCode: false
+    }).then((response) => {
+      expect(response.status).to.be.oneOf([403, 404])
+    })
+
+    // composer.json should be blocked
+    cy.request({
+      url: '/composer.json',
+      failOnStatusCode: false
+    }).then((response) => {
+      expect(response.status).to.be.oneOf([403, 404])
+    })
+
+    // _private_scripts should be blocked
+    cy.request({
+      url: '/_private_scripts/',
+      failOnStatusCode: false
+    }).then((response) => {
+      expect(response.status).to.be.oneOf([403, 404])
+    })
+
+    // includes directory should be blocked
+    cy.request({
+      url: '/includes/',
+      failOnStatusCode: false
+    }).then((response) => {
+      expect(response.status).to.be.oneOf([403, 404])
+    })
   })
 
   it('JavaScript Functionality - AJAX calls', () => {

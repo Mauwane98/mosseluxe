@@ -1,64 +1,85 @@
-# Composer dependencies
-/vendor/
-
-# Cache files
-/cache/
-
-# Environment variables
+# ===========================================
+# ENVIRONMENT & SECURITY
+# ===========================================
 .env
+.env.local
+.env.*.local
+*.pem
+*.key
 
-# IDE and OS files
-.idea/
-.vscode/
-*.DS_Store
+# ===========================================
+# DEPENDENCIES
+# ===========================================
+/vendor/
+/node_modules/
 
-# Development and build artifacts
+# ===========================================
+# CACHE & LOGS
+# ===========================================
+/cache/
+/logs/
 *.log
-*.sql
-backup_*.sql
-*.zip
-*.md
-test_*_results/
-!README.md
-
-# Database files
-*.db
-/*.db
-*.sqlite
-*.sqlite3
-
-# Error logs
-logs/
 php-error.log
 error_log
 
-# Temporary and debug files
+# ===========================================
+# DEVELOPMENT & ARCHIVE FOLDERS
+# ===========================================
+/_archive/
+/test-results/
+/playwright-report/
+
+# ===========================================
+# DATABASE FILES
+# ===========================================
+*.sql
+!/_private_scripts/database.sql
+backup_*.sql
+*.db
+*.sqlite
+*.sqlite3
+
+# ===========================================
+# TEMPORARY & DEBUG FILES
+# ===========================================
 temp_*
 debug_*
-comprehensive_*_debug.*
-final_*_test.*
-*_final_test.*
-*_test_simple.*
-*_comprehensive.*
-test_cart_*
-debug_add_to_cart.*
-
-# Reports and scans
+test_*
+check_*
+fix_*
+run_*
+create_*
+comprehensive_*
+final_*
+*_test.*
+*_debug.*
 *_report.*
 *_scan.*
-*_scan_results.*
-analysis_report.md
-audit_report.md
 
-# Node modules (in case)
-/node_modules/
+# ===========================================
+# BUILD ARTIFACTS
+# ===========================================
+*.zip
+*.tar.gz
+*.bak
 
-# OS generated files
-Thumbs.db
-.DS_Store
+# ===========================================
+# IDE & OS FILES
+# ===========================================
+.idea/
+.vscode/
+*.DS_Store
 .DS_Store?
 ._*
 .Spotlight-V100
 .Trashes
+Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+# ===========================================
+# DOCUMENTATION (keep README and dev docs)
+# ===========================================
+*.md
+!README.md
+!/_dev_docs/*.md

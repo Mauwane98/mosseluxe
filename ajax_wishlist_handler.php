@@ -1,83 +1,143 @@
 <?php
 /**
  * AJAX Wishlist Handler
- * Handle wishlist operations
+ * 
+ * Handles wishlist operations via AJAX.
+ * Supports both logged-in users (database) and guests (session + cookie).
+ * 
+ * Always returns JSON: { "success": bool, "message": string, ... }
  */
 
-// Suppress any errors/warnings from being displayed
+// Prevent any output before JSON
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 
-// Start output buffering to catch any errors/warnings
 ob_start();
 
-require_once 'includes/bootstrap.php';
-require_once 'includes/wishlist_functions.php';
+require_once __DIR__ . '/includes/bootstrap.php';
+require_once __DIR__ . '/includes/wishlist_functions.php';
+require_once __DIR__ . '/app/Controllers/WishlistController.php';
+require_once __DIR__ . '/app/Services/InputSanitizer.php';
 
-// Clean any output that might have occurred
+// Clean any unexpected output
 $buffer = ob_get_clean();
-
-// Log any unexpected output for debugging
 if (!empty($buffer)) {
-    error_log("AJAX Wishlist Handler - Unexpected output before JSON: " . substr($buffer, 0, 200));
+    error_log("AJAX Wishlist Handler - Unexpected output: " . substr($buffer, 0, 200));
 }
 
-header('Content-Type: application/json');
+// Set JSON headers
+header('Content-Type: application/json; charset=utf-8');
+header('Cache-Control: no-cache, no-store, must-revalidate');
 
-$conn = get_db_connection();
-
-// Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Please login to use wishlist'
-    ]);
+// Helper function to send JSON response
+function sendJson(array $data): void {
+    echo json_encode($data, JSON_UNESCAPED_UNICODE);
     exit;
 }
 
-$user_id = $_SESSION['user_id'];
-$action = $_POST['action'] ?? '';
+// Validate request method
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    sendJson([
+        'success' => false,
+        'message' => 'Invalid request method'
+    ]);
+}
 
+// Get database connection
+$conn = get_db_connection();
+
+// Initialize controller (works for both guests and logged-in users)
+$wishlist = new \App\Controllers\WishlistController($conn);
+
+// Get action and product_id
+$action = $_POST['action'] ?? '';
+$productId = isset($_POST['product_id']) 
+    ? \App\Services\InputSanitizer::productId($_POST['product_id']) 
+    : null;
+
+// Validate CSRF for state-changing operations
+if (in_array($action, ['add', 'remove', 'toggle', 'clear', 'move_to_cart'])) {
+    $csrfToken = $_POST['csrf_token'] ?? $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+    if (!isset($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $csrfToken)) {
+        sendJson([
+            'success' => false,
+            'message' => 'Invalid security token. Please refresh the page.'
+        ]);
+    }
+}
+
+// Handle actions
 switch ($action) {
     case 'add':
-        $product_id = (int)$_POST['product_id'];
-        $result = addToWishlist($conn, $user_id, $product_id);
-        $result['count'] = getWishlistCount($conn, $user_id);
-        echo json_encode($result);
+        if (!$productId) {
+            sendJson(['success' => false, 'message' => 'Invalid product ID']);
+        }
+        $result = $wishlist->add($productId);
+        sendJson($result);
         break;
         
     case 'remove':
-        $product_id = (int)$_POST['product_id'];
-        $result = removeFromWishlist($conn, $user_id, $product_id);
-        $result['count'] = getWishlistCount($conn, $user_id);
-        echo json_encode($result);
+        if (!$productId) {
+            sendJson(['success' => false, 'message' => 'Invalid product ID']);
+        }
+        $result = $wishlist->remove($productId);
+        sendJson($result);
+        break;
+        
+    case 'toggle':
+        if (!$productId) {
+            sendJson(['success' => false, 'message' => 'Invalid product ID']);
+        }
+        $result = $wishlist->toggle($productId);
+        sendJson($result);
         break;
         
     case 'get':
-        $wishlist = getWishlist($conn, $user_id);
-        echo json_encode([
+        $items = $wishlist->getItems();
+        sendJson([
             'success' => true,
-            'wishlist' => $wishlist,
-            'count' => count($wishlist)
+            'wishlist' => $items,
+            'count' => count($items)
         ]);
         break;
         
     case 'check':
-        $product_id = (int)$_POST['product_id'];
-        $inWishlist = isInWishlist($conn, $user_id, $product_id);
-        echo json_encode([
+        if (!$productId) {
+            sendJson(['success' => false, 'message' => 'Invalid product ID']);
+        }
+        sendJson([
             'success' => true,
-            'inWishlist' => $inWishlist
+            'in_wishlist' => $wishlist->isInWishlist($productId),
+            'count' => $wishlist->getCount()
         ]);
         break;
         
+    case 'count':
+        sendJson([
+            'success' => true,
+            'count' => $wishlist->getCount()
+        ]);
+        break;
+        
+    case 'clear':
+        $result = $wishlist->clear();
+        sendJson($result);
+        break;
+        
+    case 'move_to_cart':
+        if (!$productId) {
+            sendJson(['success' => false, 'message' => 'Invalid product ID']);
+        }
+        $result = $wishlist->moveToCart($productId);
+        sendJson($result);
+        break;
+        
     default:
-        echo json_encode([
+        sendJson([
             'success' => false,
             'message' => 'Invalid action'
         ]);
 }
 
 $conn->close();
-// No closing PHP tag - prevents accidental whitespace output

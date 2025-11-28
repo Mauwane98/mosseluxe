@@ -1,69 +1,51 @@
 <?php
-$pageTitle = "Product Details - Mossé Luxe";
-require_once __DIR__ . '/includes/bootstrap.php';
-$conn = get_db_connection();
+/**
+ * Product Details Page
+ * 
+ * Displays a single product with images, variants, and add-to-cart functionality.
+ */
 
-if (!isset($_GET['id'])) {
+require_once __DIR__ . '/includes/bootstrap.php';
+require_once __DIR__ . '/app/Services/InputSanitizer.php';
+require_once __DIR__ . '/app/Controllers/ProductController.php';
+
+// Strict input validation for product ID
+$product_id = \App\Services\InputSanitizer::productId($_GET['id'] ?? null);
+
+if (!$product_id) {
     http_response_code(404);
-    echo "<h1>Product not found</h1>";
+    require_once __DIR__ . '/404.php';
     exit();
 }
 
-$product_id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
-require_once 'includes/header.php';
+$conn = get_db_connection();
+$productController = new \App\Controllers\ProductController($conn);
 
-$product = null;
-if (isset($_GET['id'])) {
-    $product_id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
-    $sql = "SELECT id, name, description, price, sale_price, image, stock, is_featured, is_coming_soon, is_bestseller, is_new FROM products WHERE id = ? AND status = 1";
-    if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("i", $product_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            $product = $result->fetch_assoc();
-        }
-        $stmt->close();
-    }
+// Get product data
+$product = $productController->getProduct($product_id);
+
+if (!$product) {
+    http_response_code(404);
+    require_once __DIR__ . '/404.php';
+    exit();
 }
 
-    // Fetch additional product images and media
-    if ($product) {
-        $images_sql = "SELECT id, image_path, media_type, variant_color, variant_size, is_primary, sort_order, is_360_view
-                      FROM product_images WHERE product_id = ?
-                      ORDER BY is_primary DESC, sort_order ASC, id ASC";
-        if ($stmt_imgs = $conn->prepare($images_sql)) {
-            $stmt_imgs->bind_param("i", $product_id);
-            $stmt_imgs->execute();
-            $result_imgs = $stmt_imgs->get_result();
-            $product_images = [];
-            while ($row = $result_imgs->fetch_assoc()) {
-                $product_images[] = $row;
-            }
-            $stmt_imgs->close();
-        }
+// Set page title
+$pageTitle = htmlspecialchars($product['name']) . " - Mossé Luxe";
 
-        // Get product variants for selection UI
-        $product_variants = [];
-        try {
-            $product_variants = get_product_variants_by_type($product_id);
-        } catch (Exception $e) {
-            error_log('Error getting product variants: ' . $e->getMessage());
-        }
+// Get additional data from controller
+$product_images = $product['images'] ?? [];
+$product_variants = $product['variants'] ?? [];
 
-        // Get unique colors and sizes for filters
-        $available_colors = [];
-        $available_sizes = [];
-        if (!empty($product_variants)) {
-            foreach ($product_variants as $type => $variants) {
-                if ($type === 'Color') {
-                    $available_colors = array_column($variants, 'variant_value');
-                } elseif ($type === 'Size') {
-                    $available_sizes = array_column($variants, 'variant_value');
-                }
-            }
-        }
-    }
+// Extract colors and sizes for UI
+$available_colors = [];
+$available_sizes = [];
+if (!empty($product_variants)) {
+    $available_colors = array_column($product_variants['Color'] ?? [], 'variant_value');
+    $available_sizes = array_column($product_variants['Size'] ?? [], 'variant_value');
+}
+
+require_once 'includes/header.php';
 ?>
 
 <!-- Main Content -->

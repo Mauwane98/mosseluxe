@@ -98,6 +98,11 @@
     <script src="<?php echo SITE_URL; ?>assets/js/accessibility.js"></script>
     <script src="<?php echo SITE_URL; ?>assets/js/interactive-features.js"></script>
 
+    <!-- Toast Notification System -->
+    <script src="<?php echo SITE_URL; ?>assets/js/toast.js"></script>
+    <!-- Loading State Utilities -->
+    <script src="<?php echo SITE_URL; ?>assets/js/loading.js"></script>
+
     <script>
         // Newsletter Form Handler
         document.getElementById('newsletter-form')?.addEventListener('submit', function(e) {
